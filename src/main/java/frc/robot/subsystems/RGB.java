@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+/**
+ * The RGB on the robot, which uses Rev Blinkin LED controllers and 1m individually programmable strips.
+ */
 public class RGB extends SubsystemBase {
 
   private Spark blinkin;
 
-  /**
-   * Creates a new RGB.
-   */
   public RGB() {
     blinkin = new Spark(Constants.BLINKIN_ID);
   }

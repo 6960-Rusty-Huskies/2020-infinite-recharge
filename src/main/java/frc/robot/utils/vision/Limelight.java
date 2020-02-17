@@ -72,4 +72,12 @@ public class Limelight {
     public double getDistanceToGoal(double goalHeight) {
         return (goalHeight - height) / Math.tan(Math.toRadians(angle + getOffsetY()));
     }
+
+    public static void setCameraStream(StreamType streamType) {
+        table.getEntry("stream").setNumber(streamType.ordinal());
+    }
+
+    public static double getCameraStream() {
+        return table.getEntry("stream").getDouble(-1.0);
+    }
 } 

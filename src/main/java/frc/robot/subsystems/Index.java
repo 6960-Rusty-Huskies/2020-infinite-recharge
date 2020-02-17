@@ -10,17 +10,25 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+/**
+ * The "holding chamber" for power cells waiting to be shot.
+ */
 public class Index extends SubsystemBase {
 
-  public IndexSection lowerSection, upperSection;
+  private IndexSection lowerSection, upperSection;
   public int powerCellCount;
 
-  /**
-   * Creates a new Index.
-   */
   public Index() {
     lowerSection = new IndexSection(Constants.INDEX_LOWER_BEAM_BREAK, Constants.INDEX_LOWER_MOTOR);
     upperSection = new IndexSection(Constants.INDEX_UPPER_BEAM_BREAK, Constants.INDEX_UPPER_MOTOR);
+  }
+
+  public void driveUpper(double speed) {
+    upperSection.moveMotor(speed);
+  }
+
+  public void driveLower(double speed) {
+    lowerSection.moveMotor(speed);
   }
 
   @Override

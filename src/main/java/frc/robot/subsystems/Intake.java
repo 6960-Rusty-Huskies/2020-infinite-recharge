@@ -15,14 +15,14 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 
+/**
+ * The arm which takes in power cells from the outside of the robot and slots them into the Index.
+ */
 public class Intake extends PIDSubsystem {
 
   private VictorSPX wheelMotor, armMotor;
   private Encoder armEncoder;
 
-  /**
-   * Creates a new Intake.
-   */
   public Intake() {
     super(
         // The PIDController used by the subsystem

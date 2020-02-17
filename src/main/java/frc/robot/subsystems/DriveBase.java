@@ -10,26 +10,24 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+/**
+ * The base that drives the robot around the field.
+ */
 public class DriveBase extends SubsystemBase {
 
   private DifferentialDrive drive;
-  // private Encoder leftEncoder, rightEncoder;
-  private XboxController controller = new XboxController(Constants.DRIVER_JOYSTICK);
+  private Encoder leftEncoder, rightEncoder;
+  private Joystick stickLeft = new Joystick(0);
+  private Joystick stickRight = new Joystick(1);
 
   private double speedMult = 0.9, turnMult = 0.6;
 
-  private boolean stickControls = false;
-
-  /**
-   * Creates a new DriveBase.
-   */
   public DriveBase() {
     WPI_TalonSRX leftFront = new WPI_TalonSRX(Constants.DRIVE_LEFT_FRONT_MOTOR);
     WPI_TalonSRX leftBack = new WPI_TalonSRX(Constants.DRIVE_LEFT_BACK_MOTOR);
@@ -48,10 +46,7 @@ public class DriveBase extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if(stickControls) {
-      drive.arcadeDrive(-speedMult * controller.getY(Hand.kLeft), turnMult * controller.getX(Hand.kLeft));
-    } else {
-      drive.arcadeDrive(speedMult * (controller.getTriggerAxis(Hand.kRight) - controller.getTriggerAxis(Hand.kLeft)), turnMult * controller.getX(Hand.kLeft));
-    }
+
+    drive.arcadeDrive(-speedMult * stickLeft.getY(), turnMult * stickRight.getX());
   }
 }

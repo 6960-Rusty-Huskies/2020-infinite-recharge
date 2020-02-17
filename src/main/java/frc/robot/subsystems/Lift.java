@@ -9,19 +9,18 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+/**
+ * The arm that extends and elevates the robot onto the Generator Switch.
+ */
 public class Lift extends SubsystemBase {
   private VictorSPX motor;
   private DigitalInput limitSwitch;
 
-  /**
-   * The Lift 
-   */
   public Lift() {
     motor = new VictorSPX(Constants.LIFT_MOTOR);
     limitSwitch = new DigitalInput(Constants.LIFT_SWITCH);
