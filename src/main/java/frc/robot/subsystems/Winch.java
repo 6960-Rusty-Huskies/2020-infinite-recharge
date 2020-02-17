@@ -13,13 +13,13 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+/**
+ * Used to level the robot to help balance on the Generator Switch.
+ */
 public class Winch extends SubsystemBase {
 
   private VictorSPX motorControler;
 
-  /**
-   * Creates a new Winch.
-   */
   public Winch() {
     motorControler = new VictorSPX(Constants.WINCH_MOTOR);
   }

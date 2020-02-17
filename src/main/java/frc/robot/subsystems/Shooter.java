@@ -13,14 +13,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+/**
+ * The set of motors that project Power Cells into the goal.
+ */
 public class Shooter extends SubsystemBase {
 
   private double speed;
   private CANSparkMax motor;
 
-  /**
-   * Creates a new Shooter.
-   */
   public Shooter() {
     motor = new CANSparkMax(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
   }

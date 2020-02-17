@@ -17,13 +17,9 @@ public class Climber extends SubsystemBase {
   private Lift lift;
   private Winch winch;
 
-  /**
-   * Creates a new Climber.
-   */
   public Climber() {
     lift = new Lift();
     winch = new Winch();
-
   }
 
   public void moveLift(double speed) {

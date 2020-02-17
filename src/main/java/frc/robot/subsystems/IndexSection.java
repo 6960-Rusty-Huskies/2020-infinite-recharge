@@ -13,15 +13,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+/**
+ * One section of the Index.
+ */
 public class IndexSection extends SubsystemBase {
 
   private DigitalOutput beamBreak;
   private CANSparkMax motor;
 
-  /**
-   * Creates a new IndexSection.
-   * @param beamBreakId the ID of the beam break on the index section.
-   */
   public IndexSection(int beamBreakId, int motorId) {
     beamBreak = new DigitalOutput(beamBreakId);
     motor = new CANSparkMax(motorId, MotorType.kBrushless);

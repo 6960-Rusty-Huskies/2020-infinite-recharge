@@ -16,15 +16,15 @@ import frc.robot.Constants;
 import frc.robot.utils.DSColor;
 import frc.robot.utils.WheelColor;
 
+/**
+ * The arm and wheel that are used to interface with the Control Panel.
+ */
 public class Spinner extends SubsystemBase {
 
   private VictorSPX armMotor, wheelMotor;
   private ColorSensorV3 colorSensor;
   private ColorMatch colorMatch;
 
-  /**
-   * Creates a new Spinner.
-   */
   public Spinner() {
     armMotor = new VictorSPX(Constants.SPINNER_ARM_MOTOR);
     wheelMotor = new VictorSPX(Constants.SPINNER_WHEEL_MOTOR);
