@@ -8,45 +8,52 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 
-/**
- * The base that drives the robot around the field.
- */
-public class DriveBase extends SubsystemBase {
+public class DriveBase extends PIDSubsystem {
 
   private DifferentialDrive drive;
-  private Encoder leftEncoder, rightEncoder;
-  private Joystick stickLeft = new Joystick(0);
-  private Joystick stickRight = new Joystick(1);
+  private PigeonIMU imu;
+  private Joystick rightStick, leftStick;
 
-  private double speedMult = 0.9, turnMult = 0.6;
-
-  public DriveBase() {
+  /**
+   * Creates a new DriveBase.
+   */
+  public DriveBase(final Joystick leftJoystick, final Joystick rightJoystick) {
+    super(
+        // The PIDController used by the subsystem
+        new PIDController(0.005, 0, 0));
+    
     WPI_TalonSRX leftFront = new WPI_TalonSRX(Constants.DRIVE_LEFT_FRONT_MOTOR);
     WPI_TalonSRX leftBack = new WPI_TalonSRX(Constants.DRIVE_LEFT_BACK_MOTOR);
+    SpeedControllerGroup leftGroup = new SpeedControllerGroup(leftFront, leftBack);
+
     WPI_TalonSRX rightFront = new WPI_TalonSRX(Constants.DRIVE_RIGHT_FRONT_MOTOR);
     WPI_TalonSRX rightBack = new WPI_TalonSRX(Constants.DRIVE_RIGHT_BACK_MOTOR);
+    SpeedControllerGroup rightGroup = new SpeedControllerGroup(rightFront, rightBack);
 
-    SpeedControllerGroup left = new SpeedControllerGroup(leftFront, leftBack);
-    SpeedControllerGroup right = new SpeedControllerGroup(rightFront, rightBack);
+    leftStick = leftJoystick;
+    rightStick = rightJoystick;
 
-    drive = new DifferentialDrive(left, right);
-
-    // leftEncoder = new Encoder(Constants.DRIVE_LEFT_ENCODER_A, Constants.DRIVE_LEFT_ENCODER_B);
-    // rightEncoder = new Encoder(Constants.DRIVE_RIGHT_ENCODER_A, Constants.DRIVE_RIGHT_ENCODER_B);
+    drive = new DifferentialDrive(leftGroup, rightGroup);
+    imu = new PigeonIMU(leftFront);
   }
 
   @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  public void useOutput(double output, double setpoint) {
+    // Use the output here
+  }
 
-    drive.arcadeDrive(-speedMult * stickLeft.getY(), turnMult * stickRight.getX());
+  @Override
+  public double getMeasurement() {
+    // Return the process variable measurement here
+    return 0;
   }
 }

@@ -7,14 +7,18 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.utils.DSColor;
+import frc.robot.utils.Direction;
 import frc.robot.utils.WheelColor;
+import frc.robot.utils.WheelColor.ColorEnum;
 
 /**
  * The arm and wheel that are used to interface with the Control Panel.
@@ -24,11 +28,12 @@ public class Spinner extends SubsystemBase {
   private VictorSPX armMotor, wheelMotor;
   private ColorSensorV3 colorSensor;
   private ColorMatch colorMatch;
+  private double armSpeed, wheelSpeed;
 
   public Spinner() {
     armMotor = new VictorSPX(Constants.SPINNER_ARM_MOTOR);
     wheelMotor = new VictorSPX(Constants.SPINNER_WHEEL_MOTOR);
-    
+
     colorSensor = new ColorSensorV3(Port.kOnboard);
 
     colorMatch.addColorMatch(WheelColor.red);
@@ -37,12 +42,62 @@ public class Spinner extends SubsystemBase {
     colorMatch.addColorMatch(WheelColor.yellow);
   }
 
+  public Color getDetectedColor() {
+    return colorMatch.matchClosestColor(colorSensor.getColor()).color;
+  }
+
   public boolean isColorMatched() {
-    if(DSColor.getCurrent() != null) {
-      return colorMatch.matchClosestColor(colorSensor.getColor()).color == DSColor.getCurrent();
+    if (WheelColor.getFMSDisplayed() != null) {
+      return getDetectedColor() == WheelColor.getFMSDisplayed();
     }
 
     return false;
+  }
+
+  public void moveWheelMotor(Direction direction) {
+    switch (direction) {
+    case left:
+      wheelMotor.set(VictorSPXControlMode.PercentOutput, -wheelSpeed);
+      break;
+    case right:
+      wheelMotor.set(VictorSPXControlMode.PercentOutput, wheelSpeed);
+      break;
+    case zero:
+      wheelMotor.set(VictorSPXControlMode.PercentOutput, 0.0);
+    case up:
+    case down:
+      break;
+    }
+  }
+
+  public Direction determineMotorDirection() {
+
+    if(isColorMatched()) return Direction.zero;
+    ColorEnum current = WheelColor.ColorEnum.valueOf(getDetectedColor().toString());
+    ColorEnum target = ColorEnum.valueOf(WheelColor.getFMSDisplayed().toString());
+
+    if((current.ordinal() - 1) % 4 == target.ordinal()) {
+      return Direction.left;
+    }
+
+    return Direction.right;
+  }
+
+  public void moveArmMotor(Direction direction) {
+    switch(direction) {
+      case up:
+        armMotor.set(VictorSPXControlMode.PercentOutput, -armSpeed);
+        break;
+      case down:
+        armMotor.set(VictorSPXControlMode.PercentOutput, armSpeed);
+        break;
+      case zero:
+        armMotor.set(VictorSPXControlMode.PercentOutput, 0.0);
+        break;
+      case left:
+      case right:
+        break;
+    }
   }
   
   @Override
