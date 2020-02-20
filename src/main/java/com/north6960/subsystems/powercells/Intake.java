@@ -15,35 +15,42 @@ public class Intake extends PIDSubsystem {
 
   private VictorSPX wheelMotor, armMotor;
   private Encoder armEncoder;
+  private boolean manualControl;
 
   public Intake() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(0, 0, 0));
+        new PIDController(0.005, 0, 0));
 
     wheelMotor = new VictorSPX(Constants.INTAKE_WHEEL_MOTOR);
     armMotor = new VictorSPX(Constants.INTAKE_ARM_MOTOR);
     armEncoder = new Encoder(Constants.INTAKE_ENCODER_A, Constants.INTAKE_ENCODER_B);
 
+    armEncoder.setDistancePerPulse(360. / 2048.); // Gives an output in degrees.
+
     this.getController().setTolerance(1.);
   }
 
-  public void set(boolean on) {
-    if(on) {
-      wheelMotor.set(VictorSPXControlMode.Velocity, 0.75);
-    }
+  public boolean isDown() {
+    if(armEncoder.getDistance() > 90) {
+      return true;
+    } 
 
-    else wheelMotor.set(VictorSPXControlMode.Velocity, 0);
+    else return false;
   }
 
-  public void raise() {
-    setSetpoint(0);
+  public void set(boolean on) {
+    wheelMotor.set(VictorSPXControlMode.PercentOutput, on ? 0.75 : 0);
+  }
+
+  public void setArm(boolean up) {
+    armMotor.set(VictorSPXControlMode.PercentOutput, up ? 0.75 : -0.75);
   }
 
   @Override
   public void useOutput(double output, double setpoint) {
     // Use the output here
-    armMotor.set(VictorSPXControlMode.Velocity, output);
+    armMotor.set(VictorSPXControlMode.PercentOutput, output);
   }
 
   @Override

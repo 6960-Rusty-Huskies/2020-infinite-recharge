@@ -2,8 +2,6 @@ package com.north6960.subsystems.powercells;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -11,24 +9,27 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class IndexSection extends SubsystemBase {
 
-  private DigitalOutput beamBreak;
+  private BeamBreak beamBreak;
   private CANSparkMax motor;
+  private boolean wasTriggeredLastCheck;
 
   public IndexSection(int beamBreakId, int motorId) {
-    beamBreak = new DigitalOutput(beamBreakId);
+    beamBreak = new BeamBreak(beamBreakId);
+    beamBreak.set(false);
     motor = new CANSparkMax(motorId, MotorType.kBrushless);
   }
 
-  public void moveMotor(double speed) {
+  public void drive(double speed) {
     motor.set(speed);
   }
 
-  public boolean beamBreakIsTriggered() {
-    return beamBreak.get();
+  public boolean ballPassed() {
+    return !beamBreak.isTriggered() && wasTriggeredLastCheck;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    wasTriggeredLastCheck = beamBreak.isTriggered();
   }
 }
