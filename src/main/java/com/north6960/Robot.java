@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import com.north6960.vision.Limelight;
-import com.north6960.vision.StreamType;
+import com.north6960.subsystems.vision.Limelight;
+import com.north6960.subsystems.vision.StreamType;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to

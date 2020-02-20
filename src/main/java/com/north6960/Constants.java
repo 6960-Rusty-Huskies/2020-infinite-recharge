@@ -1,3 +1,4 @@
+
 package com.north6960;
 
 /**
@@ -17,6 +18,7 @@ public final class Constants {
     public static final int DRIVE_LEFT_ENCODER_B = 6;
     public static final int DRIVE_RIGHT_ENCODER_A = 7;
     public static final int DRIVE_RIGHT_ENCODER_B = 8;
+    public static final int PIGEON_IMU = 0; // Find this value
 
     public static final int INTAKE_ARM_MOTOR = 9;
     public static final int INTAKE_WHEEL_MOTOR = 10;
@@ -43,6 +45,8 @@ public final class Constants {
 
     public static final int BLINKIN_ID = 24;
 
-    public static final int DRIVER_JOYSTICK = 0;
-    // public static final int OPERATOR_JOYSTICK = 1;
+    public static final int DRIVER_JOYSTICK_LEFT = 0;
+    public static final int DRIVER_JOYSTICK_RIGHT = 1;
+    public static final int OPERATOR_JOYSTICK_LEFT = 2;
+    public static final int OPERATOR_JOYSTICK_RIGHT = 3;
 }

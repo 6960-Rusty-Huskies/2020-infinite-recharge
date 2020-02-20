@@ -1,10 +1,10 @@
 package com.north6960;
 
-import com.north6960.drive.DriveBase;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-
+import com.north6960.subsystems.drive.DriveBase;
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -13,8 +13,10 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private Joystick driverStickLeft = new Joystick(Constants.DRIVER_JOYSTICK_LEFT);
+  private Joystick driverStickRight = new Joystick(Constants.DRIVER_JOYSTICK_RIGHT);
   
-  private DriveBase driveBase = new DriveBase();
+  private DriveBase driveBase = new DriveBase(driverStickLeft, driverStickRight);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -31,6 +33,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    
   }
 
 
