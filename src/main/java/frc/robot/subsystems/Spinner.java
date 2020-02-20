@@ -29,6 +29,7 @@ public class Spinner extends SubsystemBase {
   private ColorSensorV3 colorSensor;
   private ColorMatch colorMatch;
   private double armSpeed, wheelSpeed;
+  private boolean manualControl;
 
   public Spinner() {
     armMotor = new VictorSPX(Constants.SPINNER_ARM_MOTOR);
@@ -56,23 +57,23 @@ public class Spinner extends SubsystemBase {
 
   public void moveWheelMotor(Direction direction) {
     switch (direction) {
-    case left:
-      wheelMotor.set(VictorSPXControlMode.PercentOutput, -wheelSpeed);
-      break;
-    case right:
-      wheelMotor.set(VictorSPXControlMode.PercentOutput, wheelSpeed);
-      break;
-    case zero:
-      wheelMotor.set(VictorSPXControlMode.PercentOutput, 0.0);
-    case up:
-    case down:
-      break;
+      case left:
+        wheelMotor.set(VictorSPXControlMode.PercentOutput, -wheelSpeed);
+        break;
+      case right:
+        wheelMotor.set(VictorSPXControlMode.PercentOutput, wheelSpeed);
+        break;
+      case stop:
+        wheelMotor.set(VictorSPXControlMode.PercentOutput, 0.0);
+      case up:
+      case down:
+        break;
     }
   }
 
-  public Direction determineMotorDirection() {
+  public Direction determinePositionControlDirection() {
+    if(isColorMatched()) return Direction.stop;
 
-    if(isColorMatched()) return Direction.zero;
     ColorEnum current = WheelColor.ColorEnum.valueOf(getDetectedColor().toString());
     ColorEnum target = ColorEnum.valueOf(WheelColor.getFMSDisplayed().toString());
 
@@ -91,7 +92,7 @@ public class Spinner extends SubsystemBase {
       case down:
         armMotor.set(VictorSPXControlMode.PercentOutput, armSpeed);
         break;
-      case zero:
+      case stop:
         armMotor.set(VictorSPXControlMode.PercentOutput, 0.0);
         break;
       case left:

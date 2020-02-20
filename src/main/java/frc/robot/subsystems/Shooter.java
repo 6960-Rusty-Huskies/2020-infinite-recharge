@@ -20,7 +20,7 @@ public class Shooter extends SubsystemBase {
 
   private double speed;
   private CANSparkMax motor;
-  private boolean isManual = false;
+  private boolean manualControl = false;
 
   public Shooter() {
     motor = new CANSparkMax(Constants.SHOOTER_MOTOR, MotorType.kBrushless);

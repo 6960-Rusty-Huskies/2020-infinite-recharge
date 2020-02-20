@@ -22,6 +22,7 @@ public class Intake extends PIDSubsystem {
 
   private VictorSPX wheelMotor, armMotor;
   private Encoder armEncoder;
+  private boolean manualControl;
 
   public Intake() {
     super(

@@ -8,7 +8,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Spinner;
+import frc.robot.utils.Direction;
 
 public class MoveToColor extends CommandBase {
 
@@ -23,23 +25,24 @@ public class MoveToColor extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    _spinner.moveArmMotor(Direction.down);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    switch(_spinner.getDetectedColor()) {
-    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    new WaitCommand(0.5);
+    _spinner.moveWheelMotor(Direction.stop);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return _spinner.isColorMatched();
   }
 }

@@ -16,25 +16,32 @@ import frc.robot.Constants;
 public class Index extends SubsystemBase {
 
   private IndexSection entrance, exit;
-  public int powerCellCount;
+  private int powerCellCount;
+  private boolean manualControl;
 
   public Index() {
     entrance = new IndexSection(Constants.INDEX_LOWER_BEAM_BREAK, Constants.INDEX_LOWER_MOTOR);
     exit = new IndexSection(Constants.INDEX_UPPER_BEAM_BREAK, Constants.INDEX_UPPER_MOTOR);
   }
 
+  public int getPowerCellCount() {
+    return powerCellCount;
+  }
+
   public void driveUpper(double speed) {
-    exit.moveMotor(speed);
+    exit.drive(speed);
   }
 
   public void driveLower(double speed) {
-    entrance.moveMotor(speed);
+    entrance.drive(speed);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if(entrance.ballPassed()) powerCellCount++;
-    if(exit.ballPassed()) powerCellCount--;
+    if (entrance.ballPassed())
+      powerCellCount++;
+    if (exit.ballPassed())
+      powerCellCount--;
   }
 }

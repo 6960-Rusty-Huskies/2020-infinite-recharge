@@ -29,7 +29,7 @@ public class IndexSection extends SubsystemBase {
     motor = new CANSparkMax(motorId, MotorType.kBrushless);
   }
 
-  public void moveMotor(double speed) {
+  public void drive(double speed) {
     motor.set(speed);
   }
 
