@@ -1,4 +1,4 @@
-package com.north6960.drive;
+package com.north6960.subsystems.drive;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 

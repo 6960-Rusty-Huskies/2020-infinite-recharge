@@ -1,4 +1,4 @@
-package com.north6960.lights;
+package com.north6960.subsystems.lights;
 
 import com.north6960.Constants;
 import edu.wpi.first.wpilibj.Spark;

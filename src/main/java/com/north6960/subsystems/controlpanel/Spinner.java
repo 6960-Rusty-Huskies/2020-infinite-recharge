@@ -1,9 +1,7 @@
-package com.north6960.controlpanel;
+package com.north6960.subsystems.controlpanel;
 
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.north6960.Constants;
-import com.north6960.utils.DSColor;
-import com.north6960.utils.WheelColor;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.I2C.Port;

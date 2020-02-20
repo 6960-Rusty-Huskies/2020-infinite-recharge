@@ -1,4 +1,4 @@
-package com.north6960.powercells;
+package com.north6960.subsystems.powercells;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;

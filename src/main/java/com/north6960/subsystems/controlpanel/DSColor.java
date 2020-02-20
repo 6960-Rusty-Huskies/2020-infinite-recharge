@@ -1,4 +1,4 @@
-package com.north6960.utils;
+package com.north6960.subsystems.controlpanel;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.util.Color;

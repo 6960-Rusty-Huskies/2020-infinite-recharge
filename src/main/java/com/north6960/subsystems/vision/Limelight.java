@@ -1,4 +1,4 @@
-package com.north6960.vision;
+package com.north6960.subsystems.vision;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;

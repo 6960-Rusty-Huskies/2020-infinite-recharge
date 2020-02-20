@@ -1,4 +1,4 @@
-package com.north6960.vision;
+package com.north6960.subsystems.vision;
 
 /**
  * The type of stream to use with the Limelight.

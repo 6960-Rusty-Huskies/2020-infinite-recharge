@@ -1,4 +1,4 @@
-package com.north6960.powercells;
+package com.north6960.subsystems.powercells;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.north6960.Constants;

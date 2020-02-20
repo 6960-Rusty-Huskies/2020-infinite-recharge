@@ -1,4 +1,4 @@
-package com.north6960.generatorswitch;
+package com.north6960.subsystems.generatorswitch;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
