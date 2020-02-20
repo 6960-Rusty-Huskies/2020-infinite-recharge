@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package com.north6960.subsystems.controlpanel;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
@@ -32,7 +25,6 @@ public class Spinner extends SubsystemBase {
   public Spinner() {
     armMotor = new VictorSPX(Constants.SPINNER_ARM_MOTOR);
     wheelMotor = new VictorSPX(Constants.SPINNER_WHEEL_MOTOR);
-
     colorSensor = new ColorSensorV3(Port.kOnboard);
 
     colorMatch.addColorMatch(WheelColor.red);
@@ -46,13 +38,9 @@ public class Spinner extends SubsystemBase {
   }
 
   public boolean isColorMatched() {
-    if (WheelColor.getFMSDisplayed() != null) {
       return getDetectedColor() == WheelColor.getFMSDisplayed();
-    }
-
-    return false;
   }
-
+  
   public void moveWheelMotor(Direction direction) {
     switch (direction) {
       case left:

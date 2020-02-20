@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package com.north6960;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -12,7 +5,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.north6960.subsystems.drive.DriveBase;
-
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -21,7 +13,6 @@ import com.north6960.subsystems.drive.DriveBase;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-
   private Joystick driverStickLeft = new Joystick(Constants.DRIVER_JOYSTICK_LEFT);
   private Joystick driverStickRight = new Joystick(Constants.DRIVER_JOYSTICK_RIGHT);
   
@@ -42,7 +33,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
+    
   }
 
 

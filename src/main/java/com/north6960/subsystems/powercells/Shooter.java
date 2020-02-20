@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package com.north6960.subsystems.powercells;
 
 import com.revrobotics.CANSparkMax;
@@ -21,7 +14,7 @@ public class Shooter extends SubsystemBase {
   private double speed;
   private CANSparkMax motor;
   private boolean manualControl;
-
+  
   public Shooter() {
     motor = new CANSparkMax(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
   }
@@ -37,6 +30,5 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-
   }
 }
