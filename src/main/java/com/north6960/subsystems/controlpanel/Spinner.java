@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,16 +17,17 @@ import com.north6960.subsystems.controlpanel.WheelColor.ColorEnum;
  */
 public class Spinner extends SubsystemBase {
 
-  private VictorSPX armMotor, wheelMotor;
   private ColorSensorV3 colorSensor;
+  public SpinnerArm arm;
+  public SpinnerWheel wheel;
+
   private ColorMatch colorMatch;
-  private double armSpeed, wheelSpeed;
   private boolean manualControl;
 
   public Spinner() {
-    armMotor = new VictorSPX(Constants.SPINNER_ARM_MOTOR);
-    wheelMotor = new VictorSPX(Constants.SPINNER_WHEEL_MOTOR);
     colorSensor = new ColorSensorV3(Port.kOnboard);
+    arm = new SpinnerArm();
+    wheel = new SpinnerWheel();
 
     colorMatch.addColorMatch(WheelColor.red);
     colorMatch.addColorMatch(WheelColor.green);
@@ -38,53 +40,23 @@ public class Spinner extends SubsystemBase {
   }
 
   public boolean isColorMatched() {
-      return getDetectedColor() == WheelColor.getFMSDisplayed();
-  }
-  
-  public void moveWheelMotor(Direction direction) {
-    switch (direction) {
-      case left:
-        wheelMotor.set(VictorSPXControlMode.PercentOutput, -wheelSpeed);
-        break;
-      case right:
-        wheelMotor.set(VictorSPXControlMode.PercentOutput, wheelSpeed);
-        break;
-      case stop:
-        wheelMotor.set(VictorSPXControlMode.PercentOutput, 0.0);
-      case up:
-      case down:
-        break;
-    }
+    return getDetectedColor() == WheelColor.getFMSDisplayed();
   }
 
-  public Direction determinePositionControlDirection() {
-    if(isColorMatched()) return Direction.stop;
+  public void moveToFMSColor() {
+    Direction direction;
+    if(isColorMatched()) direction = Direction.stopped;
 
     ColorEnum current = WheelColor.ColorEnum.valueOf(getDetectedColor().toString());
     ColorEnum target = ColorEnum.valueOf(WheelColor.getFMSDisplayed().toString());
 
     if((current.ordinal() - 1) % 4 == target.ordinal()) {
-      return Direction.left;
+      direction = Direction.left;
     }
 
-    return Direction.right;
-  }
+    else direction = Direction.right;
 
-  public void moveArmMotor(Direction direction) {
-    switch(direction) {
-      case up:
-        armMotor.set(VictorSPXControlMode.PercentOutput, -armSpeed);
-        break;
-      case down:
-        armMotor.set(VictorSPXControlMode.PercentOutput, armSpeed);
-        break;
-      case stop:
-        armMotor.set(VictorSPXControlMode.PercentOutput, 0.0);
-        break;
-      case left:
-      case right:
-        break;
-    }
+    wheel.move(direction);
   }
   
   @Override

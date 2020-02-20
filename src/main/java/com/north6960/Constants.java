@@ -32,6 +32,7 @@ public final class Constants {
     public static final int INDEX_LOWER_MOTOR = 16;
 
     public static final int SHOOTER_MOTOR = 17;
+    public static final int HOOD_MOTOR = 25;
 
     public static final int LIFT_MOTOR = 18;
     public static final int LIFT_SWITCH = 19;
@@ -41,6 +42,7 @@ public final class Constants {
     public static final int WINCH_MOTOR = 20;
 
     public static final int SPINNER_ARM_MOTOR = 21;
+    public static final int SPINNER_ARM_LIMIT_SWITCH = 26;
     public static final int SPINNER_WHEEL_MOTOR = 22;
 
     public static final int BLINKIN_ID = 24;
