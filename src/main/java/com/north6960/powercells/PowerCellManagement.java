@@ -21,11 +21,12 @@ public class PowerCellManagement extends SubsystemBase {
     hood = new Hood();
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    if(index.getPowerCellCount() == 5) {
-      intake.setArmUp();
+    @Override
+    public void periodic() {
     }
-  }
+
+    public int getBallCount() {
+        return index.getPowerCellCount();
+    }
+
 }
