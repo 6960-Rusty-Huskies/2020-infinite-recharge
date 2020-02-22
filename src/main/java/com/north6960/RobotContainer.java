@@ -28,7 +28,7 @@ public class RobotContainer {
   private Joystick driverStickRight = new Joystick(USB.DRIVER_JOYSTICK_RIGHT);
   private OperatorController opController = new OperatorController(USB.OPERATOR_JOYSTICK_LEFT);
   
-  private RGB m_rgb = new RGB(0, 60); 
+  //  private RGB m_rgb = new RGB(0, 60); 
 
   private DriveBase driveBase = new DriveBase(driverStickLeft, driverStickRight);
 
@@ -38,6 +38,7 @@ public class RobotContainer {
   public RobotContainer() {                                                                                                                                              
     // Configure the button bindings
     configureButtonBindings();
+
   }
 
   /**
@@ -47,8 +48,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    m_rgb.setDefaultCommand(new AlternatingPattern(m_rgb, 5, new Color8Bit(255, 0, 0), new Color8Bit(0, 0, 255)));
-
+    //  m_rgb.setDefaultCommand(new AlternatingPattern(m_rgb, 5, new Color8Bit(255, 0, 0), new Color8Bit(0, 0, 255)));
   }
 
 
