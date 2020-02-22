@@ -11,7 +11,7 @@ import com.north6960.Constants.CAN;
 public class Index extends SubsystemBase {
   private IndexSection entrance, exit;
   private int powerCellCount;
-  private boolean manualControl;
+  private boolean isManual;
 
   public Index() {
     entrance = new IndexSection(Analog.INDEX_LOWER_BEAM_BREAK, CAN.INDEX_LOWER_MOTOR);

@@ -2,14 +2,10 @@ package com.north6960;
 
 import com.north6960.Constants.USB;
 import com.north6960.commands.AlternatingPattern;
-import com.north6960.commands.GradientPattern;
-import com.north6960.commands.RGBPattern;
 import com.north6960.subsystems.drive.DriveBase;
 import com.north6960.subsystems.lights.RGB;
-import com.north6960.utils.RHColor;
 import com.north6960.utils.controller.OperatorController;
 
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;

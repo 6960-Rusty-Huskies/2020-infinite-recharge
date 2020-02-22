@@ -31,14 +31,13 @@ public class AlternatingPattern extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_rgb.strip.setAlternating(m_width, m_colors);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     // m_rgb.strip.shiftPatternUp();
-    
-    m_rgb.strip.setAlternating(m_width, m_colors);
   }
 
   // Called once the command ends or is interrupted.

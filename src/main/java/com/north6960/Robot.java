@@ -1,14 +1,6 @@
 package com.north6960;
 
-import com.north6960.commands.AlternatingPattern;
-import com.north6960.subsystems.controlpanel.WheelColor.ColorEnum;
-import com.north6960.subsystems.lights.RGB;
-import com.north6960.utils.RHColor;
-
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
