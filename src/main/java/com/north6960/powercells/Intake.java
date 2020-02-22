@@ -1,4 +1,4 @@
-package com.north6960.subsystems.powercells;
+package com.north6960.powercells;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -15,7 +15,6 @@ public class Intake extends PIDSubsystem {
 
   private VictorSPX wheelMotor, armMotor;
   private Encoder armEncoder;
-  private boolean isManual;
 
   public Intake() {
     super(
@@ -39,12 +38,16 @@ public class Intake extends PIDSubsystem {
     else return false;
   }
 
-  public void set(boolean on) {
+  public void setWheel(boolean on) {
     wheelMotor.set(VictorSPXControlMode.PercentOutput, on ? 0.75 : 0);
   }
 
-  public void setArm(boolean up) {
-    armMotor.set(VictorSPXControlMode.PercentOutput, up ? 0.75 : -0.75);
+  public void setArm(double angle) {
+    setSetpoint(angle);
+  }
+
+  public void setArmUp() {
+    setSetpoint(0);
   }
 
   @Override
@@ -57,6 +60,5 @@ public class Intake extends PIDSubsystem {
   public double getMeasurement() {
     // Return the process variable measurement here
     return armEncoder.getDistance();
-
   }
 }

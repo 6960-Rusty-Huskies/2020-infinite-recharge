@@ -1,4 +1,4 @@
-package com.north6960.subsystems.powercells;
+package com.north6960.powercells;
 
 import com.north6960.Constants;
 import com.revrobotics.CANEncoder;
@@ -14,9 +14,7 @@ public class Hood extends PIDSubsystem {
   private CANEncoder encoder;
 
   public Hood() {
-    super(
-        // The PIDController used by the subsystem
-        new PIDController(0.005, 0, 0));
+    super(new PIDController(0, 0, 0));
 
     motor = new CANSparkMax(Constants.HOOD_MOTOR, MotorType.kBrushless);
 
@@ -34,13 +32,11 @@ public class Hood extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
-    // Use the output here
     motor.set(output);
   }
 
   @Override
   public double getMeasurement() {
-    // Return the process variable measurement here
     return encoder.getPosition();
   }
 }

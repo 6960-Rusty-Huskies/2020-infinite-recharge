@@ -1,7 +1,7 @@
 package com.north6960;
 
-import com.north6960.subsystems.vision.Limelight;
-import com.north6960.subsystems.vision.StreamType;
+import com.north6960.vision.Limelight;
+import com.north6960.vision.StreamType;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;

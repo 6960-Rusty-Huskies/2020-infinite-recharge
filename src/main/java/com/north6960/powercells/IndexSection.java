@@ -1,4 +1,4 @@
-package com.north6960.subsystems.powercells;
+package com.north6960.powercells;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -23,8 +23,13 @@ public class IndexSection extends SubsystemBase {
     motor.set(speed);
   }
 
-  public boolean ballPassed() {
-    return !beamBreak.isTriggered() && wasTriggeredLastCheck;
+  public boolean ballPassed(boolean fullPass) {
+    if(fullPass) {
+      return !beamBreak.isTriggered() && wasTriggeredLastCheck;
+    }
+    else {
+      return beamBreak.isTriggered() && !wasTriggeredLastCheck;
+    }
   }
 
   @Override

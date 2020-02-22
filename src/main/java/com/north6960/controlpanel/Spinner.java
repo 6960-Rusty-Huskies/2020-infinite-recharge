@@ -1,4 +1,4 @@
-package com.north6960.subsystems.controlpanel;
+package com.north6960.controlpanel;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -9,8 +9,7 @@ import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.north6960.Constants;
-import com.north6960.utils.Direction;
-import com.north6960.subsystems.controlpanel.WheelColor.ColorEnum;
+import com.north6960.controlpanel.WheelColor.ColorEnum;
 
 /**
  * The arm and wheel that are used to interface with the Control Panel.
@@ -24,10 +23,10 @@ public class Spinner extends SubsystemBase {
   private ColorMatch colorMatch;
   private boolean manualControl;
 
-  public Spinner() {
+  public Spinner(double armSpeed, double wheelSpeed) {
     colorSensor = new ColorSensorV3(Port.kOnboard);
-    arm = new SpinnerArm();
-    wheel = new SpinnerWheel();
+    arm = new SpinnerArm(armSpeed);
+    wheel = new SpinnerWheel(wheelSpeed);
 
     colorMatch.addColorMatch(WheelColor.red);
     colorMatch.addColorMatch(WheelColor.green);
@@ -44,19 +43,20 @@ public class Spinner extends SubsystemBase {
   }
 
   public void moveToFMSColor() {
-    Direction direction;
-    if(isColorMatched()) direction = Direction.stopped;
+    int speedToMove;
+    
+    if(isColorMatched()) speedToMove = 0;
 
     ColorEnum current = WheelColor.ColorEnum.valueOf(getDetectedColor().toString());
     ColorEnum target = ColorEnum.valueOf(WheelColor.getFMSDisplayed().toString());
 
     if((current.ordinal() - 1) % 4 == target.ordinal()) {
-      direction = Direction.left;
+      speedToMove = -1;
     }
 
-    else direction = Direction.right;
+    else speedToMove = 1;
 
-    wheel.move(direction);
+    wheel.move(speedToMove);
   }
   
   @Override

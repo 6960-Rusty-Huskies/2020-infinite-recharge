@@ -5,42 +5,28 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.north6960.subsystems.controlpanel;
+package com.north6960.controlpanel;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.north6960.Constants;
-import com.north6960.utils.Direction;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SpinnerArm extends SubsystemBase {
 
-  private double speed;
+  private double m_speedMult;
   private VictorSPX motor;
   private DigitalInput limitSwitch;
 
-  public SpinnerArm() {
+  public SpinnerArm(double speedMultiplier) {
     motor = new VictorSPX(Constants.SPINNER_ARM_MOTOR);
     limitSwitch = new DigitalInput(Constants.SPINNER_ARM_LIMIT_SWITCH);
+    m_speedMult = speedMultiplier;
   }
   
-  public void move(Direction direction) {
-    switch(direction) {
-      case up:
-        motor.set(VictorSPXControlMode.PercentOutput, -speed);
-        break;
-      case down:
-        motor.set(VictorSPXControlMode.PercentOutput, speed);
-        break;
-      case stopped:
-        motor.set(VictorSPXControlMode.PercentOutput, 0.0);
-        break;
-      case left:
-      case right:
-        break;
-    }
+  public void move(int speed) {
+    motor.set(VictorSPXControlMode.PercentOutput, m_speedMult * (double) speed);
   }
   
   public boolean limitSwitchTriggered() {

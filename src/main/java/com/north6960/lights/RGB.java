@@ -1,9 +1,9 @@
-package com.north6960.subsystems.lights;
+package com.north6960.lights;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.north6960.Constants;
-import com.north6960.subsystems.controlpanel.WheelColor;
+import com.north6960.controlpanel.WheelColor;
 
 /**
  * The RGB on the robot, which uses Rev Blinkin LED controllers and 1-meter individually programmable strips.

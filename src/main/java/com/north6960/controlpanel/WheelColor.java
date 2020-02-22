@@ -1,4 +1,4 @@
-package com.north6960.subsystems.controlpanel;
+package com.north6960.controlpanel;
 
 import com.revrobotics.ColorMatch;
 import edu.wpi.first.wpilibj.DriverStation;
