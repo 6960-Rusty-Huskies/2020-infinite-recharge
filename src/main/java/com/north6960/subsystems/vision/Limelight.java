@@ -67,7 +67,7 @@ public class Limelight {
     }
 
     public static void setCameraStream(StreamType streamType) {
-        table.getEntry("stream").setNumber(streamType.ordinal());
+        table.getEntry("stream").setNumber((double) streamType.ordinal()); 
     }
 
     public static double getCameraStream() {
