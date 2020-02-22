@@ -8,13 +8,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class SpinnerWheel extends SubsystemBase {
   
   private VictorSPX motor;
+  private double m_speedMult;
 
-  public SpinnerWheel() {
+  public SpinnerWheel(double speedMultiplier) {
     motor = new VictorSPX(Constants.SPINNER_WHEEL_MOTOR);
+    m_speedMult = speedMultiplier;
   }
 
-  public void move(double speed) {
-    motor.set(VictorSPXControlMode.PercentOutput, speed);
+  public void move(int direction) {
+    motor.set(VictorSPXControlMode.PercentOutput, m_speedMult * (double) direction);
   }
 
   @Override

@@ -15,17 +15,18 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SpinnerArm extends SubsystemBase {
 
-  private double speed;
+  private double m_speedMult;
   private VictorSPX motor;
   private DigitalInput limitSwitch;
 
-  public SpinnerArm() {
+  public SpinnerArm(double speedMultiplier) {
     motor = new VictorSPX(Constants.SPINNER_ARM_MOTOR);
     limitSwitch = new DigitalInput(Constants.SPINNER_ARM_LIMIT_SWITCH);
+    m_speedMult = speedMultiplier;
   }
   
-  public void move(double speed) {
-    motor.set(VictorSPXControlMode.PercentOutput, speed);
+  public void move(int speed) {
+    motor.set(VictorSPXControlMode.PercentOutput, m_speedMult * (double) speed);
   }
   
   public boolean limitSwitchTriggered() {

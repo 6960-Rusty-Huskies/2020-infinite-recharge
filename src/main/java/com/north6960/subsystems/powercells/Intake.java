@@ -39,12 +39,16 @@ public class Intake extends PIDSubsystem {
     else return false;
   }
 
-  public void set(boolean on) {
+  public void setWheel(boolean on) {
     wheelMotor.set(VictorSPXControlMode.PercentOutput, on ? 0.75 : 0);
   }
 
+  public void setArm(double angle) {
+    setSetpoint(angle);
+  }
+
   public void setArm(boolean up) {
-    armMotor.set(VictorSPXControlMode.PercentOutput, up ? 0.75 : -0.75);
+    setSetpoint(up ? 0 : 90);
   }
 
   @Override
@@ -57,6 +61,5 @@ public class Intake extends PIDSubsystem {
   public double getMeasurement() {
     // Return the process variable measurement here
     return armEncoder.getDistance();
-
   }
 }

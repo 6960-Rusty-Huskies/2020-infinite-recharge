@@ -18,7 +18,7 @@ public class MoveToColor extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    _spinner.arm.move(-1.0);
+    _spinner.arm.move(-1);
     _spinner.moveToFMSColor();
   }
 
@@ -26,7 +26,7 @@ public class MoveToColor extends CommandBase {
   @Override
   public void execute() {
     if(_spinner.arm.limitSwitchTriggered()) {
-      _spinner.arm.move(0.0);
+      _spinner.arm.move(0);
     }
   }
 
@@ -34,7 +34,7 @@ public class MoveToColor extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     new WaitCommand(0.25);
-    _spinner.wheel.move(0.0);
+    _spinner.wheel.move(0);
   }
 
   // Returns true when the command should end.
