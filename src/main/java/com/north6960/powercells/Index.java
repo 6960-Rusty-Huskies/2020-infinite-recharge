@@ -1,4 +1,4 @@
-package com.north6960.subsystems.powercells;
+package com.north6960.powercells;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.north6960.Constants;
@@ -10,7 +10,6 @@ public class Index extends SubsystemBase {
 
   private IndexSection lower, upper;
   private int powerCellCount;
-  private boolean manualControl;
 
   public Index() {
     lower = new IndexSection(Constants.INDEX_LOWER_BEAM_BREAK, Constants.INDEX_LOWER_MOTOR);

@@ -1,4 +1,4 @@
-package com.north6960.subsystems.generatorswitch;
+package com.north6960.generatorswitch;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 

@@ -1,4 +1,4 @@
-package com.north6960.subsystems.powercells;
+package com.north6960.powercells;
 
 import com.north6960.Constants;
 import com.revrobotics.CANEncoder;

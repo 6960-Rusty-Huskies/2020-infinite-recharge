@@ -1,9 +1,9 @@
-package com.north6960.commands;
+package com.north6960.controlpanel;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-import com.north6960.subsystems.controlpanel.Spinner;
+import com.north6960.controlpanel.Spinner;
 
 public class MoveToColor extends CommandBase {
 

@@ -1,4 +1,4 @@
-package com.north6960.subsystems.controlpanel;
+package com.north6960.controlpanel;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.north6960.Constants;
-import com.north6960.subsystems.controlpanel.WheelColor.ColorEnum;
+import com.north6960.controlpanel.WheelColor.ColorEnum;
 
 /**
  * The arm and wheel that are used to interface with the Control Panel.

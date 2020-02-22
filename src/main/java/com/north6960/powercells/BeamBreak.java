@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.north6960.subsystems.powercells;
+package com.north6960.powercells;
 
 import edu.wpi.first.wpilibj.AnalogOutput;
 

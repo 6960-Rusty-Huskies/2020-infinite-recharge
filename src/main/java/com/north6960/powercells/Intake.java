@@ -1,4 +1,4 @@
-package com.north6960.subsystems.powercells;
+package com.north6960.powercells;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -15,7 +15,6 @@ public class Intake extends PIDSubsystem {
 
   private VictorSPX wheelMotor, armMotor;
   private Encoder armEncoder;
-  private boolean isManual;
 
   public Intake() {
     super(
@@ -47,8 +46,8 @@ public class Intake extends PIDSubsystem {
     setSetpoint(angle);
   }
 
-  public void setArm(boolean up) {
-    setSetpoint(up ? 0 : 90);
+  public void setArmUp() {
+    setSetpoint(0);
   }
 
   @Override
