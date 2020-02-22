@@ -22,7 +22,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
 
-  private RGB m_rgb = new RGB(0, 60);
+   private RGB m_rgb = new RGB(0, 60);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -32,10 +32,11 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
-    m_rgb.strip.setBrightness(0.150);
-    m_rgb.strip.setAlternating(12, new Color8Bit(200, 125, 0), new Color8Bit(0, 0, 255));
-
+     m_robotContainer = new RobotContainer();
+     m_rgb.strip.setBrightness(0.150);
+     m_rgb.strip.setAlternating(12, new Color8Bit(200, 75, 0), new Color8Bit(0, 0, 255));
+     
+    
   }
 
   /**

@@ -122,7 +122,7 @@ public class AddressableLEDStrip {
             setRange(i * width, i * width + width, colors[i % colors.length]);
         }
 
-        // trimPattern();
+        trimPattern();
     }
 
     /**
