@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.north6960.Constants;
-import com.north6960.utils.Direction;
 import com.north6960.subsystems.controlpanel.WheelColor.ColorEnum;
 
 /**
@@ -44,19 +43,19 @@ public class Spinner extends SubsystemBase {
   }
 
   public void moveToFMSColor() {
-    Direction direction;
-    if(isColorMatched()) direction = Direction.stopped;
+    double speedToMove;
+    if(isColorMatched()) speedToMove = 0.0;
 
     ColorEnum current = WheelColor.ColorEnum.valueOf(getDetectedColor().toString());
     ColorEnum target = ColorEnum.valueOf(WheelColor.getFMSDisplayed().toString());
 
     if((current.ordinal() - 1) % 4 == target.ordinal()) {
-      direction = Direction.left;
+      speedToMove = -1.0;
     }
 
-    else direction = Direction.right;
+    else speedToMove = 1.0;
 
-    wheel.move(direction);
+    wheel.move(speedToMove);
   }
   
   @Override

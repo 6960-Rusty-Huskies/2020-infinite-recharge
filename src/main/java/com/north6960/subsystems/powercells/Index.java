@@ -8,33 +8,34 @@ import com.north6960.Constants;
  */
 public class Index extends SubsystemBase {
 
-  private IndexSection entrance, exit;
+  private IndexSection lower, upper;
   private int powerCellCount;
   private boolean manualControl;
 
   public Index() {
-    entrance = new IndexSection(Constants.INDEX_LOWER_BEAM_BREAK, Constants.INDEX_LOWER_MOTOR);
-    exit = new IndexSection(Constants.INDEX_UPPER_BEAM_BREAK, Constants.INDEX_UPPER_MOTOR);
+    lower = new IndexSection(Constants.INDEX_LOWER_BEAM_BREAK, Constants.INDEX_LOWER_MOTOR);
+    upper = new IndexSection(Constants.INDEX_UPPER_BEAM_BREAK, Constants.INDEX_UPPER_MOTOR);
   }
 
   public int getPowerCellCount() {
     return powerCellCount;
+
   }
 
   public void driveUpper(double speed) {
-    exit.drive(speed);
+    upper.drive(speed);
   }
 
   public void driveLower(double speed) {
-    entrance.drive(speed);
+    lower.drive(speed);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if (entrance.ballPassed())
+    if (lower.ballPassed())
       powerCellCount++;
-    if (exit.ballPassed())
+    if (upper.ballPassed())
       powerCellCount--;
   }
 }
