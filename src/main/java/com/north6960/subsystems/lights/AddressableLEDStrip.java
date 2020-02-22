@@ -9,6 +9,7 @@ public class AddressableLEDStrip {
     private AddressableLED strip;
     private AddressableLEDBuffer buffer;
     private Color8Bit[] pattern;
+    private double m_brightness = 1.0;
     private final int numLEDs, maxLEDs = 256;
 
     /**
@@ -83,8 +84,13 @@ public class AddressableLEDStrip {
     public void update() {
         strip.setData(buffer);
     }
+
+    public void setBrightness(double brightness) {
+        m_brightness = brightness;
+    }
     
     public void setLED(int index, Color8Bit color) {
+        color = new Color8Bit((int) (color.red * m_brightness), (int) (color.green * m_brightness), (int) (color.blue * m_brightness));
         if(index > maxLEDs) throw new Error(String.format("Index should be no greater than %s.", maxLEDs));
         
         pattern[index] = color;
@@ -116,7 +122,7 @@ public class AddressableLEDStrip {
             setRange(i * width, i * width + width, colors[i % colors.length]);
         }
 
-        // trimPattern();
+        trimPattern();
     }
 
     /**
