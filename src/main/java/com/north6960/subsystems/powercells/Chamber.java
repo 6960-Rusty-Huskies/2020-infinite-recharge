@@ -1,6 +1,6 @@
 package com.north6960.subsystems.powercells;
 
-import com.north6960.Constants;
+import com.north6960.Constants.CAN;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -12,7 +12,7 @@ public class Chamber extends SubsystemBase {
   private CANSparkMax motor;
 
   public Chamber() {
-    motor = new CANSparkMax(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
+    motor = new CANSparkMax(CAN.SHOOTER_MOTOR, MotorType.kBrushless);
   }
 
   public void setSpeed(double speedToSet) {

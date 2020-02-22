@@ -1,5 +1,8 @@
 package com.north6960.subsystems.generatorswitch;
 
+import com.north6960.utils.Direction;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -7,20 +10,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class Climber extends SubsystemBase {
 
-  private Lift lift;
-  private Winch winch;
+  public Lift lift;
+  public Winch winch;
 
-  public Climber() {
-    lift = new Lift();
-    winch = new Winch();
-  }
-
-  public void moveLift(double speed) {
-    lift.move(speed);
-  }
-
-  public void moveWinch(double speed) {
-    winch.move(speed);
+  public Climber(double liftSpeed, double winchSpeed) {
+    lift = new Lift(liftSpeed);
+    winch = new Winch(winchSpeed);
   }
 
   @Override

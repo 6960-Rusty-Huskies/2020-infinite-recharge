@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * One section of the Index.
  */
 public class IndexSection extends SubsystemBase {
-
+  
   private BeamBreak beamBreak;
   private CANSparkMax motor;
   private boolean wasTriggeredLastCheck;

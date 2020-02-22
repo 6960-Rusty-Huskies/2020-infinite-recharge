@@ -9,7 +9,8 @@ package com.north6960.subsystems.controlpanel;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.north6960.Constants;
+import com.north6960.Constants.CAN;
+import com.north6960.Constants.Digital;
 import com.north6960.utils.Direction;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -22,8 +23,8 @@ public class SpinnerArm extends SubsystemBase {
   private DigitalInput limitSwitch;
 
   public SpinnerArm() {
-    motor = new VictorSPX(Constants.SPINNER_ARM_MOTOR);
-    limitSwitch = new DigitalInput(Constants.SPINNER_ARM_LIMIT_SWITCH);
+    motor = new VictorSPX(CAN.SPINNER_ARM_MOTOR);
+    limitSwitch = new DigitalInput(Digital.SPINNER_ARM_SWITCH);
   }
   
   public void move(Direction direction) {
