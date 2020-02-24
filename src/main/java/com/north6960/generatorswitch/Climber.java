@@ -10,8 +10,8 @@ public class Climber extends SubsystemBase {
   public Lift lift;
   public Winch winch;
 
-  public Climber(double liftSpeed, double winchSpeed) {
-    lift = new Lift(liftSpeed);
+  public Climber() {
+    lift = new Lift();
     winch = new Winch();
   }
   

@@ -1,15 +1,11 @@
 package com.north6960.controlpanel;
 
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.north6960.controlpanel.WheelColor.ColorEnum;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.north6960.Constants;
-import com.north6960.controlpanel.WheelColor.ColorEnum;
 
 /**
  * The arm and wheel that are used to interface with the Control Panel.

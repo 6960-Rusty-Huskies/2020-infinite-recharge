@@ -1,7 +1,5 @@
 package com.north6960.powercells;
 
-import com.north6960.vision.Limelight;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PowerCellManagement extends SubsystemBase {
@@ -20,13 +18,12 @@ public class PowerCellManagement extends SubsystemBase {
     shooter = new Shooter();
     hood = new Hood();
   }
+  
+  public int getBallCount() {
+    return index.getPowerCellCount();
+  }
 
-    @Override
-    public void periodic() {
-    }
-
-    public int getBallCount() {
-        return index.getPowerCellCount();
-    }
-
+  @Override
+  public void periodic() {
+  }
 }

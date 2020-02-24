@@ -17,7 +17,7 @@ public class SpinnerArm extends SubsystemBase {
     limitSwitch = new DigitalInput(Digital.SPINNER_ARM_SWITCH);
   }
   
-  public void move(double speed) {
+  public void set(double speed) {
     motor.set(VictorSPXControlMode.PercentOutput, speed);
   }
   

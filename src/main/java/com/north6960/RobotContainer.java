@@ -1,8 +1,8 @@
 package com.north6960;
 
 import com.north6960.Constants.USB;
-import com.north6960.commands.AlternatingPattern;
 import com.north6960.drive.DriveBase;
+import com.north6960.lights.AlternatingPattern;
 import com.north6960.lights.RGB;
 import com.north6960.utils.controller.OperatorController;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -26,7 +26,7 @@ public class RobotContainer {
 
   private JoystickButton b = new JoystickButton(driverStickLeft, 2);
   
-   private RGB m_rgb = new RGB(0, 60); 
+   private RGB m_rgb = new RGB(0, 60);
 
   private DriveBase driveBase = new DriveBase(driverStickLeft, driverStickRight);
   

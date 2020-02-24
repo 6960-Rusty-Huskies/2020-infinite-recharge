@@ -156,4 +156,8 @@ public class AddressableLEDStrip {
         setRange(0, numLEDs, color);
         trimPattern();
     }
+
+    public void setSolid(int r, int g, int b) {
+        setSolid(new Color8Bit(r, g, b));
+    }
 }

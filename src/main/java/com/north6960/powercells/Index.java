@@ -12,8 +12,8 @@ public class Index extends SubsystemBase {
   private int powerCellCount;
 
   public Index() {
-    entrance = new IndexSection(Analog.INDEX_LOWER_BEAM_BREAK, CAN.INDEX_LOWER_MOTOR);
-    exit = new IndexSection(Analog.INDEX_UPPER_BEAM_BREAK, CAN.INDEX_UPPER_MOTOR);
+    lower = new IndexSection(Analog.INDEX_LOWER_BEAM_BREAK, CAN.INDEX_LOWER_MOTOR);
+    upper = new IndexSection(Analog.INDEX_UPPER_BEAM_BREAK, CAN.INDEX_UPPER_MOTOR);
   }
 
   public int getPowerCellCount() {

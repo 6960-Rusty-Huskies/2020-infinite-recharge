@@ -5,50 +5,44 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.north6960.commands;
+package com.north6960.controlpanel;
 
-import com.north6960.lights.RGB;
-
-import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class AlternatingPattern extends CommandBase {
+public class LowerArm extends CommandBase {
 
-  private RGB m_rgb;
-  private final int m_width;
-  private Color8Bit[] m_colors;
+  SpinnerArm spinnerArm;
 
   /**
-   * Creates a new AlternatingPattern.
+   * Creates a new LowerArm.
    */
-  public AlternatingPattern(RGB rgb, int width, Color8Bit... colors) {
+  public LowerArm(Spinner spinner) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(rgb);
-    m_rgb = rgb;
-    m_width = width;
-    m_colors = colors;
+    spinnerArm = spinner.arm;
+    addRequirements(spinner.arm);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_rgb.strip.setAlternating(m_width, m_colors);
+    // Move the arm down
+    spinnerArm.set(1.0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // m_rgb.strip.shiftPatternUp();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    spinnerArm.set(0.0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return spinnerArm.limitSwitchTriggered();
   }
 }

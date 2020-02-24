@@ -1,12 +1,10 @@
 package com.north6960.lights;
 
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.north6960.Constants;
 import com.north6960.controlpanel.WheelColor;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
- * The RGB on the robot, which uses Rev Blinkin LED controllers and 1-meter individually programmable strips.
+ * The RGB on the robot, which uses 1-meter individually programmable strips to display patterns.
  */
 public class RGB extends SubsystemBase {
 
@@ -14,8 +12,9 @@ public class RGB extends SubsystemBase {
 
   public RGB(int port, int numPixels) {
     strip = new AddressableLEDStrip(port, numPixels);
+  }
 
-  public void set(WheelColor.ColorEnum color) {
+  public void setToWheelColor(WheelColor.ColorEnum color) {
     int r = 0, g = 0, b = 0;
 
     switch(color) {
@@ -34,7 +33,7 @@ public class RGB extends SubsystemBase {
         break;
     }
     
-    strip.setSolid(new Color8Bit(r, g, b));
+    strip.setSolid(r, g, b);
   }
 
   @Override

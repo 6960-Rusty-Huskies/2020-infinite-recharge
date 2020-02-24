@@ -1,6 +1,6 @@
 package com.north6960.powercells;
 
-import com.north6960.Constants;
+import com.north6960.Constants.CAN;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -13,7 +13,7 @@ public class Shooter extends PIDSubsystem {
 
   public Shooter() {
     super(new PIDController(0., 0., 0.));
-    spinnerMotor = new CANSparkMax(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
+    spinnerMotor = new CANSparkMax(CAN.SHOOTER_MOTOR, MotorType.kBrushless);
   }
 
   public void setSpeed(double speed) {

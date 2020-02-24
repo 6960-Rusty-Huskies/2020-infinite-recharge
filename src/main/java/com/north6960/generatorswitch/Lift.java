@@ -15,8 +15,8 @@ public class Lift extends SubsystemBase {
   private DigitalInput limitSwitch;
 
   public Lift() {
-    motor = new VictorSPX(Constants.LIFT_MOTOR);
-    limitSwitch = new DigitalInput(Constants.LIFT_SWITCH);
+    motor = new VictorSPX(CAN.LIFT_MOTOR);
+    limitSwitch = new DigitalInput(Digital.LIFT_SWITCH);
   }
 
   /**

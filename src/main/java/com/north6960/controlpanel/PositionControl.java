@@ -1,4 +1,4 @@
-package com.north6960.commands;
+package com.north6960.controlpanel;
 
 import com.north6960.controlpanel.Spinner;
 
@@ -18,7 +18,7 @@ public class PositionControl extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_spinner.arm.move(-1.0);
+    m_spinner.arm.set(-1.0);
     m_spinner.performPositionControl();
   }
 
@@ -26,7 +26,7 @@ public class PositionControl extends CommandBase {
   @Override
   public void execute() {
     if(m_spinner.arm.limitSwitchTriggered()) {
-      m_spinner.arm.move(0.0);
+      m_spinner.arm.set(0.0);
     }
   }
 

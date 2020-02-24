@@ -1,4 +1,4 @@
-package com.north6960.commands;
+package com.north6960.lights;
 
 import com.north6960.lights.RGB;
 
