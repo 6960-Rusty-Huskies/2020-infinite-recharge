@@ -37,7 +37,7 @@ public class Spinner extends SubsystemBase {
     return getDetectedColor() == WheelColor.getFMSDisplayed();
   }
 
-  public void performPositionControl() {
+  public void moveToFMSColor() {
     double speed;
 
     if(getDetectedColor().toString().isBlank() || getDetectedColor().toString().isEmpty()) {
@@ -60,7 +60,7 @@ public class Spinner extends SubsystemBase {
   }
 
   public void performRotationControl() {
-
+    
   }
   
   @Override
