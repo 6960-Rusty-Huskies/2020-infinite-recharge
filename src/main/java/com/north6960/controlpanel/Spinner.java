@@ -34,7 +34,7 @@ public class Spinner extends SubsystemBase {
   }
 
   public boolean isColorMatched() {
-    return getDetectedColor() == WheelColor.getFMSDisplayed();
+    return getDetectedColor() == WheelColor.getFMSDisplayedColor();
   }
 
   public void moveToFMSColor() {
@@ -48,7 +48,7 @@ public class Spinner extends SubsystemBase {
     if(isColorMatched()) speed = 0.0;
 
     ColorEnum current = WheelColor.ColorEnum.valueOf(getDetectedColor().toString());
-    ColorEnum target = ColorEnum.valueOf(WheelColor.getFMSDisplayed().toString());
+    ColorEnum target = ColorEnum.valueOf(WheelColor.getFMSDisplayedColor().toString());
 
     if((current.ordinal() - 1) % 4 == target.ordinal()) {
       speed = -0.75; // Left

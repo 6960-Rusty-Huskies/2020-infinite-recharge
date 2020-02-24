@@ -1,7 +1,6 @@
-package com.north6960.utils.controller;
+package com.north6960.controller; 
 
 import java.util.AbstractMap.SimpleEntry;
-
 import com.north6960.Constants.Button;
 import com.north6960.Constants.USB;
 
@@ -49,7 +48,7 @@ public class DriverController {
     }
 
     /**
-     * <p> Initializes a button on the controller using Hand Integer constants. </p>
+     * <p> Initializes a button on the controller with its Hand and Integer constants. </p>
      * <p> Should be used to initialize each button object in this class only once. </p>
      * @param button The button to initialize.
      * @param constant The constant from Constants.Buttons to initialize the button with.

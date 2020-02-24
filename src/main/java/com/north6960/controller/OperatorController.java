@@ -1,4 +1,4 @@
-package com.north6960.utils.controller;
+package com.north6960.controller;
 
 import com.north6960.Constants.Button;
 import com.north6960.Constants.USB;
