@@ -4,7 +4,8 @@ import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.north6960.Constants;
+import com.north6960.Constants.CAN;
+import com.north6960.Constants.Digital;
 
 /**
  * The arm that extends and elevates the robot onto the Generator Switch.

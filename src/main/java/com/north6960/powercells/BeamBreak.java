@@ -25,5 +25,4 @@ public class BeamBreak {
     public void set(boolean value) {
         defaultState = value;
     }
-
 }

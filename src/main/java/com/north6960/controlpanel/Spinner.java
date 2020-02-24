@@ -21,12 +21,11 @@ public class Spinner extends SubsystemBase {
   public SpinnerWheel wheel;
 
   private ColorMatch colorMatch;
-  private boolean manualControl;
 
-  public Spinner(double armSpeed, double wheelSpeed) {
+  public Spinner() {
     colorSensor = new ColorSensorV3(Port.kOnboard);
-    arm = new SpinnerArm(armSpeed);
-    wheel = new SpinnerWheel(wheelSpeed);
+    arm = new SpinnerArm();
+    wheel = new SpinnerWheel();
 
     colorMatch.addColorMatch(WheelColor.red);
     colorMatch.addColorMatch(WheelColor.green);
@@ -42,21 +41,30 @@ public class Spinner extends SubsystemBase {
     return getDetectedColor() == WheelColor.getFMSDisplayed();
   }
 
-  public void moveToFMSColor() {
-    int speedToMove;
-    
-    if(isColorMatched()) speedToMove = 0;
+  public void performPositionControl() {
+    double speed;
+
+    if(getDetectedColor().toString().isBlank() || getDetectedColor().toString().isEmpty()) {
+      performRotationControl();
+      return;
+    } 
+
+    if(isColorMatched()) speed = 0.0;
 
     ColorEnum current = WheelColor.ColorEnum.valueOf(getDetectedColor().toString());
     ColorEnum target = ColorEnum.valueOf(WheelColor.getFMSDisplayed().toString());
 
     if((current.ordinal() - 1) % 4 == target.ordinal()) {
-      speedToMove = -1;
+      speed = -0.75; // Left
     }
 
-    else speedToMove = 1;
+    else speed = 0.75; // Right
 
-    wheel.move(speedToMove);
+    wheel.move(speed);
+  }
+
+  public void performRotationControl() {
+
   }
   
   @Override

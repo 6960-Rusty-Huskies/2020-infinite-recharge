@@ -10,39 +10,36 @@ import com.north6960.controlpanel.WheelColor;
  */
 public class RGB extends SubsystemBase {
 
-  private Spark blinkin;
+  public AddressableLEDStrip strip;
 
-  public RGB() {
-    blinkin = new Spark(Constants.BLINKIN_ID);
-  }
+  public RGB(int port, int numPixels) {
+    strip = new AddressableLEDStrip(port, numPixels);
 
-  public void setPattern(double id) {
-    blinkin.set(id);
-  }
-
-  public void setPattern(WheelColor.ColorEnum color) {
-    double id = 0.0;
+  public void set(WheelColor.ColorEnum color) {
+    int r = 0, g = 0, b = 0;
 
     switch(color) {
       case red:
-        id = 0.61;
+        r = 255;
         break;
       case green:
-        id = 0.77;
+        g = 255;
         break;
       case blue:
-        id = 0.87;
+        b = 255;
         break;
       case yellow:
-        id = 0.69;
+        r = 255;
+        g = 255;
         break;
     }
-
-    blinkin.set(id);
+    
+    strip.setSolid(new Color8Bit(r, g, b));
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    strip.update();
   }
 }

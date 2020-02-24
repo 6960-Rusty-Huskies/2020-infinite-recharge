@@ -2,11 +2,11 @@ package com.north6960.powercells;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-import com.north6960.Constants;
+import com.north6960.Constants.CAN;
+import com.north6960.Constants.Digital;
 
 /**
  * The arm which takes in power cells from the outside of the robot and slots them into the Index.
@@ -21,12 +21,11 @@ public class Intake extends PIDSubsystem {
         // The PIDController used by the subsystem
         new PIDController(0.005, 0, 0));
 
-    wheelMotor = new VictorSPX(Constants.INTAKE_WHEEL_MOTOR);
-    armMotor = new VictorSPX(Constants.INTAKE_ARM_MOTOR);
-    armEncoder = new Encoder(Constants.INTAKE_ENCODER_A, Constants.INTAKE_ENCODER_B);
+    wheelMotor = new VictorSPX(CAN.INTAKE_WHEEL_MOTOR);
+    armMotor = new VictorSPX(CAN.INTAKE_ARM_MOTOR);
+    armEncoder = new Encoder(Digital.INTAKE_ENCODER_A, Digital.INTAKE_ENCODER_B);
 
     armEncoder.setDistancePerPulse(360. / 2048.); // Gives an output in degrees.
-
     this.getController().setTolerance(1.);
   }
 
@@ -37,7 +36,7 @@ public class Intake extends PIDSubsystem {
 
     else return false;
   }
-
+  
   public void setWheel(boolean on) {
     wheelMotor.set(VictorSPXControlMode.PercentOutput, on ? 0.75 : 0);
   }

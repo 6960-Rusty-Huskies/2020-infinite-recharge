@@ -4,21 +4,21 @@ import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.north6960.Constants;
+import com.north6960.Constants.CAN;
 
 /**
  * Used to level the robot to help balance on the Generator Switch.
  */
 public class Winch extends SubsystemBase {
 
-  private VictorSPX motorControler;
+  private VictorSPX motor;
 
   public Winch() {
-    motorControler = new VictorSPX(Constants.WINCH_MOTOR);
+    motor = new VictorSPX(CAN.WINCH_MOTOR);
   }
 
   public void move(double speed) {
-    motorControler.set(VictorSPXControlMode.Velocity, speed);
+    motor.set(VictorSPXControlMode.PercentOutput, speed);
   }
 
   @Override
