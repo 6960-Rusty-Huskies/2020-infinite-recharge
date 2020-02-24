@@ -1,32 +1,41 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package com.north6960.utils.controller;
 
+import com.north6960.Constants.Button;
+import com.north6960.Constants.USB;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * The controller used by the Operator that controls game-specific subsystems such as shooters and intakes.
  */
 public class OperatorController {
-    private Joystick stick;
-    public JoystickButton[] button;
+    private static Joystick stickLeft = new Joystick(USB.OPERATOR_JOYSTICK_LEFT);
+    private static Joystick stickRight = new Joystick(USB.OPERATOR_JOYSTICK_RIGHT);
 
-    public OperatorController(int port) {
-        stick = new Joystick(port);
-        button = new JoystickButton[stick.getButtonCount()];
+    public static JoystickButton shootBtn = new JoystickButton(stickLeft, Button.SHOOT);
+    public static JoystickButton shooterManualBtn = new JoystickButton(stickLeft, Button.SHOOTER_MANUAL);
 
-        for(int i = 1; i <= stick.getButtonCount(); i++) {
-            button[i] = new JoystickButton(stick, i);
+    public static double getX(Hand hand) {
+        switch(hand) {
+            case kLeft:
+                return stickLeft.getX();
+            case kRight:
+                return stickRight.getX();
+            default:
+                return 0.0;
         }
     }
 
-    public double getAxis(int axis) {
-        return stick.getRawAxis(axis);
+    public static double getY(Hand hand) {
+        switch(hand) {
+            case kLeft:
+                return stickLeft.getY();
+            case kRight:
+                return stickRight.getY();
+            default:
+                return 0.0;
+        }
     }
 }

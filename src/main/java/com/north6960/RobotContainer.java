@@ -20,13 +20,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private Joystick driverStickLeft = new Joystick(USB.DRIVER_JOYSTICK_LEFT);
-  private Joystick driverStickRight = new Joystick(USB.DRIVER_JOYSTICK_RIGHT);
-  private OperatorController opController = new OperatorController(USB.OPERATOR_JOYSTICK_LEFT);
-  
-   private RGB m_rgb = new RGB(0, 60);
+  private final Joystick driverStickLeft = new Joystick(USB.DRIVER_JOYSTICK_LEFT);
+  private final Joystick driverStickRight = new Joystick(USB.DRIVER_JOYSTICK_RIGHT);
+  private final OperatorController opController = new OperatorController();
 
-  private DriveBase driveBase = new DriveBase(driverStickLeft, driverStickRight);
+  private final RGB m_rgb = new RGB(0, 60);
+
+  private final DriveBase driveBase = new DriveBase(driverStickLeft, driverStickRight);
   
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
