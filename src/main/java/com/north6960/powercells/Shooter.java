@@ -1,32 +1,34 @@
 package com.north6960.powercells;
 
 import com.north6960.Constants;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Shooter extends PIDSubsystem {
+/**
+ * The set of motors that project Power Cells into the goal.
+ */
+public class Shooter extends SubsystemBase {
 
-  private CANSparkMax spinnerMotor;
+  private CANSparkMax motor;
+  private CANEncoder encoder;
 
+  private boolean isManual;
+  
   public Shooter() {
-    super(new PIDController(0., 0., 0.));
-    spinnerMotor = new CANSparkMax(Constants.CAN.SHOOTER_MOTOR, MotorType.kBrushless);
+    motor = new CANSparkMax(Constants.CAN.SHOOTER_MOTOR, MotorType.kBrushless);
+    encoder = motor.getEncoder();
   }
 
-  public void setSpeed(double speed) {
-    setSetpoint(speed);
-  }
+  public void setManual(boolean setManual) {
 
-  @Override
-  public double getMeasurement() {
-    return spinnerMotor.get();
+    isManual = setManual;
   }
 
   @Override
-  public void useOutput(double output, double setpoint) {
-    spinnerMotor.set(output);
+  public void periodic() {
+    // This method will be called once per scheduler run
   }
 }

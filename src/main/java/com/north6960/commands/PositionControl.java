@@ -1,16 +1,15 @@
 package com.north6960.commands;
 
+import com.north6960.controlpanel.Spinner;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-import com.north6960.subsystems.controlpanel.Spinner;
-import com.north6960.utils.Direction;
-
-public class MoveToColor extends CommandBase {
+public class PositionControl extends CommandBase {
 
   private Spinner m_spinner;
 
-  public MoveToColor(Spinner spinner) {
+  public PositionControl(Spinner spinner) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_spinner = spinner;
     addRequirements(spinner);
@@ -19,15 +18,15 @@ public class MoveToColor extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_spinner.arm.move(Direction.down);
-    m_spinner.moveToFMSColor();
+    m_spinner.arm.move(-1.0);
+    m_spinner.performPositionControl();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if(m_spinner.arm.limitSwitchTriggered()) {
-      m_spinner.arm.move(Direction.stopped);
+      m_spinner.arm.move(0.0);
     }
   }
 
@@ -35,7 +34,7 @@ public class MoveToColor extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     new WaitCommand(0.25);
-    m_spinner.wheel.move(Direction.stopped);
+    m_spinner.wheel.move(0.0);
   }
 
   // Returns true when the command should end.

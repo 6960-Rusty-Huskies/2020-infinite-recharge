@@ -2,10 +2,9 @@ package com.north6960;
 
 import com.north6960.Constants.USB;
 import com.north6960.commands.AlternatingPattern;
-import com.north6960.subsystems.drive.DriveBase;
-import com.north6960.subsystems.lights.RGB;
+import com.north6960.drive.DriveBase;
+import com.north6960.lights.RGB;
 import com.north6960.utils.controller.OperatorController;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -47,7 +46,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-   b.whenPressed(new AlternatingPattern(m_rgb, 12, new Color8Bit(200, 75, 0), new Color8Bit(0, 0, 255)));
+    b.whenPressed(new AlternatingPattern(m_rgb, 12, new Color8Bit(200, 75, 0), new Color8Bit(0, 0, 255)));
   }
 
 

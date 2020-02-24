@@ -1,4 +1,4 @@
-package com.north6960.subsystems.drive;
+package com.north6960.drive;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;

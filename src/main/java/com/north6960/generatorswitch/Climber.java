@@ -1,4 +1,4 @@
-package com.north6960.subsystems.generatorswitch;
+package com.north6960.generatorswitch;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -12,7 +12,7 @@ public class Climber extends SubsystemBase {
 
   public Climber(double liftSpeed, double winchSpeed) {
     lift = new Lift(liftSpeed);
-    winch = new Winch(winchSpeed);
+    winch = new Winch();
   }
 
   @Override

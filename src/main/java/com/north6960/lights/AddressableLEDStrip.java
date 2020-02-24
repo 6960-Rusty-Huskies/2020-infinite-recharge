@@ -1,4 +1,4 @@
-package com.north6960.subsystems.lights;
+package com.north6960.lights;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;

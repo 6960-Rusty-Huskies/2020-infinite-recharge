@@ -1,7 +1,6 @@
-package com.north6960.subsystems.controlpanel;
+package com.north6960.controlpanel;
 
-import com.north6960.subsystems.controlpanel.WheelColor.ColorEnum;
-import com.north6960.utils.Direction;
+import com.north6960.controlpanel.WheelColor.ColorEnum;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.I2C.Port;
@@ -16,9 +15,7 @@ public class Spinner extends SubsystemBase {
   private ColorSensorV3 colorSensor;
   public SpinnerArm arm;
   public SpinnerWheel wheel;
-
   private ColorMatch colorMatch;
-  private boolean manualControl;
 
   public Spinner() {
     colorSensor = new ColorSensorV3(Port.kOnboard);
@@ -39,20 +36,29 @@ public class Spinner extends SubsystemBase {
     return getDetectedColor() == WheelColor.getFMSDisplayed();
   }
 
-  public void moveToFMSColor() {
-    Direction direction;
-    if(isColorMatched()) direction = Direction.stopped;
+  public void performPositionControl() {
+    Double speed;
+
+    if(getDetectedColor().toString().isBlank() || getDetectedColor().toString().isEmpty()) {
+
+    } 
+
+    if(isColorMatched()) speed = 0.0;
 
     ColorEnum current = WheelColor.ColorEnum.valueOf(getDetectedColor().toString());
     ColorEnum target = ColorEnum.valueOf(WheelColor.getFMSDisplayed().toString());
 
     if((current.ordinal() - 1) % 4 == target.ordinal()) {
-      direction = Direction.left;
+      speed = -0.75; // Left
     }
 
-    else direction = Direction.right;
+    else speed = 0.75; // Right
 
-    wheel.move(direction);
+    wheel.move(speed);
+  }
+
+  public void performRotationControl() {
+
   }
   
   @Override
