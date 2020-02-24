@@ -2,11 +2,9 @@ package com.north6960.powercells;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-
 import com.north6960.Constants.CAN;
 import com.north6960.Constants.Digital;
 
@@ -17,7 +15,6 @@ public class Intake extends PIDSubsystem {
 
   private VictorSPX wheelMotor, armMotor;
   private Encoder armEncoder;
-  private boolean isManual;
 
   public Intake() {
     super(
@@ -29,7 +26,6 @@ public class Intake extends PIDSubsystem {
     armEncoder = new Encoder(Digital.INTAKE_ENCODER_A, Digital.INTAKE_ENCODER_B);
 
     armEncoder.setDistancePerPulse(360. / 2048.); // Gives an output in degrees.
-
     this.getController().setTolerance(1.);
   }
 
@@ -40,13 +36,17 @@ public class Intake extends PIDSubsystem {
 
     else return false;
   }
-
-  public void set(boolean on) {
+  
+  public void setWheel(boolean on) {
     wheelMotor.set(VictorSPXControlMode.PercentOutput, on ? 0.75 : 0);
   }
 
-  public void setArm(boolean up) {
-    armMotor.set(VictorSPXControlMode.PercentOutput, up ? 0.75 : -0.75);
+  public void setArm(double angle) {
+    setSetpoint(angle);
+  }
+
+  public void setArmUp() {
+    setSetpoint(0);
   }
 
   @Override
@@ -59,6 +59,5 @@ public class Intake extends PIDSubsystem {
   public double getMeasurement() {
     // Return the process variable measurement here
     return armEncoder.getDistance();
-
   }
 }

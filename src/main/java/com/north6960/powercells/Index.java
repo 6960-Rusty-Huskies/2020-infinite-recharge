@@ -1,7 +1,6 @@
 package com.north6960.powercells;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import com.north6960.Constants.Analog;
 import com.north6960.Constants.CAN;
 
@@ -9,9 +8,8 @@ import com.north6960.Constants.CAN;
  * The "holding chamber" for power cells waiting to be shot.
  */
 public class Index extends SubsystemBase {
-  private IndexSection entrance, exit;
+  private IndexSection lower, upper;
   private int powerCellCount;
-  private boolean isManual;
 
   public Index() {
     entrance = new IndexSection(Analog.INDEX_LOWER_BEAM_BREAK, CAN.INDEX_LOWER_MOTOR);
@@ -23,19 +21,21 @@ public class Index extends SubsystemBase {
   }
 
   public void driveUpper(double speed) {
-    exit.drive(speed);
+    upper.drive(speed);
   }
 
   public void driveLower(double speed) {
-    entrance.drive(speed);
+    lower.drive(speed);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if (entrance.ballPassed())
+    if (lower.ballPassed(true)) {
       powerCellCount++;
-    if (exit.ballPassed())
+    }
+    if (upper.ballPassed(false)) {
       powerCellCount--;
+    }
   }
 }

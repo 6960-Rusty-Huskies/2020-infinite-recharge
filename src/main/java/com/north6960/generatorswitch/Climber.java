@@ -14,7 +14,7 @@ public class Climber extends SubsystemBase {
     lift = new Lift(liftSpeed);
     winch = new Winch();
   }
-
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

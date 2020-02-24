@@ -1,11 +1,15 @@
 package com.north6960.controlpanel;
 
-import com.north6960.controlpanel.WheelColor.ColorEnum;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.north6960.Constants;
+import com.north6960.controlpanel.WheelColor.ColorEnum;
 
 /**
  * The arm and wheel that are used to interface with the Control Panel.
@@ -15,6 +19,7 @@ public class Spinner extends SubsystemBase {
   private ColorSensorV3 colorSensor;
   public SpinnerArm arm;
   public SpinnerWheel wheel;
+
   private ColorMatch colorMatch;
 
   public Spinner() {
@@ -37,10 +42,11 @@ public class Spinner extends SubsystemBase {
   }
 
   public void performPositionControl() {
-    Double speed;
+    double speed;
 
     if(getDetectedColor().toString().isBlank() || getDetectedColor().toString().isEmpty()) {
-
+      performRotationControl();
+      return;
     } 
 
     if(isColorMatched()) speed = 0.0;

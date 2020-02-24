@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.AnalogOutput;
  * A beam break sensor on the robot.
  */
 public class BeamBreak {
+
     private AnalogOutput internalSensor;
     private boolean defaultState;
 

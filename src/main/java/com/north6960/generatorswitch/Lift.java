@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import com.north6960.Constants.CAN;
 import com.north6960.Constants.Digital;
 
@@ -14,23 +13,20 @@ import com.north6960.Constants.Digital;
 public class Lift extends SubsystemBase {
   private VictorSPX motor;
   private DigitalInput limitSwitch;
-  private double spd;
 
-  public Lift(double speed) {
-    motor = new VictorSPX(CAN.LIFT_MOTOR);
-    limitSwitch = new DigitalInput(Digital.LIFT_SWITCH);
-    spd = speed;
+  public Lift() {
+    motor = new VictorSPX(Constants.LIFT_MOTOR);
+    limitSwitch = new DigitalInput(Constants.LIFT_SWITCH);
   }
 
   /**
    * Move the lift. The speed is always between -1 and 1. Negative moves the lift down, positive moves it up.
+   * @param speed the speed with which to move the lift.
    */
   public void move(double speed) {
-    if(limitSwitch.get()) {
-      speed = 0.0;
+    if(!limitSwitch.get()) {
+      motor.set(VictorSPXControlMode.Velocity, speed);
     }
-    
-    motor.set(VictorSPXControlMode.PercentOutput, speed);
   }
 
   @Override
