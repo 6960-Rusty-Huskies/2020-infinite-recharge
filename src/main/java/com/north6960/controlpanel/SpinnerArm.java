@@ -13,7 +13,7 @@ public class SpinnerArm extends SubsystemBase {
   private DigitalInput limitSwitch;
 
   public SpinnerArm() {
-    motor = new VictorSPX(CAN.SPINNER_ARM_MOTOR);
+    motor = new VictorSPX(CAN.CPM_ARM_MOTOR);
     limitSwitch = new DigitalInput(Digital.SPINNER_ARM_SWITCH);
   }
   

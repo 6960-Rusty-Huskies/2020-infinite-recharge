@@ -1,10 +1,7 @@
 
 package com.north6960;
 
-import java.util.Dictionary;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.AbstractMap.SimpleImmutableEntry;
-
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 /**
@@ -24,19 +21,19 @@ public final class Constants {
 		public static final int DRIVE_RIGHT_FRONT_MOTOR = 3;
 		public static final int DRIVE_RIGHT_BACK_MOTOR = 4;
 		
-		public static final int INTAKE_ARM_MOTOR = 5;
-		public static final int INTAKE_WHEEL_MOTOR = 6;
+		public static final int INTAKE_ARM_MOTOR = 7;
+		public static final int INTAKE_WHEEL_MOTOR = 8;
 
-		public static final int INDEX_LOWER_MOTOR = 7;
-		public static final int INDEX_UPPER_MOTOR = 8;
+		public static final int INDEX_LOWER_MOTOR = 12;
+		public static final int INDEX_UPPER_MOTOR = 11;
 		
-		public static final int SHOOTER_MOTOR = 9;
-		public static final int HOOD_MOTOR = 10;
-		public static final int LIFT_MOTOR = 11;
-		public static final int WINCH_MOTOR = 12;
+		public static final int SHOOTER_MOTOR = 15;
+		public static final int HOOD_MOTOR = 14;
+		public static final int LIFT_MOTOR = 5;
+		public static final int WINCH_MOTOR = 9;
 
-		public static final int SPINNER_ARM_MOTOR = 13;
-        public static final int SPINNER_WHEEL_MOTOR = 14;
+		public static final int CPM_ARM_MOTOR = 10;
+        public static final int CPM_WHEEL_MOTOR = 6;
         
         // IMU
 		public static final int PIGEON_IMU = 15; 
@@ -60,8 +57,8 @@ public final class Constants {
 
     public static final class Analog {
         // BEAM BREAKS
-		public static final int INDEX_UPPER_BEAM_BREAK = 13;
-		public static final int INDEX_LOWER_BEAM_BREAK = 15;
+		public static final int INDEX_UPPER_BEAM_BREAK = 0;
+		public static final int INDEX_LOWER_BEAM_BREAK = 1;
     }
     
     public static final class PWM {

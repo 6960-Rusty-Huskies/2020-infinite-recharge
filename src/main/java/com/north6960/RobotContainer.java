@@ -1,12 +1,9 @@
 package com.north6960;
 
-import com.north6960.Constants.USB;
-import com.north6960.drive.DriveBase;
-import com.north6960.lights.RGB;
 import com.north6960.controller.DriverController;
-import com.north6960.controller.OperatorController;
+import com.north6960.powercells.Index;
+
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -19,11 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriverController driverController = new DriverController();
-  private final OperatorController opController = new OperatorController();
-
-  private final RGB m_rgb = new RGB(0, 60);
-
-  private final DriveBase driveBase = new DriveBase();
+  // private final OperatorController opController = new OperatorController();
   
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -41,8 +34,6 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
-
   }
 
 

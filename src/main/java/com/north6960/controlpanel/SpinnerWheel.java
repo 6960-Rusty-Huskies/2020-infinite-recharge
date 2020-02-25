@@ -10,7 +10,7 @@ public class SpinnerWheel extends SubsystemBase {
   private VictorSPX motor;
 
   public SpinnerWheel() {
-    motor = new VictorSPX(CAN.SPINNER_WHEEL_MOTOR);
+    motor = new VictorSPX(CAN.CPM_WHEEL_MOTOR);
   }
 
   public void move(double speed) {
