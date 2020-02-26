@@ -21,8 +21,6 @@ public class RobotContainer {
   private final DriverController driverController = new DriverController();
   private final OperatorController opController = new OperatorController();
 
-  private final RGB m_rgb = new RGB(0, 60);
-
   private final DriveBase driveBase = new DriveBase();
   
   /**

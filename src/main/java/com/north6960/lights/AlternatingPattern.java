@@ -3,9 +3,9 @@ package com.north6960.lights;
 import com.north6960.lights.RGB;
 
 import edu.wpi.first.wpilibj.util.Color8Bit;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class AlternatingPattern extends CommandBase {
+public class AlternatingPattern extends InstantCommand {
 
   private RGB m_rgb;
   private final int m_width;
@@ -31,17 +31,11 @@ public class AlternatingPattern extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-     m_rgb.strip.shiftPatternUp();
+    m_rgb.strip.shiftPatternUp();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
   }
-  // Returns true when the command should end.
-  /*@Override
-   public boolean isFinished() {
-    return false;
-  }
-*/
 }

@@ -1,8 +1,14 @@
 package com.north6960;
 
+import com.north6960.lights.RGB;
+import com.north6960.lights.RGBPattern;
+import com.north6960.lights.ShiftPattern;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -13,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
+  private RGB rgb = new RGB(0, 120);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -39,6 +46,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    CommandScheduler.getInstance().schedule( new ShiftPattern(rgb), new WaitCommand(0.5) );
   }
 
   /**
