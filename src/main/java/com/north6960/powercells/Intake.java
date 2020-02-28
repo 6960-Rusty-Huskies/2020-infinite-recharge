@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.north6960.Constants.CAN;
 import com.north6960.Constants.Digital;
 import com.north6960.Constants.PID;
+import com.north6960.Constants.Physical;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.ArmFeedforward;
@@ -52,9 +53,22 @@ public class Intake extends PIDSubsystem {
     setSetpoint(angle);
   }
 
+  public void toggleArm() {
+    if(this.getController().getSetpoint() == 0) {
+      putUp();
+    }
+
+    else putDown();
+  }
+
   public void putUp() {
     setSetpoint(0);
     setWheel(false);
+  }
+
+  public void putDown() {
+    setSetpoint(Physical.INTAKE_LOW_ANGLE);
+    setWheel(true);
   }
 
   @Override

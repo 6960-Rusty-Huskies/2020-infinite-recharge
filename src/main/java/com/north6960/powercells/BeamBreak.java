@@ -12,6 +12,7 @@ public class BeamBreak {
 
     public BeamBreak(int channel) {
         internalSensor = new AnalogOutput(channel);
+        defaultState = getRaw();
     }
 
     private boolean getRaw() {
@@ -23,11 +24,12 @@ public class BeamBreak {
     }
 
     /**
-     * <p> Sets the default state of the beam break. </p> 
-     * <p> isTriggered() will return true if the raw reading is different from the default state. </p>
-     * @param value The value of the default state.
+     * <p> Sets the default state to the current raw state of the beam break. </p>
+     * 
+     * <p> Should be called when the beam break is known not to be blocked by any object 
+     *     it's meant to be tracking. </p>
      */
-    public void setDefaultState(boolean value) {
-        defaultState = value;
+    public void calibrateDefaultState() {
+        defaultState = getRaw();
     }
 }

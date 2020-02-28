@@ -113,6 +113,25 @@ public final class Constants {
 	}
 
 	/**
+	 * Contains physical constants such as gear ratios and RPMs.
+	 */
+	public static final class Physical {
+		public static final double SHOOTER_RPM_DEFAULT = 500;
+		public static final double SHOOTER_RPM_NEAR = 1000;
+		public static final double SHOOTER_RPM_FAR = 3000;
+		public static final double LL_AREA_FAR = 0.1;
+
+		public static final double UPPER_INDEX_SPEED = 150;
+		public static final double LOWER_INDEX_SPEED = 150;
+
+		public static final double INTAKE_LOW_ANGLE = 70;
+
+		public static final double HOOD_ANGLE_NEAR = 30;
+		public static final double HOOD_ANGLE_FAR = 45;
+		public static final double HOOD_GEAR_RATIO = 1.;
+	}
+
+	/**
 	 * Contains PID and feedforward values for subsystems that use a PID controller.
 	 */
 	public static final class PID {
@@ -125,10 +144,7 @@ public final class Constants {
 		public static final double INDEX_UPPER_P = 0.657;
 		public static final double INDEX_UPPER_FF = 0.0;
 
-		public static final double HOOD_S = 0.0;
-		public static final double HOOD_COS = 0.0;
-		public static final double HOOD_V = 0.0;
-		public static final double HOOD_A = 0.0;
+		public static final double HOOD_FF = 0.0;
 		public static final double HOOD_P = 0.0;
 		public static final double HOOD_D = 0.0;
 

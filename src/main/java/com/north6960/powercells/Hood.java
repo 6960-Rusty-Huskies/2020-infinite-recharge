@@ -3,50 +3,39 @@ package com.north6960.powercells;
 import com.north6960.Constants.CAN;
 import com.north6960.Constants.PID;
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.ControlType;
 
-import edu.wpi.first.wpilibj.controller.ArmFeedforward;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Hood extends PIDSubsystem {
+public class Hood extends SubsystemBase {
 
   private CANSparkMax motor;
+  private CANPIDController controller;
   private CANEncoder encoder;
-  private ArmFeedforward feedforward;
+
+  private double angDeg;
 
   public Hood() {
-    super(
-        // The PIDController used by the subsystem
-        new PIDController(PID.HOOD_P, 0, PID.HOOD_D));
-
-    feedforward = new ArmFeedforward(PID.HOOD_S, PID.HOOD_COS, PID.HOOD_V, PID.HOOD_A);
     motor = new CANSparkMax(CAN.HOOD_MOTOR, MotorType.kBrushless);
+    controller = motor.getPIDController();
     encoder = motor.getEncoder();
 
-    // Encoder should give an output in radians.
-    encoder.setPositionConversionFactor(2. * Math.PI);
+    encoder.setPositionConversionFactor(1. / 360.);
+    angDeg = encoder.getPosition();
+
+    controller.setP(PID.HOOD_P);
+    controller.setFF(PID.HOOD_FF);
   }
 
-  public void setMotor(double speed) {
-    motor.set(speed);
-  }
-
-  public void setAngle(double angle) {
-    setSetpoint(angle);
-  }
-
-  @Override
-  public void useOutput(double output, double setpoint) {
-    // Use the output here
-    // Velocity in feedforward.calculate() is in radians per second.
-    motor.setVoltage(output + feedforward.calculate(setpoint, output));
+  public void setAngle(double angDeg) {
+    this.angDeg = angDeg;
   }
 
   @Override
-  public double getMeasurement() {
-    // Return the process variable measurement here
-    return encoder.getPosition();
+  public void periodic() {
+    controller.setReference(angDeg, ControlType.kPosition);
   }
 }

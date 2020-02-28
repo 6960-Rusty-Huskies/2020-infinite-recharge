@@ -1,7 +1,9 @@
 package com.north6960.powercells;
 
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -14,21 +16,26 @@ public class IndexSection extends SubsystemBase {
   
   private BeamBreak beamBreak;
   private CANSparkMax motor;
-  private CANEncoder encoder;
+  private CANPIDController pidController;
   private boolean wasTriggeredLastCheck;
-  private SimpleMotorFeedforward feedforward;
+  private double rpm;
 
-  public IndexSection(int beamBreakId, int motorId) {
-
+  public IndexSection(int beamBreakId, int motorId, double p, double ff) {
     beamBreak = new BeamBreak(beamBreakId);
-    beamBreak.setDefaultState(false);
 
     motor = new CANSparkMax(motorId, MotorType.kBrushless);
-    encoder = motor.getEncoder();
+
+    pidController = motor.getPIDController();
+    pidController.setP(p);
+    pidController.setFF(ff);
+  }
+
+  public boolean getBeamBreak() {
+    return beamBreak.isTriggered();
   }
 
   public void drive(double speed) {
-    motor.set(speed);
+    rpm = speed;
   }
 
   /**
@@ -50,5 +57,7 @@ public class IndexSection extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     wasTriggeredLastCheck = beamBreak.isTriggered();
+
+    motor.getPIDController().setReference(rpm, ControlType.kVelocity);
   }
 }

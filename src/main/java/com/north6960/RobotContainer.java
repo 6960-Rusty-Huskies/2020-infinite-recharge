@@ -2,11 +2,22 @@ package com.north6960;
 
 import com.north6960.controller.DriverController;
 import com.north6960.controller.OperatorController;
+import com.north6960.drive.DriveBase;
 import com.north6960.generatorswitch.Climber;
+import com.north6960.powercells.PowerCellManagement;
+import com.north6960.powercells.ShootCell;
+import com.north6960.powercells.ShootPowerCells;
+import com.north6960.vision.Limelight;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
+import edu.wpi.first.wpilibj2.command.SelectCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -19,6 +30,8 @@ public class RobotContainer {
   // private final DriverController driverController = new DriverController();
   // private final OperatorController opController = new OperatorController();
   private Climber climber = new Climber();
+  private DriveBase driveBase = new DriveBase(0.75, 0.75);
+  private PowerCellManagement powerCellManagement;
   private DriverController driverController = new DriverController();
   private OperatorController opController = new OperatorController();
 
@@ -37,6 +50,9 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+    // =-=-=-=-= DRIVER CONTROLS =-=-=-=-= //
+
     driverController.raiseLiftButton
       .whenPressed( () -> climber.lift.move(1.0) )
       .whenReleased( () -> climber.lift.move(0.0) );
@@ -52,6 +68,17 @@ public class RobotContainer {
     driverController.lowerWinchButton
       .whenPressed( () -> climber.winch.move(-1.0) )
       .whenReleased( () -> climber.winch.move(0.0) );
+
+    // =-=-=-=-= OPERATOR CONTROLS =-=-=-=-= //
+
+    opController.shootAllBtn
+      .whenPressed(new ShootPowerCells(driveBase, powerCellManagement, powerCellManagement.index.getPowerCellCount()));
+    
+    opController.shootOneBtn
+      .whenPressed(new ShootPowerCells(driveBase, powerCellManagement, 1));
+
+    opController.intakeBtn
+      .whenPressed( new InstantCommand(() -> powerCellManagement.intake.toggleArm()) );
   }
 
 
