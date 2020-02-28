@@ -1,10 +1,9 @@
 package com.north6960;
 
-import com.north6960.powercells.Index;
-import com.north6960.powercells.Shooter;
+import com.north6960.vision.LedMode;
+import com.north6960.vision.Limelight;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -18,9 +17,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
 
-  private Shooter shooter = new Shooter();
-  private Index index = new Index();
-
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -29,9 +25,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard;
-     m_robotContainer = new RobotContainer();
+    m_robotContainer = new RobotContainer();
 
-     // shooter.enable();
+    Limelight.setLed(LedMode.off);
   }
 
   /**
@@ -48,19 +44,16 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("Velocity", shooter.getMeasurement());
   }
 
   /**
    * This function is called once each time the robot enters Disabled mode.
    */
   @Override
-  public void disabledInit() {
-  }
+  public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {
-  }
+  public void disabledPeriodic() {}
 
   /**
    * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.

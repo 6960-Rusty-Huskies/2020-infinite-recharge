@@ -22,7 +22,12 @@ public class BeamBreak {
         return getRaw() != defaultState;
     }
 
-    public void set(boolean value) {
+    /**
+     * <p> Sets the default state of the beam break. </p> 
+     * <p> isTriggered() will return true if the raw reading is different from the default state. </p>
+     * @param value The value of the default state.
+     */
+    public void setDefaultState(boolean value) {
         defaultState = value;
     }
 }

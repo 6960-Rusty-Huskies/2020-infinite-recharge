@@ -2,6 +2,8 @@ package com.north6960.generatorswitch;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.north6960.Constants.CAN;
@@ -11,11 +13,11 @@ import com.north6960.Constants.Digital;
  * The arm that extends and elevates the robot onto the Generator Switch.
  */
 public class Lift extends SubsystemBase {
-  private VictorSPX motor;
+  private WPI_TalonSRX motor;
   private DigitalInput limitSwitch;
 
   public Lift() {
-    motor = new VictorSPX(CAN.LIFT_MOTOR);
+    motor = new WPI_TalonSRX(CAN.LIFT_MOTOR);
     limitSwitch = new DigitalInput(Digital.LIFT_SWITCH);
   }
 
@@ -25,7 +27,7 @@ public class Lift extends SubsystemBase {
    */
   public void move(double speed) {
     if(!limitSwitch.get()) {
-      motor.set(VictorSPXControlMode.Velocity, speed);
+      motor.set(speed);
     }
   }
 

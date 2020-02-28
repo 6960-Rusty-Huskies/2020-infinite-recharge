@@ -19,11 +19,14 @@ public class PowerCellManagement extends SubsystemBase {
     hood = new Hood();
   }
   
-  public int getBallCount() {
+  public int getPowerCellCount() {
     return index.getPowerCellCount();
   }
 
   @Override
   public void periodic() {
+    if(getPowerCellCount() >= 5) {
+      intake.putUp();
+    }
   }
 }

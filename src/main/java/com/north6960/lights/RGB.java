@@ -1,6 +1,8 @@
 package com.north6960.lights;
 
-import com.north6960.controlpanel.WheelColor;
+import com.north6960.controlpanel.WheelColor.ColorEnum;
+
+import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -8,13 +10,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class RGB extends SubsystemBase {
 
-  public AddressableLEDStrip strip;
+  private AddressableLEDStrip strip;
 
-  public RGB(int port, int numPixels) {
-    strip = new AddressableLEDStrip(port, numPixels);
+  public RGB(int port, int length) {
+    strip = new AddressableLEDStrip(port, length);
   }
 
-  public void setToWheelColor(WheelColor.ColorEnum color) {
+  public void setToWheelColor(ColorEnum color) {
     int r = 0, g = 0, b = 0;
 
     switch(color) {
@@ -34,6 +36,22 @@ public class RGB extends SubsystemBase {
     }
     
     strip.setSolid(r, g, b);
+  }
+
+  public void shiftPatternUp() {
+    strip.shiftPatternUp();
+  }
+
+  public void shiftPatternDown() {
+    strip.shiftPatternDown();
+  }
+
+  public void setGradient(int width, Color8Bit... colors) {
+    strip.setGradient(width, colors);
+  }
+
+  public void setAlternating(int width, Color8Bit... colors) {
+    strip.setAlternating(width, colors);
   }
 
   @Override

@@ -25,7 +25,7 @@ public class AlternatingPattern extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_rgb.strip.setAlternating(m_width, m_colors);
+    m_rgb.setAlternating(m_width, m_colors);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

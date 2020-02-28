@@ -17,7 +17,7 @@ public abstract class WheelColor {
       red, green, blue, yellow
   }
 
-  public static Color getFMSDisplayedColor() {
+  public static Color getFMSDisplayed() {
     switch(DriverStation.getInstance().getGameSpecificMessage()) {
         case "R":
             return red;

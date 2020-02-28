@@ -1,7 +1,8 @@
 package com.north6960;
 
 import com.north6960.controller.DriverController;
-import com.north6960.powercells.Index;
+import com.north6960.controller.OperatorController;
+import com.north6960.generatorswitch.Climber;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -15,16 +16,18 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final DriverController driverController = new DriverController();
+  // private final DriverController driverController = new DriverController();
   // private final OperatorController opController = new OperatorController();
-  
+  private Climber climber = new Climber();
+  private DriverController driverController = new DriverController();
+  private OperatorController opController = new OperatorController();
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {                                                                                                                                              
     // Configure the button bindings
     configureButtonBindings();
-
   }
 
   /**
@@ -34,6 +37,21 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    driverController.raiseLiftButton
+      .whenPressed( () -> climber.lift.move(1.0) )
+      .whenReleased( () -> climber.lift.move(0.0) );
+
+    driverController.lowerLiftButton
+      .whenPressed( () -> climber.lift.move(-1.0) )
+      .whenReleased( () -> climber.lift.move(0.0) );
+    
+    driverController.raiseWinchButton
+      .whenPressed( () -> climber.winch.move(1.0) )
+      .whenReleased( () -> climber.winch.move(0.0) );
+
+    driverController.lowerWinchButton
+      .whenPressed( () -> climber.winch.move(-1.0) )
+      .whenReleased( () -> climber.winch.move(0.0) );
   }
 
 

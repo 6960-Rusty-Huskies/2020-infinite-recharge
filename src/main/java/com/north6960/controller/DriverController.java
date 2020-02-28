@@ -24,11 +24,11 @@ public class DriverController {
 
     public DriverController() {
         // Key is Hand, value is port number
-        initButton(halfSpeedButton, Button.DRIVE_HALF_SPEED);
-        initButton(raiseLiftButton, Button.RAISE_LIFT);
-        initButton(lowerLiftButton, Button.LOWER_LIFT);
-        initButton(raiseWinchButton, Button.RAISE_WINCH);
-        initButton(lowerWinchButton, Button.LOWER_WINCH);
+        halfSpeedButton = initButton(Button.DRIVE_HALF_SPEED);
+        raiseLiftButton = initButton(Button.RAISE_LIFT);
+        lowerLiftButton = initButton(Button.LOWER_LIFT);
+        raiseWinchButton = initButton(Button.RAISE_WINCH);
+        lowerWinchButton = initButton(Button.LOWER_WINCH);
     }
 
     public double getX(Hand hand) {
@@ -59,7 +59,7 @@ public class DriverController {
      * @param button The button to initialize.
      * @param constant The constant from Constants.Buttons to initialize the button with.
      */
-    private void initButton(JoystickButton button, SimpleEntry<Hand, Integer> constant) {
+    private JoystickButton initButton(SimpleEntry<Hand, Integer> constant) {
         Joystick stick;
         switch(constant.getKey()) {
             case kLeft:
@@ -73,6 +73,6 @@ public class DriverController {
                 break;
         }
 
-        button = new JoystickButton(stick, constant.getValue());
+        return new JoystickButton(stick, constant.getValue());
     }
 }

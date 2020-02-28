@@ -14,7 +14,10 @@ public class OperatorController {
     private static Joystick stickLeft = new Joystick(USB.OPERATOR_JOYSTICK_LEFT);
     private static Joystick stickRight = new Joystick(USB.OPERATOR_JOYSTICK_RIGHT);
 
-    public static JoystickButton shootBtn = new JoystickButton(stickLeft, Button.SHOOT);
+    public static JoystickButton shootOneBtn = new JoystickButton(stickLeft, Button.SHOOT_ONE);
+    public static JoystickButton shootAllBtn = new JoystickButton(stickLeft, Button.SHOOT_ALL);
+    public static JoystickButton intakeBtn = new JoystickButton(stickLeft, Button.INTAKE);
+
     public static JoystickButton shooterManualBtn = new JoystickButton(stickLeft, Button.SHOOTER_MANUAL);
 
     public static double getX(Hand hand) {
