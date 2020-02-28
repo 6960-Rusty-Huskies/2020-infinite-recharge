@@ -125,6 +125,7 @@ public final class Constants {
 		public static final double LOWER_INDEX_SPEED = 150;
 
 		public static final double INTAKE_LOW_ANGLE = 70;
+		public static final double INTAKE_HIGH_ANGLE = 0;
 
 		public static final double HOOD_ANGLE_NEAR = 30;
 		public static final double HOOD_ANGLE_FAR = 45;
@@ -136,7 +137,7 @@ public final class Constants {
 	 */
 	public static final class PID {
 		public static final double SHOOTER_FF = 0.0;
-		public static final double SHOOTER_P = 1.03;
+		public static final double SHOOTER_P = 0.0;
 
 		public static final double INDEX_LOWER_P = 0.0;
 		public static final double INDEX_LOWER_FF = 0.0;
@@ -147,6 +148,8 @@ public final class Constants {
 		public static final double HOOD_FF = 0.0;
 		public static final double HOOD_P = 0.0;
 		public static final double HOOD_D = 0.0;
+
+		public static final double DRIVE_BASE_P = 0.0;
 
 		public static final double INTAKE_S = 0.0;
 		public static final double INTAKE_V = 0.0;

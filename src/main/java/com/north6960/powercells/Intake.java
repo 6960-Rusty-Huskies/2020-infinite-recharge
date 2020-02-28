@@ -38,19 +38,15 @@ public class Intake extends PIDSubsystem {
   }
 
   public boolean isDown() {
-    if(armEncoder.getDistance() > 90) {
-      return true;
-    } 
+    return getController().getSetpoint() == Physical.INTAKE_LOW_ANGLE;
+  }
 
-    else return false;
+  public boolean isUp() {
+    return getController().getSetpoint() == Physical.INTAKE_HIGH_ANGLE;
   }
   
   public void setWheel(boolean on) {
     wheelMotor.set(VictorSPXControlMode.PercentOutput, on ? 0.75 : 0.0);
-  }
-
-  public void setArm(double angle) {
-    setSetpoint(angle);
   }
 
   public void toggleArm() {
@@ -62,7 +58,7 @@ public class Intake extends PIDSubsystem {
   }
 
   public void putUp() {
-    setSetpoint(0);
+    setSetpoint(Physical.INTAKE_HIGH_ANGLE);
     setWheel(false);
   }
 

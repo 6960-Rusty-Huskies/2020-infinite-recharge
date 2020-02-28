@@ -4,20 +4,14 @@ import com.north6960.controller.DriverController;
 import com.north6960.controller.OperatorController;
 import com.north6960.drive.DriveBase;
 import com.north6960.generatorswitch.Climber;
+import com.north6960.powercells.IntakePowerCells;
 import com.north6960.powercells.PowerCellManagement;
-import com.north6960.powercells.ShootCell;
 import com.north6960.powercells.ShootPowerCells;
-import com.north6960.vision.Limelight;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
-import edu.wpi.first.wpilibj2.command.SelectCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -72,7 +66,11 @@ public class RobotContainer {
     // =-=-=-=-= OPERATOR CONTROLS =-=-=-=-= //
 
     opController.shootAllBtn
-      .whenPressed(new ShootPowerCells(driveBase, powerCellManagement, powerCellManagement.index.getPowerCellCount()));
+      .whenPressed(
+        new ShootPowerCells(driveBase, powerCellManagement, 
+        powerCellManagement.index.getPowerCellCount())
+        .andThen(
+          new IntakePowerCells(powerCellManagement)));
     
     opController.shootOneBtn
       .whenPressed(new ShootPowerCells(driveBase, powerCellManagement, 1));

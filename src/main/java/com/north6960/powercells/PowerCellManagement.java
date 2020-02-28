@@ -3,6 +3,7 @@ package com.north6960.powercells;
 import com.north6960.Constants.Physical;
 import com.north6960.vision.Limelight;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PowerCellManagement extends SubsystemBase {
@@ -12,9 +13,6 @@ public class PowerCellManagement extends SubsystemBase {
   public Shooter shooter;
   public Hood hood;
 
-  /**
-   * Creates a new PowerCellManagement.
-   */
   public PowerCellManagement() {
     index = new Index();
     intake = new Intake();
@@ -22,6 +20,11 @@ public class PowerCellManagement extends SubsystemBase {
     hood = new Hood();
   }
 
+  /**
+   * Prepares the shooter speed and hood angle for shooting. 
+   * Values are determined by area of the Limelight target, 
+   * i.e. the distance to the target.
+   */
   public void setUpShooter() {
     if(Limelight.getArea() < Physical.LL_AREA_FAR) {
       shooter.setSpeed(Physical.SHOOTER_RPM_FAR);
@@ -36,8 +39,6 @@ public class PowerCellManagement extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(index.getPowerCellCount() >= 5) {
-      intake.putUp();
-    }
+    SmartDashboard.putNumber("Power Cell Count", index.getPowerCellCount());
   }
 }
