@@ -1,7 +1,5 @@
 package com.north6960.generatorswitch;
 
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -18,6 +16,7 @@ public class Lift extends SubsystemBase {
 
   public Lift() {
     motor = new WPI_TalonSRX(CAN.LIFT_MOTOR);
+    motor.setInverted(true);
     limitSwitch = new DigitalInput(Digital.LIFT_SWITCH);
   }
 
@@ -26,9 +25,9 @@ public class Lift extends SubsystemBase {
    * @param speed the speed with which to move the lift.
    */
   public void move(double speed) {
-    if(!limitSwitch.get()) {
+    // if(!limitSwitch.get()) {
       motor.set(speed);
-    }
+    // }
   }
 
   @Override

@@ -26,19 +26,26 @@ public class PowerCellManagement extends SubsystemBase {
    * i.e. the distance to the target.
    */
   public void setUpShooter() {
-    if(Limelight.getArea() < Physical.LL_AREA_FAR) {
-      shooter.setSpeed(Physical.SHOOTER_RPM_FAR);
-      hood.setAngle(Physical.HOOD_ANGLE_FAR);
-    }
+    // if(Limelight.getArea() < Physical.LL_AREA_FAR) {
+    //   shooter.setSpeed(Physical.SHOOTER_RPM_FAR);
+    //   hood.setAngle(Physical.HOOD_ANGLE_FAR);
+    // }
 
-    else if(!Limelight.hasValidTarget() || Limelight.getArea() > Physical.LL_AREA_FAR) {
-      shooter.setSpeed(Physical.SHOOTER_RPM_NEAR);
-      hood.setAngle(Physical.HOOD_ANGLE_NEAR);
-    }
+    // else if(!Limelight.hasValidTarget() || Limelight.getArea() > Physical.LL_AREA_FAR) {
+    //   shooter.setSpeed(Physical.SHOOTER_RPM_NEAR);
+    //   hood.setAngle(Physical.HOOD_ANGLE_NEAR);
+    // }
+
+    shooter.setSpeed(2000);
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Power Cell Count", index.getPowerCellCount());
+
+    SmartDashboard.putNumber("Intake position", intake.getMeasurement());
+    SmartDashboard.putNumber("Intake setpoint", intake.getController().getSetpoint() );
+    SmartDashboard.putNumber("Intake output", intake.getController().calculate(intake.getController().getSetpoint()));
+    SmartDashboard.putBoolean("Intake enabled", intake.isEnabled());
   }
 }

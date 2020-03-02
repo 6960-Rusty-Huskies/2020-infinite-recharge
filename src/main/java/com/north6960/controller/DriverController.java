@@ -31,6 +31,20 @@ public class DriverController {
         lowerWinchButton = initButton(Button.LOWER_WINCH);
     }
 
+    public JoystickButton getButton(Hand hand, int value) {
+        Joystick stick = null;
+        switch(hand) {
+            case kLeft:
+                stick = leftStick;
+                break;
+            case kRight:
+                stick = rightStick;
+                break;
+        }
+
+        return new JoystickButton(stick, value);
+    } 
+
     public double getX(Hand hand) {
         switch(hand) {
             case kLeft:

@@ -24,8 +24,8 @@ public final class Constants {
 		public static final int DRIVE_RIGHT_FRONT_MOTOR = 3;
 		public static final int DRIVE_RIGHT_BACK_MOTOR = 4;
 		
-		public static final int INTAKE_ARM_MOTOR = 7;
-		public static final int INTAKE_WHEEL_MOTOR = 8;
+		public static final int INTAKE_ARM_MOTOR = 8;
+		public static final int INTAKE_WHEEL_MOTOR = 7;
 
 		public static final int INDEX_LOWER_MOTOR = 12;
 		public static final int INDEX_UPPER_MOTOR = 11;
@@ -47,18 +47,19 @@ public final class Constants {
 	 */
     public static final class Digital {
         // ENCODERS
-		public static final int DRIVE_LEFT_ENCODER_A = 0;
-		public static final int DRIVE_LEFT_ENCODER_B = 1;
+		public static final int DRIVE_LEFT_ENCODER_A = 4;
+		public static final int DRIVE_LEFT_ENCODER_B = 5;
 
 		public static final int DRIVE_RIGHT_ENCODER_A = 2;
 		public static final int DRIVE_RIGHT_ENCODER_B = 3;
 
-		public static final int INTAKE_ENCODER_A = 4;
-        public static final int INTAKE_ENCODER_B = 5;
+		public static final int INTAKE_ENCODER_A = 0;
+        public static final int INTAKE_ENCODER_B = 1;
 
-        // LIMIT SWITCHES
-		public static final int LIFT_SWITCH = 6;
-		public static final int SPINNER_ARM_SWITCH = 7;
+		// LIMIT SWITCHES
+		public static final int INTAKE_ARM_LIMIT_SWITCH = 6;
+		public static final int LIFT_SWITCH = 10;
+		public static final int SPINNER_ARM_LIMIT_SWITCH = 7;
 	}
 	
 	/**
@@ -66,8 +67,8 @@ public final class Constants {
 	 */
     public static final class Analog {
         // BEAM BREAKS
-		public static final int INDEX_UPPER_BEAM_BREAK = 0;
-		public static final int INDEX_LOWER_BEAM_BREAK = 1;
+		public static final int INDEX_UPPER_BEAM_BREAK = 1;
+		public static final int INDEX_LOWER_BEAM_BREAK = 0;
 	}
 	
     /**
@@ -105,11 +106,11 @@ public final class Constants {
 		public static final int INDEX_MANUAL = 7;
 
 		public static final SimpleEntry<Hand, Integer> 
-			DRIVE_HALF_SPEED = new SimpleEntry<Hand, Integer>(Hand.kLeft, 1),
-			RAISE_LIFT = new SimpleEntry<Hand, Integer>(Hand.kLeft, 5),
-			LOWER_LIFT = new SimpleEntry<Hand, Integer>(Hand.kLeft, 3),
-			RAISE_WINCH = new SimpleEntry<Hand, Integer>(Hand.kRight, 6),
-			LOWER_WINCH = new SimpleEntry<Hand, Integer>(Hand.kRight, 4);
+			DRIVE_HALF_SPEED = new SimpleEntry<Hand, Integer>(Hand.kRight, 1),
+			RAISE_LIFT = new SimpleEntry<Hand, Integer>(Hand.kLeft, 3),
+			LOWER_LIFT = new SimpleEntry<Hand, Integer>(Hand.kLeft, 2),
+			RAISE_WINCH = new SimpleEntry<Hand, Integer>(Hand.kRight, 3),
+			LOWER_WINCH = new SimpleEntry<Hand, Integer>(Hand.kRight, 2);
 	}
 
 	/**
@@ -121,8 +122,8 @@ public final class Constants {
 		public static final double SHOOTER_RPM_FAR = 3000;
 		public static final double LL_AREA_FAR = 0.1;
 
-		public static final double UPPER_INDEX_SPEED = 150;
-		public static final double LOWER_INDEX_SPEED = 150;
+		public static final double UPPER_INDEX_SPEED = 200;
+		public static final double LOWER_INDEX_SPEED = 200;
 
 		public static final double INTAKE_LOW_ANGLE = 70;
 		public static final double INTAKE_HIGH_ANGLE = 0;
@@ -136,14 +137,15 @@ public final class Constants {
 	 * Contains PID and feedforward values for subsystems that use a PID controller.
 	 */
 	public static final class PID {
-		public static final double SHOOTER_FF = 0.0;
-		public static final double SHOOTER_P = 0.0;
+		
+		public static final double SHOOTER_P = 0.0005;
+		public static final double SHOOTER_FF = 0.0003;
 
-		public static final double INDEX_LOWER_P = 0.0;
-		public static final double INDEX_LOWER_FF = 0.0;
+		public static final double INDEX_LOWER_P = 0.0005;
+		public static final double INDEX_LOWER_FF = 0.0003;
 
-		public static final double INDEX_UPPER_P = 0.657;
-		public static final double INDEX_UPPER_FF = 0.0;
+		public static final double INDEX_UPPER_P = 0.0005;
+		public static final double INDEX_UPPER_FF = 0.0003;
 
 		public static final double HOOD_FF = 0.0;
 		public static final double HOOD_P = 0.0;
@@ -151,11 +153,11 @@ public final class Constants {
 
 		public static final double DRIVE_BASE_P = 0.0;
 
-		public static final double INTAKE_S = 0.0;
-		public static final double INTAKE_V = 0.0;
-		public static final double INTAKE_COS = 0.0;
-		public static final double INTAKE_A = 0.0;
-		public static final double INTAKE_P = 0.0;
-		public static final double INTAKE_D = 0.0;
+		public static final double INTAKE_S = 4.52;
+		public static final double INTAKE_V = 0.00606;
+		public static final double INTAKE_COS = 0.437;
+		public static final double INTAKE_A = 9.58E-5;
+		public static final double INTAKE_P = 0.000721;
+		public static final double INTAKE_D = 0.000339;
 	}
 }

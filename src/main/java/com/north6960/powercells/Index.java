@@ -4,43 +4,28 @@ import com.north6960.Constants.Analog;
 import com.north6960.Constants.CAN;
 import com.north6960.Constants.PID;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * The "holding chamber" for power cells waiting to be shot.
  */
 public class Index extends SubsystemBase {
-  private IndexSection lower, upper;
+  public IndexSection lower, upper;
   private int powerCellCount;
 
   public Index() {
-    lower = new IndexSection(Analog.INDEX_LOWER_BEAM_BREAK, CAN.INDEX_LOWER_MOTOR, PID.INDEX_LOWER_P, PID.INDEX_LOWER_FF);
-    upper = new IndexSection(Analog.INDEX_UPPER_BEAM_BREAK, CAN.INDEX_UPPER_MOTOR, PID.INDEX_UPPER_P, PID.INDEX_UPPER_FF);
+    lower = 
+      new IndexSection(Analog.INDEX_LOWER_BEAM_BREAK, CAN.INDEX_LOWER_MOTOR, PID.INDEX_LOWER_P, PID.INDEX_LOWER_FF, false);
+    upper = 
+      new IndexSection(Analog.INDEX_UPPER_BEAM_BREAK, CAN.INDEX_UPPER_MOTOR, PID.INDEX_UPPER_P, PID.INDEX_UPPER_FF, true);
+    
+    SmartDashboard.putNumber("Upper setpoint", 0.0);
+    SmartDashboard.putNumber("Lower setpoint", 0.0);
+
+    powerCellCount = 0;
   }
 
-  /**
-   * @return Whether the upper beam bread is currently triggered.
-   */
-  public boolean getUpperBB() {
-    return upper.getBeamBreak();
-  }
-
-  /**
-   * 
-   * @param fullPass Whether to consider "passed" when the 
-   * @return
-   */
-  public boolean getUpperPCPassed(boolean fullPass) {
-    return upper.ballPassed(fullPass);
-  }
-
-  public boolean getLowerBB() {
-    return lower.getBeamBreak();
-  }
-
-  public boolean getLowerPCPassed(boolean fullPass) {
-    return lower.ballPassed(fullPass);
-  }
 
   public int getPowerCellCount() {
     return powerCellCount;
@@ -57,11 +42,16 @@ public class Index extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if (lower.ballPassed(false)) {
+    SmartDashboard.putNumber("Upper velocity", upper.getRPM());
+    SmartDashboard.putNumber("Lower velocity", lower.getRPM());
+
+    if(lower.getBeamBreak() && !lower.wasTriggeredLastCheck) {
       powerCellCount++;
     }
-    if (upper.ballPassed(true)) {
+
+    if(!upper.getBeamBreak() && upper.wasTriggeredLastCheck) {
       powerCellCount--;
     }
+
   }
 }

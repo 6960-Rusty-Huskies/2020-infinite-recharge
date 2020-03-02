@@ -46,13 +46,12 @@ public class DriveBase extends SubsystemBase {
 
     turnMult = turnMultiplier;
     speedMult = speedMultiplier;
-    setDefaultCommand(new DriveTeleop(this));
   }
 
   public void arcadeDrive(double speed, double turn) {
     speed = MathUtil.clamp(speed, -1.0, 1.0);
     turn = MathUtil.clamp(turn, -1.0, 1.0);
-    drive.arcadeDrive(speed * speedMult, turn * turnMult);
+    drive.arcadeDrive(-speed * speedMult, turn * turnMult);
   }
 
   public double getImuCompassHeading() {

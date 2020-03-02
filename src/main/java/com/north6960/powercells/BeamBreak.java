@@ -1,18 +1,22 @@
 package com.north6960.powercells;
 
-import edu.wpi.first.wpilibj.AnalogOutput;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 /**
  * A beam break sensor on the robot.
  */
 public class BeamBreak {
 
-    private AnalogOutput internalSensor;
+    private AnalogInput internalSensor;
     private boolean defaultState;
 
     public BeamBreak(int channel) {
-        internalSensor = new AnalogOutput(channel);
+        internalSensor = new AnalogInput(channel);
         defaultState = getRaw();
+    }
+
+    public double getVoltage() {
+        return internalSensor.getVoltage();
     }
 
     private boolean getRaw() {

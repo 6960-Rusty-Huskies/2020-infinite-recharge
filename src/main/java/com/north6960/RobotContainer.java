@@ -2,16 +2,24 @@ package com.north6960;
 
 import com.north6960.controller.DriverController;
 import com.north6960.controller.OperatorController;
+import com.north6960.controlpanel.CPM;
 import com.north6960.drive.DriveBase;
+import com.north6960.drive.DriveTeleop;
 import com.north6960.generatorswitch.Climber;
+import com.north6960.powercells.Index;
 import com.north6960.powercells.IntakePowerCells;
 import com.north6960.powercells.PowerCellManagement;
 import com.north6960.powercells.ShootPowerCells;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -21,11 +29,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  // private final DriverController driverController = new DriverController();
-  // private final OperatorController opController = new OperatorController();
+
   private Climber climber = new Climber();
+  private CPM cpm = new CPM();
   private DriveBase driveBase = new DriveBase(0.75, 0.75);
-  private PowerCellManagement powerCellManagement;
+  public static PowerCellManagement powerCellManagement = new PowerCellManagement();
+
   private DriverController driverController = new DriverController();
   private OperatorController opController = new OperatorController();
 
@@ -47,36 +56,72 @@ public class RobotContainer {
 
     // =-=-=-=-= DRIVER CONTROLS =-=-=-=-= //
 
-    driverController.raiseLiftButton
-      .whenPressed( () -> climber.lift.move(1.0) )
-      .whenReleased( () -> climber.lift.move(0.0) );
+    driveBase.setDefaultCommand(new DriveTeleop(driveBase));
 
-    driverController.lowerLiftButton
-      .whenPressed( () -> climber.lift.move(-1.0) )
-      .whenReleased( () -> climber.lift.move(0.0) );
+    // driverController.raiseLiftButton
+    //   .whileHeld( () -> climber.lift.move(0.25) )
+    //   .whenInactive( () -> climber.lift.move(0.0));
+
+    // driverController.lowerLiftButton
+    //   .whileHeld( () -> climber.lift.move(-0.1) )
+    //   .whenInactive( () -> climber.lift.move(0.0) );
     
-    driverController.raiseWinchButton
-      .whenPressed( () -> climber.winch.move(1.0) )
-      .whenReleased( () -> climber.winch.move(0.0) );
+    // driverController.raiseWinchButton
+    //   .whileHeld( () -> climber.winch.move(1.0) )
+    //   .whenReleased( () -> climber.winch.move(0.0) );
 
-    driverController.lowerWinchButton
-      .whenPressed( () -> climber.winch.move(-1.0) )
-      .whenReleased( () -> climber.winch.move(0.0) );
+    // driverController.lowerWinchButton
+    //   .whileHeld( () -> climber.winch.move(-1.0) )
+    //   .whenReleased( () -> climber.winch.move(0.0) ); 
+    
 
     // =-=-=-=-= OPERATOR CONTROLS =-=-=-=-= //
 
-    opController.shootAllBtn
-      .whenPressed(
-        new ShootPowerCells(driveBase, powerCellManagement, 
-        powerCellManagement.index.getPowerCellCount())
-        .andThen(
-          new IntakePowerCells(powerCellManagement)));
-    
-    opController.shootOneBtn
-      .whenPressed(new ShootPowerCells(driveBase, powerCellManagement, 1));
+    powerCellManagement.setDefaultCommand(new IntakePowerCells(powerCellManagement));
 
-    opController.intakeBtn
-      .whenPressed( new InstantCommand(() -> powerCellManagement.intake.toggleArm()) );
+    driverController.getButton(Hand.kLeft, 1)
+      .whileHeld(
+        new SequentialCommandGroup( new InstantCommand( () -> { powerCellManagement.index.driveUpper(-200); } ),
+        new InstantCommand(() -> powerCellManagement.shooter.setSpeed(2000) ),
+        new WaitUntilCommand( () -> powerCellManagement.shooter.atSetpoint() ),
+        new InstantCommand( () -> {
+          powerCellManagement.index.driveUpper(200);
+          powerCellManagement.index.driveLower(200);
+         } )))
+      .whenReleased(
+        new InstantCommand( () -> {
+          powerCellManagement.index.driveUpper(0); powerCellManagement.index.driveLower(0); 
+        } ));
+      
+    
+    driverController.getButton(Hand.kLeft, 2)
+      .whileHeld( () -> powerCellManagement.intake.armMotor.set(0.5) )
+      .whenReleased( () -> powerCellManagement.intake.armMotor.set(0) );
+
+    driverController.getButton(Hand.kLeft, 3)
+      .whileHeld( () -> powerCellManagement.intake.armMotor.set(-0.5))
+      .whenReleased( () -> powerCellManagement.intake.armMotor.set(0) );
+    
+    driverController.getButton(Hand.kRight, 5)
+      .whileHeld( () -> powerCellManagement.intake.wheelMotor.set(0.45) )
+      .whenReleased( () -> powerCellManagement.intake.wheelMotor.set(0) );
+
+    // opController.shootAllBtn
+    //   .toggleWhenPressed(
+    //     new ShootPowerCells(driveBase, powerCellManagement, 
+    //     powerCellManagement.index.getPowerCellCount())
+    //     .andThen(
+    //       new IntakePowerCells(powerCellManagement)));
+    
+    // opController.shootOneBtn
+    //   .whenPressed(new ShootPowerCells(driveBase, powerCellManagement, 1));
+
+    
+    // opController.intakeBtn
+    //   .whenPressed( new InstantCommand(() -> powerCellManagement.intake.toggleArm()) );
+
+
+    
   }
 
 
