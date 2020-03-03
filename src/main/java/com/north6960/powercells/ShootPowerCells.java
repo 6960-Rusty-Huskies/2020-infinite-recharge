@@ -3,6 +3,8 @@ package com.north6960.powercells;
 import com.north6960.Constants.PID;
 import com.north6960.Constants.Physical;
 import com.north6960.drive.DriveBase;
+import com.north6960.drive.FollowLimelightOffsetX;
+import com.north6960.vision.LedMode;
 import com.north6960.vision.Limelight;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -12,62 +14,39 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import edu.wpi.first.wpiutil.math.MathUtil;
 
 public class ShootPowerCells extends SequentialCommandGroup {
   /**
    * Creates a new ShootPowerCells.
    */
-  public ShootPowerCells(DriveBase driveBase, PowerCellManagement pcm, int numToShoot) {
+  public ShootPowerCells(DriveBase driveBase, PowerCellManagement pcm) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-    // new PIDCommand(
-    //   // Declare PID controller
-    //   new PIDController(PID.DRIVE_BASE_P, 0, 0),
-    //   // Get measurement 
-    //   () -> Limelight.getOffsetX(), 
-    //   // Set setpoint
-    //   0, 
-    //   // Use output
-    //   output -> { driveBase.arcadeDrive(output, 0); }, 
-    //   // Subsystem requirements
-    //   driveBase),
-    
-    // new PIDCommand(
-    //   // Declare PID controller
-    //   new PIDController(PID.DRIVE_BASE_P, 0, 0),
-    //   // Get measurement
-    //   () -> driveBase.getImuCompassHeading(), 
-    //   // Set setpoint
-    //   driveBase.getImuCompassHeading(), 
-    //   // Use output
-    //   output -> { driveBase.arcadeDrive(output, 0); }, 
-    //   // Subsystem requirements
-    //   driveBase)
-    
-    // .alongWith( 
-    new InstantCommand( () -> { pcm.index.driveUpper(-200); } ),
-    new InstantCommand(() -> pcm.shooter.setSpeed(2000) ),
-    new WaitUntilCommand( () -> pcm.shooter.atSetpoint() ),
-    new ShootCell(pcm, numToShoot) );
+      new InstantCommand( () -> Limelight.setLed(LedMode.on) ), 
+      new FollowLimelightOffsetX(driveBase));
+      // .alongWith(
+      //   new InstantCommand( () -> { 
+      //     pcm.index.driveUpper(-200);
+      //     pcm.index.driveLower(-200); 
+      //   }).andThen(
+      //   new WaitCommand(0.5))
+      //   .andThen(
+      //   new InstantCommand(() -> pcm.shooter.setSpeed(2000) ))
+      //   .andThen(
+      //   new WaitUntilCommand( () -> pcm.shooter.atSetpoint() ))
+      //   .andThen(
+        // new ShootCell(pcm))
+      // );
   }
     
   public static class ShootCell extends CommandBase {
     private PowerCellManagement pcm;
 
-    private final int initialPowerCellCount;
-    private final int finalPowerCellCount;
-
-    public ShootCell(PowerCellManagement pcm, int numToShoot) {
+    public ShootCell(PowerCellManagement pcm) {
       // Use addRequirements() here to declare subsystem dependencies.
       addRequirements(pcm);
       this.pcm = pcm;
-
-      initialPowerCellCount = pcm.index.getPowerCellCount();
-
-      finalPowerCellCount = initialPowerCellCount - numToShoot;
-      MathUtil.clamp(finalPowerCellCount, 0, initialPowerCellCount - 1);
     }
 
     // Called when the command is initially scheduled.
@@ -94,9 +73,10 @@ public class ShootPowerCells extends SequentialCommandGroup {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-      pcm.shooter.setSpeed(Physical.SHOOTER_RPM_DEFAULT);
+      pcm.shooter.setSpeed(0);
       pcm.index.driveUpper(0);
       pcm.index.driveLower(0);
+      Limelight.setLed(LedMode.off);
 
       if(!interrupted) {
         pcm.intake.putDown();
@@ -106,7 +86,7 @@ public class ShootPowerCells extends SequentialCommandGroup {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-      return pcm.index.getPowerCellCount() == finalPowerCellCount;
+      return pcm.isShooting();
     }
   }
 }

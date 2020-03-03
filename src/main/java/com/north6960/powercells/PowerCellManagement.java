@@ -1,9 +1,10 @@
 package com.north6960.powercells;
 
-import com.north6960.Constants.Physical;
-import com.north6960.vision.Limelight;
+import com.north6960.drive.DriveBase;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PowerCellManagement extends SubsystemBase {
@@ -13,11 +14,26 @@ public class PowerCellManagement extends SubsystemBase {
   public Shooter shooter;
   public Hood hood;
 
+  private boolean isShooting;
+
   public PowerCellManagement() {
     index = new Index();
     intake = new Intake();
     shooter = new Shooter();
     hood = new Hood();
+    isShooting = false;
+  }
+
+  public boolean isShooting() {
+    return isShooting;
+  }
+
+  public void toggleShooting(DriveBase driveBase) {
+    isShooting = !isShooting;
+
+    if(!isShooting) {
+      CommandScheduler.getInstance().schedule(new ScheduleCommand( new ShootPowerCells(driveBase, this) ));
+    }
   }
 
   /**

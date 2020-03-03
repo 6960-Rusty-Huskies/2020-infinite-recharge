@@ -80,18 +80,7 @@ public class RobotContainer {
     powerCellManagement.setDefaultCommand(new IntakePowerCells(powerCellManagement));
 
     driverController.getButton(Hand.kLeft, 1)
-      .whileHeld(
-        new SequentialCommandGroup( new InstantCommand( () -> { powerCellManagement.index.driveUpper(-200); } ),
-        new InstantCommand(() -> powerCellManagement.shooter.setSpeed(2000) ),
-        new WaitUntilCommand( () -> powerCellManagement.shooter.atSetpoint() ),
-        new InstantCommand( () -> {
-          powerCellManagement.index.driveUpper(200);
-          powerCellManagement.index.driveLower(200);
-         } )))
-      .whenReleased(
-        new InstantCommand( () -> {
-          powerCellManagement.index.driveUpper(0); powerCellManagement.index.driveLower(0); 
-        } ));
+      .whenPressed( () -> powerCellManagement.toggleShooting(driveBase) );
       
     
     driverController.getButton(Hand.kLeft, 2)

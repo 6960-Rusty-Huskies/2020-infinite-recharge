@@ -1,35 +1,40 @@
 package com.north6960.drive;
 
+import com.north6960.Constants.PID;
+import com.north6960.vision.Limelight;
+
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 
-public class FollowImuHeading extends PIDCommand {
-
+public class FollowLimelightOffsetX extends PIDCommand {
   /**
-   * Creates a new FollowImuHeading.
+   * Creates a new FollowLimelightTarget.
    */
-  public FollowImuHeading(DriveBase driveBase) {
+  public FollowLimelightOffsetX(DriveBase driveBase) {
     super(
         // The controller that the command will use
-        new PIDController(0, 0, 0),
+        new PIDController(PID.DRIVE_BASE_P, 0, PID.DRIVE_BASE_D),
         // This should return the measurement
-        () -> driveBase.getImuCompassHeading(),
+        () -> Limelight.getOffsetX(),
         // This should return the setpoint (can also be a constant)
         () -> 0,
         // This uses the output
         output -> {
           // Use the output here
-          driveBase.arcadeDrive(0, output);
+          driveBase.arcadeDrive(0, -output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
     addRequirements(driveBase);
-    getController().setSetpoint(driveBase.getImuCompassHeading());
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    // Finish when the controller is at the setpoint.
+    return getController().atSetpoint();
   }
+
+  @Override
+  public void end(boolean interrupted) {}
 }

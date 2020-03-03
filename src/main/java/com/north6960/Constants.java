@@ -47,11 +47,11 @@ public final class Constants {
 	 */
     public static final class Digital {
         // ENCODERS
-		public static final int DRIVE_LEFT_ENCODER_A = 4;
-		public static final int DRIVE_LEFT_ENCODER_B = 5;
+		public static final int DRIVE_LEFT_ENCODER_A = 2;
+		public static final int DRIVE_LEFT_ENCODER_B = 3;
 
-		public static final int DRIVE_RIGHT_ENCODER_A = 2;
-		public static final int DRIVE_RIGHT_ENCODER_B = 3;
+		public static final int DRIVE_RIGHT_ENCODER_A = 4;
+		public static final int DRIVE_RIGHT_ENCODER_B = 5;
 
 		public static final int INTAKE_ENCODER_A = 0;
         public static final int INTAKE_ENCODER_B = 1;
@@ -138,7 +138,7 @@ public final class Constants {
 	 */
 	public static final class PID {
 		
-		public static final double SHOOTER_P = 0.0005;
+		public static final double SHOOTER_P = 0.005;
 		public static final double SHOOTER_FF = 0.0003;
 
 		public static final double INDEX_LOWER_P = 0.0005;
@@ -151,7 +151,8 @@ public final class Constants {
 		public static final double HOOD_P = 0.0;
 		public static final double HOOD_D = 0.0;
 
-		public static final double DRIVE_BASE_P = 0.0;
+		public static final double DRIVE_BASE_P = 0.09;
+		public static final double DRIVE_BASE_D = 0.01;
 
 		public static final double INTAKE_S = 4.52;
 		public static final double INTAKE_V = 0.00606;

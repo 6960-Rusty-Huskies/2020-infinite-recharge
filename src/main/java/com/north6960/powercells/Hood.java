@@ -32,6 +32,7 @@ public class Hood extends SubsystemBase {
 
     controller.setOutputRange(-0.5, 0.5);
     controller.setP(PID.HOOD_P);
+    controller.setD(PID.HOOD_D);
     controller.setFF(PID.HOOD_FF);
   }
 
