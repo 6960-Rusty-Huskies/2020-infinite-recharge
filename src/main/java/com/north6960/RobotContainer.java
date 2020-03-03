@@ -41,9 +41,11 @@ public class RobotContainer {
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() {                                                                                                                                              
+  public RobotContainer() {                                                                                                                                 
     // Configure the button bindings
     configureButtonBindings();
+
+    powerCellManagement.hood.setAngle(45);
   }
 
   /**
@@ -91,9 +93,25 @@ public class RobotContainer {
       .whileHeld( () -> powerCellManagement.intake.armMotor.set(-0.5))
       .whenReleased( () -> powerCellManagement.intake.armMotor.set(0) );
     
-    driverController.getButton(Hand.kRight, 5)
+    driverController.getButton(Hand.kRight, 3)
       .whileHeld( () -> powerCellManagement.intake.wheelMotor.set(0.45) )
       .whenReleased( () -> powerCellManagement.intake.wheelMotor.set(0) );
+
+    driverController.getButton(Hand.kRight, 2)
+      .whileHeld( () -> powerCellManagement.intake.wheelMotor.set(-0.45) )
+      .whenReleased( () -> powerCellManagement.intake.wheelMotor.set(0) );
+
+    driverController.getButton(Hand.kRight, 6)
+      .whileHeld( () -> climber.lift.move(0.2) )
+      .whenReleased( () -> climber.lift.move(0) );
+
+    driverController.getButton(Hand.kRight, 7)
+      .whileHeld( () -> climber.lift.move(-0.2) )
+      .whenReleased( () -> climber.lift.move(0) );
+    
+      driverController.getButton(Hand.kLeft, 11)
+        .whileHeld( () -> climber.winch.move(-1.0) )
+        .whenReleased( () -> climber.winch.move(0) );
 
     // opController.shootAllBtn
     //   .toggleWhenPressed(

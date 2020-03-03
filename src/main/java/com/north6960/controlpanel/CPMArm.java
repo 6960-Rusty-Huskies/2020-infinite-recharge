@@ -37,6 +37,5 @@ public class CPMArm extends SubsystemBase {
     // if(Math.abs(speed) < 0.1) speed = 0;
 
     // motor.set(VictorSPXControlMode.PercentOutput, speed);
-    SmartDashboard.putBoolean("Spinner arm limit switch", limitSwitchTriggered());
   }
 }

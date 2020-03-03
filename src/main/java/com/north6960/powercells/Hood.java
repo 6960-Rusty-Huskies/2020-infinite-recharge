@@ -9,7 +9,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Hood extends SubsystemBase {
@@ -18,8 +18,6 @@ public class Hood extends SubsystemBase {
   private CANPIDController controller;
   private CANEncoder encoder;
 
-  private DriverController dController = new DriverController();
-
   private double angDeg;
 
   public Hood() {
@@ -27,7 +25,8 @@ public class Hood extends SubsystemBase {
     controller = motor.getPIDController();
     encoder = motor.getEncoder();
 
-    encoder.setPositionConversionFactor(1. / 360.);
+    encoder.setPositionConversionFactor( 360. / 100. );
+    encoder.setPosition(0);
     angDeg = encoder.getPosition();
 
     controller.setOutputRange(-0.5, 0.5);
@@ -43,5 +42,6 @@ public class Hood extends SubsystemBase {
   @Override
   public void periodic() {
     controller.setReference(angDeg, ControlType.kPosition);
+    SmartDashboard.putNumber("Hood measurement", encoder.getPosition());
   }
 }

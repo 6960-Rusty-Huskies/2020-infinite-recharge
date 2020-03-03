@@ -58,10 +58,5 @@ public class PowerCellManagement extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Power Cell Count", index.getPowerCellCount());
-
-    SmartDashboard.putNumber("Intake position", intake.getMeasurement());
-    SmartDashboard.putNumber("Intake setpoint", intake.getController().getSetpoint() );
-    SmartDashboard.putNumber("Intake output", intake.getController().calculate(intake.getController().getSetpoint()));
-    SmartDashboard.putBoolean("Intake enabled", intake.isEnabled());
   }
 }

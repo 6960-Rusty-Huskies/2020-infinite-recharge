@@ -23,21 +23,17 @@ public class ShootPowerCells extends SequentialCommandGroup {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super(
-      new InstantCommand( () -> Limelight.setLed(LedMode.on) ), 
-      new FollowLimelightOffsetX(driveBase));
+      new InstantCommand( () -> Limelight.setLed(LedMode.on)), 
+      // new FollowLimelightOffsetX(driveBase)
       // .alongWith(
-      //   new InstantCommand( () -> { 
-      //     pcm.index.driveUpper(-200);
-      //     pcm.index.driveLower(-200); 
-      //   }).andThen(
-      //   new WaitCommand(0.5))
-      //   .andThen(
-      //   new InstantCommand(() -> pcm.shooter.setSpeed(2000) ))
-      //   .andThen(
-      //   new WaitUntilCommand( () -> pcm.shooter.atSetpoint() ))
-      //   .andThen(
-        // new ShootCell(pcm))
-      // );
+        new InstantCommand( () -> { 
+          pcm.index.driveUpper(-200);
+        }),
+        new WaitCommand(0.5),
+        new InstantCommand(() -> pcm.shooter.setSpeed(3000)),
+        new WaitUntilCommand( () -> pcm.shooter.atSetpoint()),
+        new ShootCell(pcm)
+      );
   }
     
   public static class ShootCell extends CommandBase {

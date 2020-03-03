@@ -19,9 +19,6 @@ public class Index extends SubsystemBase {
       new IndexSection(Analog.INDEX_LOWER_BEAM_BREAK, CAN.INDEX_LOWER_MOTOR, PID.INDEX_LOWER_P, PID.INDEX_LOWER_FF, false);
     upper = 
       new IndexSection(Analog.INDEX_UPPER_BEAM_BREAK, CAN.INDEX_UPPER_MOTOR, PID.INDEX_UPPER_P, PID.INDEX_UPPER_FF, true);
-    
-    SmartDashboard.putNumber("Upper setpoint", 0.0);
-    SmartDashboard.putNumber("Lower setpoint", 0.0);
 
     powerCellCount = 0;
   }
@@ -42,9 +39,6 @@ public class Index extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Upper velocity", upper.getRPM());
-    SmartDashboard.putNumber("Lower velocity", lower.getRPM());
-
     if(lower.getBeamBreak() && !lower.wasTriggeredLastCheck) {
       powerCellCount++;
     }
