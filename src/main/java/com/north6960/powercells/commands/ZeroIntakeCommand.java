@@ -1,5 +1,6 @@
-package com.north6960.powercells;
+package com.north6960.powercells.commands;
 
+import com.north6960.powercells.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ZeroIntakeCommand extends CommandBase {

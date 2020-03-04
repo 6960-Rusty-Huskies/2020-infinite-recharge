@@ -6,10 +6,10 @@ import com.north6960.controlpanel.CPM;
 import com.north6960.drive.DriveBase;
 import com.north6960.drive.DriveTeleop;
 import com.north6960.generatorswitch.Climber;
-import com.north6960.powercells.Index;
-import com.north6960.powercells.IntakePowerCells;
+import com.north6960.powercells.commands.IntakePowerCells;
 import com.north6960.powercells.PowerCellManagement;
 
+import com.north6960.powercells.commands.ShootPowerCells;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -26,8 +26,8 @@ public class RobotContainer {
 
   private Climber climber = new Climber();
   private CPM cpm = new CPM();
-  public static DriveBase driveBase = new DriveBase(1.0, 1.0);
-  public static PowerCellManagement powerCellManagement = new PowerCellManagement();
+  private DriveBase driveBase = new DriveBase(1.0, 1.0);
+  private PowerCellManagement powerCellManagement = new PowerCellManagement();
 
   private DriverController driverController = new DriverController();
   private OperatorController opController = new OperatorController();
@@ -74,7 +74,7 @@ public class RobotContainer {
     // =-=-=-=-= OPERATOR CONTROLS =-=-=-=-= //
 
     driverController.getButton(Hand.kLeft, 1)
-      .whenPressed( () -> powerCellManagement.toggleShooting(driveBase) );
+      .whenPressed( () -> new ShootPowerCells(driveBase, powerCellManagement) );
     
     driverController.getButton(Hand.kLeft, 2)
       .whileHeld( () -> powerCellManagement.intake.armMotor.set(0.5) )

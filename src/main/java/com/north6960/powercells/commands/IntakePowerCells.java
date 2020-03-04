@@ -1,7 +1,8 @@
-package com.north6960.powercells;
+package com.north6960.powercells.commands;
 
 import com.north6960.Constants.Physical;
 
+import com.north6960.powercells.PowerCellManagement;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class IntakePowerCells extends CommandBase {
