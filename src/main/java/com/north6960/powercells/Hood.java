@@ -28,20 +28,26 @@ public class Hood extends SubsystemBase {
     encoder.setPositionConversionFactor( 360. / 100. );
     encoder.setPosition(0);
     angDeg = encoder.getPosition();
-
     controller.setOutputRange(-0.5, 0.5);
     controller.setP(PID.HOOD_P);
     controller.setD(PID.HOOD_D);
     controller.setFF(PID.HOOD_FF);
   }
 
+  public boolean atSetpoint() {
+    return encoder.getPosition() >= angDeg - 2. && encoder.getPosition() <= angDeg + 2.;
+  }
+
   public void setAngle(double angDeg) {
     this.angDeg = angDeg;
+  }
+  
+  public double getAngle() {
+    return encoder.getPosition();
   }
 
   @Override
   public void periodic() {
     controller.setReference(angDeg, ControlType.kPosition);
-    SmartDashboard.putNumber("Hood measurement", encoder.getPosition());
   }
 }

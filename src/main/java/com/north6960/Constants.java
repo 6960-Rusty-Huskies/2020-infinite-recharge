@@ -151,8 +151,8 @@ public final class Constants {
 		public static final double HOOD_P = 0.05;
 		public static final double HOOD_D = 0.0;
 
-		public static final double DRIVE_BASE_P = 0.125;
-		public static final double DRIVE_BASE_D = 0.0025;
+		public static final double DRIVE_BASE_P = 0.01;
+		public static final double DRIVE_BASE_D = 0.0;
 
 		public static final double INTAKE_S = 4.52;
 		public static final double INTAKE_V = 0.00606;

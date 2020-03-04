@@ -8,32 +8,16 @@ import edu.wpi.first.wpilibj.AnalogInput;
 public class BeamBreak {
 
     private AnalogInput internalSensor;
-    private boolean defaultState;
 
     public BeamBreak(int channel) {
         internalSensor = new AnalogInput(channel);
-        defaultState = getRaw();
     }
 
     public double getVoltage() {
         return internalSensor.getVoltage();
     }
 
-    private boolean getRaw() {
+    public boolean get() {
         return internalSensor.getVoltage() > 2.5;
-    }
-
-    public boolean isTriggered() {
-        return getRaw() != defaultState;
-    }
-
-    /**
-     * <p> Sets the default state to the current raw state of the beam break. </p>
-     * 
-     * <p> Should be called when the beam break is known not to be blocked by any object 
-     *     it's meant to be tracking. </p>
-     */
-    public void calibrateDefaultState() {
-        defaultState = getRaw();
     }
 }

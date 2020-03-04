@@ -30,7 +30,7 @@ public class IndexSection extends SubsystemBase {
   }
 
   public boolean getBeamBreak() {
-    return beamBreak.isTriggered();
+    return beamBreak.get();
   }
 
   public void drive(double speed) {
@@ -48,7 +48,7 @@ public class IndexSection extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    wasTriggeredLastCheck = beamBreak.isTriggered();
+    wasTriggeredLastCheck = beamBreak.get();
 
     motor.getPIDController().setReference(rpm, ControlType.kVelocity);
   }

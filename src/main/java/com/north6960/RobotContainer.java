@@ -9,17 +9,11 @@ import com.north6960.generatorswitch.Climber;
 import com.north6960.powercells.Index;
 import com.north6960.powercells.IntakePowerCells;
 import com.north6960.powercells.PowerCellManagement;
-import com.north6960.powercells.ShootPowerCells;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -32,7 +26,7 @@ public class RobotContainer {
 
   private Climber climber = new Climber();
   private CPM cpm = new CPM();
-  private DriveBase driveBase = new DriveBase(0.75, 0.75);
+  public static DriveBase driveBase = new DriveBase(1.0, 1.0);
   public static PowerCellManagement powerCellManagement = new PowerCellManagement();
 
   private DriverController driverController = new DriverController();
@@ -44,8 +38,8 @@ public class RobotContainer {
   public RobotContainer() {                                                                                                                                 
     // Configure the button bindings
     configureButtonBindings();
-
-    powerCellManagement.hood.setAngle(45);
+    
+    powerCellManagement.setDefaultCommand(new IntakePowerCells(powerCellManagement));
   }
 
   /**
@@ -79,11 +73,8 @@ public class RobotContainer {
 
     // =-=-=-=-= OPERATOR CONTROLS =-=-=-=-= //
 
-    powerCellManagement.setDefaultCommand(new IntakePowerCells(powerCellManagement));
-
     driverController.getButton(Hand.kLeft, 1)
       .whenPressed( () -> powerCellManagement.toggleShooting(driveBase) );
-      
     
     driverController.getButton(Hand.kLeft, 2)
       .whileHeld( () -> powerCellManagement.intake.armMotor.set(0.5) )
@@ -119,16 +110,10 @@ public class RobotContainer {
     //     powerCellManagement.index.getPowerCellCount())
     //     .andThen(
     //       new IntakePowerCells(powerCellManagement)));
-    
-    // opController.shootOneBtn
-    //   .whenPressed(new ShootPowerCells(driveBase, powerCellManagement, 1));
 
     
     // opController.intakeBtn
     //   .whenPressed( new InstantCommand(() -> powerCellManagement.intake.toggleArm()) );
-
-
-    
   }
 
 

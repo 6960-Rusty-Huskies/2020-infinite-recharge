@@ -4,6 +4,8 @@ import com.north6960.Constants.Digital;
 import com.north6960.powercells.Index;
 import com.north6960.powercells.PowerCellManagement;
 import com.north6960.powercells.ZeroIntakeCommand;
+import com.north6960.vision.LedMode;
+import com.north6960.vision.Limelight;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -30,6 +32,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard;
     m_robotContainer = new RobotContainer();
+    Limelight.setLed(LedMode.off);
   }
 
   /**

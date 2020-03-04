@@ -1,27 +1,27 @@
 package com.north6960.powercells;
 
+import com.north6960.RobotContainer;
 import com.north6960.drive.DriveBase;
+import com.north6960.vision.LedMode;
+import com.north6960.vision.Limelight;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PowerCellManagement extends SubsystemBase {
 
-  public Index index;
-  public Intake intake;
-  public Shooter shooter;
-  public Hood hood;
+  public Index index = new Index();
+  public Intake intake = new Intake();
+  public Shooter shooter = new Shooter();
+  public Hood hood = new Hood();
 
-  private boolean isShooting;
+  private Command shootCommand = new ShootPowerCells(RobotContainer.driveBase, this);
+  private boolean isShooting = false;
 
   public PowerCellManagement() {
-    index = new Index();
-    intake = new Intake();
-    shooter = new Shooter();
-    hood = new Hood();
-    isShooting = false;
+    SmartDashboard.putNumber("Shooter RPM", 0);
+    SmartDashboard.putNumber("Hood angle", 0);
   }
 
   public boolean isShooting() {
@@ -31,8 +31,18 @@ public class PowerCellManagement extends SubsystemBase {
   public void toggleShooting(DriveBase driveBase) {
     isShooting = !isShooting;
 
-    if(!isShooting) {
-      CommandScheduler.getInstance().schedule(new ScheduleCommand( new ShootPowerCells(driveBase, this) ));
+    if(isShooting) {
+      shootCommand.schedule();
+      Limelight.setLed(LedMode.on);
+    }
+
+    else {
+      shootCommand.cancel();
+      
+      shooter.setSpeed(0);
+      index.driveUpper(0);
+      index.driveLower(0);
+      Limelight.setLed(LedMode.off);
     }
   }
 
@@ -43,20 +53,21 @@ public class PowerCellManagement extends SubsystemBase {
    */
   public void setUpShooter() {
     // if(Limelight.getArea() < Physical.LL_AREA_FAR) {
-    //   shooter.setSpeed(Physical.SHOOTER_RPM_FAR);
-    //   hood.setAngle(Physical.HOOD_ANGLE_FAR);
+      shooter.setSpeed(SmartDashboard.getNumber("Shooter RPM", 0));
+      hood.setAngle(SmartDashboard.getNumber("Hood angle", 0));
     // }
 
     // else if(!Limelight.hasValidTarget() || Limelight.getArea() > Physical.LL_AREA_FAR) {
-    //   shooter.setSpeed(Physical.SHOOTER_RPM_NEAR);
-    //   hood.setAngle(Physical.HOOD_ANGLE_NEAR);
+      // shooter.setSpeed(Physical.SHOOTER_RPM_NEAR);
+      // hood.setAngle(Physical.HOOD_ANGLE_NEAR);
     // }
-
-    shooter.setSpeed(2000);
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Power Cell Count", index.getPowerCellCount());
+    
+    SmartDashboard.putNumber("Current shooter speed", shooter.getSpeed());
+    SmartDashboard.putNumber("Current hood angle", hood.getAngle());
   }
 }
