@@ -15,14 +15,14 @@ public class Climber extends SubsystemBase {
     winch = new Winch();
   }
 
-  public void moveLift(double speed) {
+  public void driveLift(double speed) {
     lift.move(speed);
   }
 
-  public void moveWinch(double speed) {
+  public void driveWinch(double speed) {
     winch.move(speed);
   }
-
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

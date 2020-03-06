@@ -1,45 +1,45 @@
-package com.north6960.controlpanel;
+package com.north6960.powercells.commands;
 
+import com.north6960.powercells.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-import com.north6960.controlpanel.Spinner;
-
-public class MoveToColor extends CommandBase {
-
-  private Spinner _spinner;
-
-  public MoveToColor(Spinner spinner) {
+public class ZeroIntakeCommand extends CommandBase {
+  Intake intake;
+  /**
+   * Creates a new ZeroIntakeCommand.
+   */
+  public ZeroIntakeCommand(Intake intake) {
     // Use addRequirements() here to declare subsystem dependencies.
-    _spinner = spinner;
-    addRequirements(spinner);
+    addRequirements(intake);
+    this.intake = intake;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    _spinner.arm.move(-1);
-    _spinner.moveToFMSColor();
+    intake.armMotor.set(-0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(_spinner.arm.limitSwitchTriggered()) {
-      _spinner.arm.move(0);
-    }
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    new WaitCommand(0.25);
-    _spinner.wheel.move(0);
+    if(!interrupted) {
+      intake.armMotor.set(0);
+      intake.zeroEncoder();
+      intake.enable();
+      intake.setSetpoint(0);
+    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return _spinner.isColorMatched();
+    return intake.limitSwitchTriggered();
   }
 }

@@ -1,32 +1,48 @@
 package com.north6960.powercells;
 
-import com.north6960.Constants;
+import com.north6960.Constants.CAN;
+import com.north6960.Constants.PID;
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.ControlType;
+import com.revrobotics.EncoderType;
 
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Shooter extends PIDSubsystem {
+public class Shooter extends SubsystemBase {
 
   private CANSparkMax spinnerMotor;
+  private CANEncoder encoder;
+  private CANPIDController controller;
+  private double setpoint;
 
   public Shooter() {
-    super(new PIDController(0., 0., 0.));
-    spinnerMotor = new CANSparkMax(Constants.SHOOTER_MOTOR, MotorType.kBrushless);
+    spinnerMotor = new CANSparkMax(CAN.SHOOTER_MOTOR, MotorType.kBrushless);
+    encoder = spinnerMotor.getEncoder(EncoderType.kHallSensor, 42);
+
+    controller = spinnerMotor.getPIDController();
+
+    controller.setP(PID.SHOOTER_P);
+    controller.setFF(PID.SHOOTER_FF);
+    spinnerMotor.setInverted(true);
   }
 
-  public void setSpeed(double speed) {
-    setSetpoint(speed);
+  public void setSpeed(double rpm) {
+    setpoint = rpm; 
+  }
+
+  public double getSpeed() {
+    return encoder.getVelocity();
+  }
+
+  public boolean atSetpoint() {
+    return encoder.getVelocity() > setpoint - 10;
   }
 
   @Override
-  public double getMeasurement() {
-    return spinnerMotor.get();
-  }
-
-  @Override
-  public void useOutput(double output, double setpoint) {
-    spinnerMotor.set(output);
+  public void periodic() {
+    controller.setReference(setpoint, ControlType.kVelocity);
   }
 }

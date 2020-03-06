@@ -26,28 +26,28 @@ public class Limelight {
      * @return Vertical Offset From Crosshair To Target (-24.85 to 24.85 degrees).
      */
     public static double getOffsetY() {
-        return table.getEntry("ty").getDouble(0.0);
+        return table.getEntry("ty").getDouble(-361.0);
     }
 
     /**
      * @return Horizontal Offset From Crosshair To Target (-29.8 to 29.8 degrees).
      */
     public static double getOffsetX() {
-        return table.getEntry("tx").getDouble(0.0);
+        return table.getEntry("tx").getDouble(-361.0);
     }
 
     /**
      * @return Target Area (0% of image to 100% of image)
      */
     public static double getArea() {
-        return table.getEntry("ta").getDouble(0.0);
+        return table.getEntry("ta").getDouble(-1.0);
     }
 
     /**
      * @return Skew or rotation (-90 degrees to 0 degrees)
      */
     public static double getSkew() {
-        return table.getEntry("ts").getDouble(0.0);
+        return table.getEntry("ts").getDouble(-1.0);
     }
 
     /**
@@ -55,11 +55,11 @@ public class Limelight {
      * @param ledMode the mode to set the LED to.
      */
     public static void setLed(LedMode ledMode) {
-        table.getEntry("ledMode").setNumber(ledMode.ordinal());
+        table.getEntry("ledMode").setNumber((double) ledMode.ordinal());
     }
 
     public static void setOperationMode(CameraMode camMode) {
-        table.getEntry("camMode").setNumber(camMode.ordinal());
+        table.getEntry("camMode").setNumber((double) camMode.ordinal());
     }
 
     public double getDistanceToGoal(double goalHeight) {
