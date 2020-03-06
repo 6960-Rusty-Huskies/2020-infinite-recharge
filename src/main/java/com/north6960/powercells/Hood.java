@@ -2,14 +2,14 @@ package com.north6960.powercells;
 
 import com.north6960.Constants.CAN;
 import com.north6960.Constants.PID;
-import com.north6960.controller.DriverController;
+import com.north6960.Constants.Physical;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Hood extends SubsystemBase {
@@ -18,28 +18,33 @@ public class Hood extends SubsystemBase {
   private CANPIDController controller;
   private CANEncoder encoder;
 
-  private double angDeg;
+  private double setpoint;
 
   public Hood() {
     motor = new CANSparkMax(CAN.HOOD_MOTOR, MotorType.kBrushless);
     controller = motor.getPIDController();
     encoder = motor.getEncoder();
 
-    encoder.setPositionConversionFactor( 360. / 100. );
+    encoder.setPositionConversionFactor( 360. / Physical.HOOD_GEAR_RATIO );
     encoder.setPosition(0);
-    angDeg = encoder.getPosition();
+    setpoint = 0;
+
     controller.setOutputRange(-0.5, 0.5);
     controller.setP(PID.HOOD_P);
     controller.setD(PID.HOOD_D);
     controller.setFF(PID.HOOD_FF);
   }
 
+  public void setBrakeMode(boolean brakeMode) {
+    motor.setIdleMode(brakeMode ? IdleMode.kBrake : IdleMode.kCoast);
+  }
+
   public boolean atSetpoint() {
-    return encoder.getPosition() >= angDeg - 2. && encoder.getPosition() <= angDeg + 2.;
+    return encoder.getPosition() >= setpoint - 2. && encoder.getPosition() <= setpoint + 2.;
   }
 
   public void setAngle(double angDeg) {
-    this.angDeg = angDeg;
+    this.setpoint = angDeg;
   }
   
   public double getAngle() {
@@ -48,6 +53,6 @@ public class Hood extends SubsystemBase {
 
   @Override
   public void periodic() {
-    controller.setReference(angDeg, ControlType.kPosition);
+    controller.setReference(setpoint, ControlType.kPosition);
   }
 }

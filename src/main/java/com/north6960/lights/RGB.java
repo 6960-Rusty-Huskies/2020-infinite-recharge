@@ -1,6 +1,6 @@
 package com.north6960.lights;
 
-import com.north6960.controlpanel.WheelColor.ColorEnum;
+import com.north6960.controlpanel.ColorEnum;
 
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;

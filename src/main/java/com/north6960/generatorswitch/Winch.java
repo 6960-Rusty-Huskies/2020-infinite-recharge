@@ -1,5 +1,6 @@
 package com.north6960.generatorswitch;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -15,6 +16,7 @@ public class Winch extends SubsystemBase {
 
   public Winch() {
     motor = new VictorSPX(CAN.WINCH_MOTOR);
+    motor.setNeutralMode(NeutralMode.Brake);
   }
 
   public void move(double speed) {

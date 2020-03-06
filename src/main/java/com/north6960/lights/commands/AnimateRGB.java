@@ -1,4 +1,6 @@
-package com.north6960.lights;
+package com.north6960.lights.commands;
+
+import com.north6960.lights.RGB;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;

@@ -29,9 +29,12 @@ public class ZeroIntakeCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.armMotor.set(0);
-    intake.zeroEncoder();
-    intake.enable();
+    if(!interrupted) {
+      intake.armMotor.set(0);
+      intake.zeroEncoder();
+      intake.enable();
+      intake.setSetpoint(0);
+    }
   }
 
   // Returns true when the command should end.

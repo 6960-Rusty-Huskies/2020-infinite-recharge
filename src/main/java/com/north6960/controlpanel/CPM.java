@@ -1,6 +1,5 @@
 package com.north6960.controlpanel;
 
-import com.north6960.controlpanel.WheelColor.ColorEnum;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 
@@ -67,7 +66,8 @@ public class CPM extends SubsystemBase {
 
     if(isColorMatched()) speed = 0.0;
 
-    ColorEnum current = WheelColor.ColorEnum.valueOf(getDetectedColor().toString());
+    // Increase the value of the color by 2 to get the value under the control panel color sensor.
+    ColorEnum current = ColorEnum.valueOf(getDetectedColor().toString()).next(2);
     ColorEnum target = ColorEnum.valueOf(WheelColor.getFMSDisplayed().toString());
 
     if((current.ordinal() - 2) % 4 == target.ordinal()) {

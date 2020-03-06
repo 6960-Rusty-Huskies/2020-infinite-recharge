@@ -1,8 +1,5 @@
 package com.north6960.generatorswitch;
 
-import com.north6960.controller.DriverController;
-
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -10,13 +7,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class Climber extends SubsystemBase {
 
-  public Lift lift;
-  public Winch winch;
-  private DriverController controller = new DriverController();
+  private Lift lift;
+  private Winch winch;
 
   public Climber() {
     lift = new Lift();
     winch = new Winch();
+  }
+
+  public void driveLift(double speed) {
+    lift.move(speed);
+  }
+
+  public void driveWinch(double speed) {
+    winch.move(speed);
   }
   
   @Override

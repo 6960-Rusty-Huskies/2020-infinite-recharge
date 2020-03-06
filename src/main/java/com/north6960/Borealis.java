@@ -2,6 +2,7 @@ package com.north6960;
 
 import com.north6960.vision.LedMode;
 import com.north6960.vision.Limelight;
+import com.north6960.vision.StreamType;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -13,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Borealis extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
 
@@ -26,7 +27,10 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard;
     m_robotContainer = new RobotContainer();
+
     Limelight.setLed(LedMode.off);
+    Limelight.setCameraStream(StreamType.PiPSecondary);
+
   }
 
   /**
@@ -49,7 +53,9 @@ public class Robot extends TimedRobot {
    * This function is called once each time the robot enters Disabled mode.
    */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    m_robotContainer.powerCellManagement.hood.setBrakeMode(false);
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -84,9 +90,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     
-    CommandScheduler.getInstance().cancelAll();
-    CommandScheduler.getInstance().run();
-
+    m_robotContainer.powerCellManagement.hood.setBrakeMode(true);
   }
 
   /**

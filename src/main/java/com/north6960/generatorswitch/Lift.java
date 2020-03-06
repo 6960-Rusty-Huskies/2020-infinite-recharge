@@ -1,5 +1,6 @@
 package com.north6960.generatorswitch;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -12,12 +13,13 @@ import com.north6960.Constants.Digital;
  */
 public class Lift extends SubsystemBase {
   private WPI_TalonSRX motor;
-  private DigitalInput limitSwitch;
+  private DigitalInput limitSwitchTop, limitSwitchBottom;
 
   public Lift() {
     motor = new WPI_TalonSRX(CAN.LIFT_MOTOR);
-    motor.setInverted(true);
-    limitSwitch = new DigitalInput(Digital.LIFT_SWITCH);
+    limitSwitchTop = new DigitalInput(Digital.LIFT_SWITCH_TOP);
+    limitSwitchBottom = new DigitalInput(Digital.LIFT_SWITCH_BOTTOM);
+    motor.setNeutralMode(NeutralMode.Brake);
   }
 
   /**
@@ -25,9 +27,9 @@ public class Lift extends SubsystemBase {
    * @param speed the speed with which to move the lift.
    */
   public void move(double speed) {
-    // if(!limitSwitch.get()) {
+    if((!limitSwitchTop.get() && speed > 0) || (!limitSwitchBottom.get() && speed < 0)) {
       motor.set(speed);
-    // }
+    }
   }
 
   @Override

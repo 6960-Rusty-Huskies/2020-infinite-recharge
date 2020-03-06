@@ -39,7 +39,7 @@ public final class Constants {
         public static final int CPM_WHEEL_MOTOR = 6;
         
         // IMU
-		public static final int PIGEON_IMU = 15; 
+		public static final int PIGEON_IMU = 16; 
 	}
 	
 	/**
@@ -58,8 +58,9 @@ public final class Constants {
 
 		// LIMIT SWITCHES
 		public static final int INTAKE_ARM_LIMIT_SWITCH = 6;
-		public static final int LIFT_SWITCH = 10;
-		public static final int SPINNER_ARM_LIMIT_SWITCH = 7;
+		public static final int LIFT_SWITCH_TOP = 10;
+		public static final int LIFT_SWITCH_BOTTOM = 11;
+		public static final int SPINNER_ARM_LIMIT_SWITCH_TOP = 7;
 	}
 	
 	/**
@@ -76,7 +77,8 @@ public final class Constants {
 	 */
     public static final class PWM {
         // LED strips
-        public static final int LED_1 = 0;
+		public static final int LED_1 = 0;
+		public static final int LED_2 = 1;
 	}
 	
     /**
@@ -95,14 +97,15 @@ public final class Constants {
 	 */
 	public static final class Button {
 		// Button values start at 1.
+		
+		public static final int SHOOT_FAR = 1;
+		public static final int SHOOT_NEAR = 2;
 
-		public static final int SHOOT_ONE = 1;
-		public static final int SHOOT_ALL = 2;
-		public static final int INTAKE = 3;
+		public static final int TOGGLE_INTAKE = 3;
 		public static final int ROTATION_CONTROL = 4;
 		public static final int POSITION_CONTROL = 5;
 
-		public static final int SHOOTER_MANUAL = 6;
+		public static final int TOGGLE_MANUAL = 6;
 		public static final int INDEX_MANUAL = 7;
 
 		public static final SimpleEntry<Hand, Integer> 
@@ -118,19 +121,23 @@ public final class Constants {
 	 */
 	public static final class Physical {
 		public static final double SHOOTER_RPM_DEFAULT = 500;
-		public static final double SHOOTER_RPM_NEAR = 1000;
-		public static final double SHOOTER_RPM_FAR = 3000;
+		public static final double SHOOTER_RPM_NEAR = 2000;
+		public static final double SHOOTER_RPM_FAR = 3650;
+		public static final double SHOOTER_RPM_AUTO = 2500;
+
+		public static final double HOOD_ANGLE_NEAR = 10;
+		public static final double HOOD_ANGLE_FAR = -5;
+		public static final double HOOD_ANGLE_AUTO = 0;
+		public static final double HOOD_GEAR_RATIO = 100;
+
 		public static final double LL_AREA_FAR = 0.1;
 
-		public static final double UPPER_INDEX_SPEED = 200;
-		public static final double LOWER_INDEX_SPEED = 200;
+		public static final double INDEX_SPEED = 1./3.;
+		public static final double INDEX_GEAR_RATIO = 10;
 
-		public static final double INTAKE_LOW_ANGLE = 70;
+		public static final double INTAKE_LOW_ANGLE = 120;
 		public static final double INTAKE_HIGH_ANGLE = 0;
-
-		public static final double HOOD_ANGLE_NEAR = 30;
-		public static final double HOOD_ANGLE_FAR = 45;
-		public static final double HOOD_GEAR_RATIO = 1.;
+		public static final double INTAKE_GEAR_RATIO = 16. / 18.;
 	}
 
 	/**
@@ -141,18 +148,15 @@ public final class Constants {
 		public static final double SHOOTER_P = 0.00035;
 		public static final double SHOOTER_FF = 0.00025;
 
-		public static final double INDEX_LOWER_P = 0.0005;
-		public static final double INDEX_LOWER_FF = 0.0003;
-
-		public static final double INDEX_UPPER_P = 0.0005;
-		public static final double INDEX_UPPER_FF = 0.0003;
+		public static final double INDEX_P = 1;
+		public static final double INDEX_FF = 0.138;
 
 		public static final double HOOD_FF = 0.0;
 		public static final double HOOD_P = 0.05;
 		public static final double HOOD_D = 0.0;
 
 		public static final double DRIVE_BASE_P = 0.01;
-		public static final double DRIVE_BASE_D = 0.0;
+		public static final double DRIVE_BASE_D = 0;
 
 		public static final double INTAKE_S = 4.52;
 		public static final double INTAKE_V = 0.00606;

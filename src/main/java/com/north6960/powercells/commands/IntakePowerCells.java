@@ -1,13 +1,16 @@
 package com.north6960.powercells.commands;
 
 import com.north6960.Constants.Physical;
-
+import com.north6960.controller.OperatorController;
 import com.north6960.powercells.PowerCellManagement;
+
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class IntakePowerCells extends CommandBase {
 
   private PowerCellManagement pcm;
+  private OperatorController controller;
 
   /**
    * Creates a new IntakePowerCells.
@@ -21,26 +24,32 @@ public class IntakePowerCells extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // if(!pcm.intake.isDown()) {
-    //   pcm.intake.putDown();
-    // }
+    if(!pcm.intake.isDown()) {
+      pcm.intake.putDown();
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(pcm.index.lower.getBeamBreak()) {
-      pcm.index.driveLower(Physical.LOWER_INDEX_SPEED);
+    if(!pcm.index.isManual) {
+      if(pcm.index.lower.getBeamBreak()) {
+        pcm.index.driveBoth(Physical.INDEX_SPEED);
+      }
+      else {
+        pcm.index.driveBoth(0);
+      }
     }
+
     else {
-      pcm.index.driveLower(0);
+      pcm.index.driveBoth(Physical.INDEX_SPEED * controller.getY(Hand.kLeft));
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // pcm.intake.putUp();
+    pcm.intake.putUp();
   }
 
   // Returns true when the command should end.

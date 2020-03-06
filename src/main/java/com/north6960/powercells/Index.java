@@ -2,7 +2,6 @@ package com.north6960.powercells;
 
 import com.north6960.Constants.Analog;
 import com.north6960.Constants.CAN;
-import com.north6960.Constants.PID;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,16 +12,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Index extends SubsystemBase {
   public IndexSection lower, upper;
   private int powerCellCount;
+  public boolean isManual = false;
 
   public Index() {
     lower = 
-      new IndexSection(Analog.INDEX_LOWER_BEAM_BREAK, CAN.INDEX_LOWER_MOTOR, PID.INDEX_LOWER_P, PID.INDEX_LOWER_FF, false);
+      new IndexSection(Analog.INDEX_LOWER_BEAM_BREAK, CAN.INDEX_LOWER_MOTOR,  false);
     upper = 
-      new IndexSection(Analog.INDEX_UPPER_BEAM_BREAK, CAN.INDEX_UPPER_MOTOR, PID.INDEX_UPPER_P, PID.INDEX_UPPER_FF, true);
+      new IndexSection(Analog.INDEX_UPPER_BEAM_BREAK, CAN.INDEX_UPPER_MOTOR, true);
 
-    powerCellCount = 0;
+    powerCellCount = 3;
   }
-
 
   public int getPowerCellCount() {
     return powerCellCount;
@@ -36,6 +35,11 @@ public class Index extends SubsystemBase {
     lower.drive(speed);
   }
 
+  public void driveBoth(double speed) {
+    driveUpper(speed);
+    driveLower(speed);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -46,6 +50,11 @@ public class Index extends SubsystemBase {
     if(!upper.getBeamBreak() && upper.wasTriggeredLastCheck) {
       powerCellCount--;
     }
+
+    if(powerCellCount < 0) powerCellCount = 0;
+
+    SmartDashboard.putBoolean("Upper beam break", upper.getBeamBreak());
+    SmartDashboard.putBoolean("Lower beam break", lower.getBeamBreak());
 
   }
 }

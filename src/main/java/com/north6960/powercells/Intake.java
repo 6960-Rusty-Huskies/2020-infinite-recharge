@@ -1,6 +1,5 @@
 package com.north6960.powercells;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.north6960.Constants.CAN;
@@ -12,8 +11,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
 /**
@@ -25,6 +22,7 @@ public class Intake extends PIDSubsystem {
   private Encoder armEncoder;
   private ArmFeedforward feedforward;
   private DigitalInput limitSwitch;
+  public boolean isManual = false;
 
   public Intake() {
     super(
@@ -41,7 +39,7 @@ public class Intake extends PIDSubsystem {
     wheelMotor.setInverted(true);
 
     // Encoder should give an output in degrees.
-    armEncoder.setDistancePerPulse((18. / 16.) * 360. / 2048.);
+    armEncoder.setDistancePerPulse(Physical.INTAKE_GEAR_RATIO * 360. / 2048.);
     armEncoder.setReverseDirection(true);
 
     getController().setTolerance(1.);
@@ -49,6 +47,10 @@ public class Intake extends PIDSubsystem {
 
   public void zeroEncoder() {
     armEncoder.reset();
+  }
+
+  public double getArmAngle() {
+    return armEncoder.getDistance();
   }
 
   public boolean limitSwitchTriggered() {
@@ -67,14 +69,6 @@ public class Intake extends PIDSubsystem {
     wheelMotor.set(VictorSPXControlMode.PercentOutput, on ? 0.3 : 0.0);
   }
 
-  public void toggleArm() {
-    if(this.getController().getSetpoint() == 0) {
-      putUp();
-    }
-
-    else putDown();
-  }
-
   public void putUp() {
     setSetpoint(Physical.INTAKE_HIGH_ANGLE);
     setWheel(false);
@@ -83,6 +77,14 @@ public class Intake extends PIDSubsystem {
   public void putDown() {
     setSetpoint(Physical.INTAKE_LOW_ANGLE);
     setWheel(true);
+  }
+
+  public void toggleArm() {
+    if(this.getController().getSetpoint() == 0) {
+      putUp();
+    }
+
+    else putDown();
   }
 
   @Override

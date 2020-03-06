@@ -38,6 +38,8 @@ public class DriveBase extends SubsystemBase {
     leftEncoder = new Encoder(Digital.DRIVE_LEFT_ENCODER_A, Digital.DRIVE_LEFT_ENCODER_B);
     rightEncoder = new Encoder(Digital.DRIVE_RIGHT_ENCODER_A, Digital.DRIVE_RIGHT_ENCODER_B);
 
+    leftEncoder.setDistancePerPulse( 2048. * 2. * Math.PI * 6.);
+
     rightStick = new Joystick(USB.DRIVER_JOYSTICK_RIGHT);
     leftStick = new Joystick(USB.DRIVER_JOYSTICK_LEFT);
 
@@ -54,8 +56,8 @@ public class DriveBase extends SubsystemBase {
     drive.arcadeDrive(-speed * speedMult, turn * turnMult);
   }
 
-  public double getImuCompassHeading() {
-    return imu.getAbsoluteCompassHeading();
+  public double getAverageDistance() {
+    return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2.;
   }
 
   @Override
