@@ -28,7 +28,7 @@ public class ControlPanelManipulator extends SubsystemBase {
     colorMatch = new ColorMatch();
 
     upperLimitSwitch = new DigitalInput(Digital.SPINNER_SWITCH_TOP);
-    // lowerLimitSwitch = new DigitalInput(Digital.SPINNER_SWITCH_BOTTOM);
+    lowerLimitSwitch = new DigitalInput(Digital.SPINNER_SWITCH_BOTTOM);
 
     colorMatch.addColorMatch(WheelColor.red);
     colorMatch.addColorMatch(WheelColor.green);
@@ -36,51 +36,36 @@ public class ControlPanelManipulator extends SubsystemBase {
     colorMatch.addColorMatch(WheelColor.yellow);
   }
 
-  public ColorEnum getDetectedColorEnum() {
-    Color detected = getDetectedColor();
+  public ColorEnum getPredictedFieldColor() {
+    Color c = colorMatch.matchClosestColor(colorSensor.getColor()).color;
 
-    if(detected == WheelColor.red) {
-      return ColorEnum.red;
-    }
-    else if(detected == WheelColor.green) {
-      return ColorEnum.green;
-    }
-    else if(detected == WheelColor.blue) {
-      return ColorEnum.blue;
-    }
-    else if(detected == WheelColor.yellow) {
-      return ColorEnum.yellow;
-    }
-
-    return null;
-  }
-
-  public Color getDetectedColor() {
-    return colorMatch.matchClosestColor(colorSensor.getColor()).color;
+    return ColorEnum.fromWheelColor(c).next(2);
   }
 
   public boolean isColorMatched() {
-    return getDetectedColor() == WheelColor.getFMSDisplayed();
+    return getPredictedFieldColor() == ColorEnum.fromWheelColor(WheelColor.getFMSDisplayed());
   }
 
   public void moveTowardFMSColor() {
     double speed;
 
-    if(WheelColor.getFMSDisplayed().toString().isBlank() || WheelColor.getFMSDisplayed().toString().isEmpty()) {
+    Color fmsDisplayed = WheelColor.getFMSDisplayed();
+
+    if(fmsDisplayed.toString().isBlank() || fmsDisplayed.toString().isEmpty()) {
       return;
     } 
 
     if(isColorMatched()) speed = 0.0;
 
     // Increase the value of the color by 2 to get the value under the control panel color sensor.
-    ColorEnum current = ColorEnum.valueOf(getDetectedColor().toString()).next(2);
-    ColorEnum target = ColorEnum.valueOf(WheelColor.getFMSDisplayed().toString());
+    ColorEnum current = getPredictedFieldColor();
+    ColorEnum target = ColorEnum.fromWheelColor(fmsDisplayed);
 
     if((current.ordinal() - 2) % 4 == target.ordinal()) {
-      speed = -0.75; // Left
+      speed = -1; // Left
     }
 
-    else speed = 0.75; // Right
+    else speed = 1; // Right
 
     wheel.move(speed);
   }

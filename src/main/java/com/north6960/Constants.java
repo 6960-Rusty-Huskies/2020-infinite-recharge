@@ -61,7 +61,7 @@ public final class Constants {
 		public static final int LIFT_SWITCH_TOP = 10;
 		public static final int LIFT_SWITCH_BOTTOM = 11;
 		public static final int SPINNER_SWITCH_TOP = 7;
-		public static final int SPINNER_SWITCH_BOTTOM = -1;
+		public static final int aSPINNER_SWITCH_BOTTOM = -1;
 	}
 	
 	/**

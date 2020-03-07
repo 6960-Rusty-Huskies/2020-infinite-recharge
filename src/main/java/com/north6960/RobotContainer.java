@@ -5,6 +5,8 @@ import com.north6960.autonomous.DefaultAutoCommand;
 import com.north6960.controller.DriverController;
 import com.north6960.controller.OperatorController;
 import com.north6960.controlpanel.ControlPanelManipulator;
+import com.north6960.controlpanel.commands.PositionControl;
+import com.north6960.controlpanel.commands.RotationControl;
 import com.north6960.drive.DriveBase;
 import com.north6960.drive.commands.DriveTeleop;
 import com.north6960.generatorswitch.Climber;
@@ -27,7 +29,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private Climber climber = new Climber();
-  // private ControlPanelManipulator cpm = new ControlPanelManipulator();
+  private ControlPanelManipulator cpm = new ControlPanelManipulator();
   private DriveBase driveBase = new DriveBase(0.75, 0.75);
   public PowerCellManagement powerCellManagement = new PowerCellManagement();
 
@@ -97,13 +99,11 @@ public class RobotContainer {
         powerCellManagement.shooter.setSpeed(0);
       } );
 
-      // TODO make PositionControl and RotationControl commands.
+      opController.rotationControlBtn
+        .toggleWhenPressed(new PositionControl(cpm));
 
-      // opController.rotationControlBtn
-        // .toggleWhenPressed(new PositionControl(cpm));
-
-      // opController.positionControlBtn
-      //   .toggleWhenPressed(new RotationControl(cpm));
+      opController.positionControlBtn
+        .toggleWhenPressed(new RotationControl(cpm));
   }
 
 
