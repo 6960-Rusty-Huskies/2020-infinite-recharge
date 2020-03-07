@@ -2,13 +2,13 @@ package com.north6960.controlpanel.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import com.north6960.controlpanel.CPM;
+import com.north6960.controlpanel.ControlPanelManipulator;
 
 public class MoveToFMSColor extends CommandBase {
 
-  private CPM cpm;
+  private ControlPanelManipulator cpm;
 
-  public MoveToFMSColor(CPM cpm) {
+  public MoveToFMSColor(ControlPanelManipulator cpm) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.cpm = cpm;
     addRequirements(cpm);
@@ -28,7 +28,7 @@ public class MoveToFMSColor extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    cpm.wheel.move(0.0);
+    cpm.moveWheel(0.0);
   }
 
   // Returns true when the command should end.

@@ -1,45 +1,39 @@
-package com.north6960.powercells.commands;
+package com.north6960.controlpanel.commands;
 
-import com.north6960.powercells.Intake;
+import com.north6960.controlpanel.ControlPanelManipulator;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ZeroIntakeCommand extends CommandBase {
-  Intake intake;
+public class RaiseArm extends CommandBase {
+  ControlPanelManipulator cpm;
   /**
-   * Creates a new ZeroIntakeCommand.
+   * Creates a new RaiseArm.
    */
-  public ZeroIntakeCommand(Intake intake) {
+  public RaiseArm(ControlPanelManipulator cpm) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
-    this.intake = intake;
+    addRequirements(cpm);
+    this.cpm = cpm;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.armMotor.set(-0.5);
+    cpm.moveArm(-1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if(!interrupted) {
-      intake.armMotor.set(0);
-      intake.zeroEncoder();
-      intake.enable();
-      intake.setSetpoint(0);
-    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return intake.limitSwitchTriggered();
+    return cpm.upperLimitSwitchTriggered();
   }
 }

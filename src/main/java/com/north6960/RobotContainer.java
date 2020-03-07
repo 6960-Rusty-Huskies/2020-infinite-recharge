@@ -1,24 +1,21 @@
 package com.north6960;
 
+import com.north6960.Constants.Physical;
 import com.north6960.autonomous.DefaultAutoCommand;
 import com.north6960.controller.DriverController;
 import com.north6960.controller.OperatorController;
-import com.north6960.controlpanel.CPM;
+import com.north6960.controlpanel.ControlPanelManipulator;
 import com.north6960.drive.DriveBase;
 import com.north6960.drive.commands.DriveTeleop;
 import com.north6960.generatorswitch.Climber;
-import com.north6960.powercells.commands.IntakePowerCells;
 import com.north6960.powercells.PowerCellManagement;
 import com.north6960.powercells.ShootingType;
+import com.north6960.powercells.commands.IntakePowerCells;
 import com.north6960.powercells.commands.ShootPowerCells;
-import com.north6960.powercells.commands.ZeroIntakeCommand;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -30,7 +27,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private Climber climber = new Climber();
-  private CPM cpm = new CPM();
+  // private ControlPanelManipulator cpm = new ControlPanelManipulator();
   private DriveBase driveBase = new DriveBase(0.75, 0.75);
   public PowerCellManagement powerCellManagement = new PowerCellManagement();
 
@@ -46,8 +43,6 @@ public class RobotContainer {
     
     powerCellManagement.setDefaultCommand(new IntakePowerCells(powerCellManagement));
     driveBase.setDefaultCommand(new DriveTeleop(driveBase));
-
-    new ZeroIntakeCommand(powerCellManagement.intake).schedule();
   }
 
   /**
@@ -59,47 +54,48 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // =-=-=-=-= DRIVER CONTROLS =-=-=-=-= //
-
-    driverController.raiseLiftButton
-      .whileHeld( () -> climber.driveLift(0.5) )
-      .whenInactive( () -> climber.driveLift(0.0));
-
-    driverController.lowerLiftButton
-      .whileHeld( () -> climber.driveLift(-0.1) )
-      .whenReleased( () -> climber.driveLift(0.0) );
-    
     driverController.raiseWinchButton
       .whileHeld( () -> climber.driveWinch(1.0) )
       .whenReleased( () -> climber.driveWinch(0.0) );
 
-    driverController.lowerWinchButton
-      .whileHeld( () -> climber.driveWinch(-1.0) )
-      .whenReleased( () -> climber.driveWinch(0.0) ); 
-    
+    driverController.halfSpeedButton
+      .whileHeld( () -> driveBase.isHalfSpeed = true )
+      .whenReleased( () -> driveBase.isHalfSpeed = false );
 
     // =-=-=-=-= OPERATOR CONTROLS =-=-=-=-= //
 
     ShootPowerCells 
       shootFar = new ShootPowerCells(driveBase, powerCellManagement, ShootingType.far),
-      shootNear = new ShootPowerCells(driveBase, powerCellManagement, ShootingType.near);
+      shootNear = new ShootPowerCells(driveBase, powerCellManagement, ShootingType.auto);
 
     opController.shootFarBtn
-      .toggleWhenPressed(shootFar);
+      .whileActiveOnce(shootFar, true);
 
     opController.shootNearBtn
-      .toggleWhenPressed(shootNear);
+      .whileActiveOnce(shootNear, true);
 
-    opController.toggleManualBtn
-      .whenPressed( () -> powerCellManagement.toggleManual() );
-    
-    opController.toggleIntakeBtn
-      .whenPressed(new ConditionalCommand( 
-        // onTrue
-        new InstantCommand(() -> powerCellManagement.intake.toggleArm()), 
-        // onFalse
-        null, 
-        // condition
-        powerCellManagement::isManual ));
+    opController.indexUpBtn
+      .whileHeld( () -> {
+        powerCellManagement.index.driveBoth(Physical.INDEX_SPEED);
+      }, powerCellManagement)
+      .whenReleased( () -> {
+        powerCellManagement.index.driveBoth(0);
+      } );
+
+    opController.indexDownBtn
+      .whileHeld( () -> {
+        if(!powerCellManagement.index.lower.getBeamBreak()) {
+          powerCellManagement.index.driveLower(-Physical.INDEX_SPEED);
+        }
+        else powerCellManagement.index.driveLower(0);
+
+        powerCellManagement.index.driveUpper(-Physical.INDEX_SPEED);
+        powerCellManagement.shooter.setSpeed(-100);
+      }, powerCellManagement )
+      .whenReleased( () -> {
+        powerCellManagement.index.driveBoth(0);
+        powerCellManagement.shooter.setSpeed(0);
+      } );
 
       // TODO make PositionControl and RotationControl commands.
 
@@ -118,6 +114,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new DefaultAutoCommand(driveBase, powerCellManagement);
+    return new DefaultAutoCommand(driveBase, powerCellManagement, new ShootPowerCells(driveBase, powerCellManagement, ShootingType.auto));
   }
 }

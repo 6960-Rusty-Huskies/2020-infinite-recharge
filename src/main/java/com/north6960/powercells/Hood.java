@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 
 public class Hood extends SubsystemBase {
 
@@ -44,6 +45,7 @@ public class Hood extends SubsystemBase {
   }
 
   public void setAngle(double angDeg) {
+    MathUtil.clamp(angDeg, -45, 10);
     this.setpoint = angDeg;
   }
   

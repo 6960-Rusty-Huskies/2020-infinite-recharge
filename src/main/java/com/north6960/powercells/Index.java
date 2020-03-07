@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Index extends SubsystemBase {
   public IndexSection lower, upper;
   private int powerCellCount;
-  public boolean isManual = false;
 
   public Index() {
     lower = 

@@ -15,10 +15,10 @@ public class CPMArm extends SubsystemBase {
 
   public CPMArm() {
     motor = new VictorSPX(CAN.CPM_ARM_MOTOR);
-    limitSwitch = new DigitalInput(Digital.SPINNER_ARM_LIMIT_SWITCH_TOP);
+    limitSwitch = new DigitalInput(Digital.SPINNER_SWITCH_TOP);
   }
   
-  public void set(double speed) {
+  public void move(double speed) {
     motor.set(VictorSPXControlMode.PercentOutput, speed);
   }
   

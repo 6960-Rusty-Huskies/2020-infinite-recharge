@@ -1,28 +1,34 @@
 package com.north6960.controlpanel;
 
+import com.north6960.Constants.Digital;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
- * <p> <b>C</b>ontrol <b>P</b>anel <b>M</b>anipulator. </p>
  * <p> The arm, wheel and color sensor that are used to manipulate the Control Panel. </p>
  */
-public class CPM extends SubsystemBase {
+public class ControlPanelManipulator extends SubsystemBase {
 
   private ColorSensorV3 colorSensor;
-  public CPMArm arm;
-  public CPMWheel wheel;
+  private CPMArm arm;
+  private CPMWheel wheel;
   private ColorMatch colorMatch;
+  private DigitalInput upperLimitSwitch, lowerLimitSwitch;
 
-  public CPM() {
+  public ControlPanelManipulator() {
     colorSensor = new ColorSensorV3(Port.kOnboard);
     arm = new CPMArm();
     wheel = new CPMWheel();
     colorMatch = new ColorMatch();
+
+    upperLimitSwitch = new DigitalInput(Digital.SPINNER_SWITCH_TOP);
+    // lowerLimitSwitch = new DigitalInput(Digital.SPINNER_SWITCH_BOTTOM);
 
     colorMatch.addColorMatch(WheelColor.red);
     colorMatch.addColorMatch(WheelColor.green);
@@ -78,9 +84,26 @@ public class CPM extends SubsystemBase {
 
     wheel.move(speed);
   }
+
+  public void moveWheel(double speed) {
+    wheel.move(speed);
+  }
+
+  public void moveArm(double speed) {
+    arm.move(speed);
+  }
+
+  public boolean lowerLimitSwitchTriggered() {
+    return lowerLimitSwitch.get();
+  }
+
+  public boolean upperLimitSwitchTriggered() {
+    return upperLimitSwitch.get();
+  }
   
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("Color wheel limit switch", arm.limitSwitchTriggered());
   }
 }

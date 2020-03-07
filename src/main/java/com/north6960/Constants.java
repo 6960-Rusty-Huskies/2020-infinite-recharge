@@ -60,7 +60,8 @@ public final class Constants {
 		public static final int INTAKE_ARM_LIMIT_SWITCH = 6;
 		public static final int LIFT_SWITCH_TOP = 10;
 		public static final int LIFT_SWITCH_BOTTOM = 11;
-		public static final int SPINNER_ARM_LIMIT_SWITCH_TOP = 7;
+		public static final int SPINNER_SWITCH_TOP = 7;
+		public static final int SPINNER_SWITCH_BOTTOM = -1;
 	}
 	
 	/**
@@ -98,32 +99,28 @@ public final class Constants {
 	public static final class Button {
 		// Button values start at 1.
 		
-		public static final int SHOOT_FAR = 1;
-		public static final int SHOOT_NEAR = 2;
+		public static final int SHOOT_FAR = 7;
+		public static final int SHOOT_NEAR = 8;
 
-		public static final int TOGGLE_INTAKE = 3;
-		public static final int ROTATION_CONTROL = 4;
-		public static final int POSITION_CONTROL = 5;
+		public static final int ROTATION_CONTROL = 9;
+		public static final int POSITION_CONTROL = 10;
 
-		public static final int TOGGLE_MANUAL = 6;
-		public static final int INDEX_MANUAL = 7;
+		public static final int INDEX_UP = 1;
+		public static final int INDEX_DOWN = 5;
+		public static final int INDEX_AUTO_TOGGLE = 2;
 
 		public static final SimpleEntry<Hand, Integer> 
-			DRIVE_HALF_SPEED = new SimpleEntry<Hand, Integer>(Hand.kRight, 1),
-			RAISE_LIFT = new SimpleEntry<Hand, Integer>(Hand.kLeft, 3),
-			LOWER_LIFT = new SimpleEntry<Hand, Integer>(Hand.kLeft, 2),
-			RAISE_WINCH = new SimpleEntry<Hand, Integer>(Hand.kRight, 3),
-			LOWER_WINCH = new SimpleEntry<Hand, Integer>(Hand.kRight, 2);
+			DRIVE_HALF_SPEED = new SimpleEntry<Hand, Integer>(Hand.kLeft, 2),
+			RAISE_WINCH = new SimpleEntry<Hand, Integer>(Hand.kRight, 3);
 	}
 
 	/**
 	 * Contains physical constants such as gear ratios and RPMs.
 	 */
 	public static final class Physical {
-		public static final double SHOOTER_RPM_DEFAULT = 500;
 		public static final double SHOOTER_RPM_NEAR = 2000;
 		public static final double SHOOTER_RPM_FAR = 3650;
-		public static final double SHOOTER_RPM_AUTO = 2500;
+		public static final double SHOOTER_RPM_AUTO = 2350;
 
 		public static final double HOOD_ANGLE_NEAR = 10;
 		public static final double HOOD_ANGLE_FAR = -5;
@@ -138,6 +135,9 @@ public final class Constants {
 		public static final double INTAKE_LOW_ANGLE = 120;
 		public static final double INTAKE_HIGH_ANGLE = 0;
 		public static final double INTAKE_GEAR_RATIO = 16. / 18.;
+
+		public static final double LIFT_SPEED_UP = 0.5;
+		public static final double LIFT_SPEED_DOWN = 0.1;
 	}
 
 	/**
