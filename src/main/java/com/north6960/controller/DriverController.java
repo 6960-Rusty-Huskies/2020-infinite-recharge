@@ -17,18 +17,12 @@ public class DriverController {
     private Joystick rightStick = new Joystick(USB.DRIVER_JOYSTICK_RIGHT);
 
     public JoystickButton halfSpeedButton;
-    public JoystickButton raiseLiftButton; 
-    public JoystickButton lowerLiftButton;
     public JoystickButton raiseWinchButton;
-    public JoystickButton lowerWinchButton;
 
     public DriverController() {
         // Key is Hand, value is port number
         halfSpeedButton = initButton(Button.DRIVE_HALF_SPEED);
-        raiseLiftButton = initButton(Button.RAISE_LIFT);
-        lowerLiftButton = initButton(Button.LOWER_LIFT);
         raiseWinchButton = initButton(Button.RAISE_WINCH);
-        lowerWinchButton = initButton(Button.LOWER_WINCH);
     }
 
     public JoystickButton getButton(Hand hand, int value) {

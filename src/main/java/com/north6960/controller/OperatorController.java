@@ -15,14 +15,15 @@ public class OperatorController {
     private GenericHID stickLeft = new Joystick(USB.OPERATOR_JOYSTICK_LEFT);
     private GenericHID stickRight = new Joystick(USB.OPERATOR_JOYSTICK_RIGHT);
 
-    public JoystickButton shootNearBtn = new JoystickButton(stickLeft, Button.SHOOT_NEAR);
-    public JoystickButton shootFarBtn = new JoystickButton(stickLeft, Button.SHOOT_FAR);
+    public JoystickButton shootNearBtn = new JoystickButton(stickRight, Button.SHOOT_NEAR);
+    public JoystickButton shootFarBtn = new JoystickButton(stickRight, Button.SHOOT_FAR);
 
-    public JoystickButton rotationControlBtn = new JoystickButton(stickLeft, Button.ROTATION_CONTROL);
+    public JoystickButton rotationControlBtn = new JoystickButton(stickRight, Button.ROTATION_CONTROL);
     public JoystickButton positionControlBtn = new JoystickButton(stickLeft, Button.POSITION_CONTROL);
 
-    public JoystickButton toggleIntakeBtn = new JoystickButton(stickLeft, Button.TOGGLE_INTAKE);
-    public JoystickButton toggleManualBtn = new JoystickButton(stickLeft, Button.TOGGLE_MANUAL);
+    public JoystickButton indexUpBtn = new JoystickButton(stickRight, Button.INDEX_UP);
+    public JoystickButton indexDownBtn = new JoystickButton(stickRight, Button.INDEX_DOWN);
+    public JoystickButton indexAutoToggleBtn = new JoystickButton(stickRight, Button.INDEX_AUTO_TOGGLE);
 
     public double getX(Hand hand) {
         switch(hand) {

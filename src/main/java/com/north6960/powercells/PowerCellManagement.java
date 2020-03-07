@@ -6,17 +6,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PowerCellManagement extends SubsystemBase {
-
   public Index index = new Index();
   public Intake intake = new Intake();
   public Shooter shooter = new Shooter();
   public Hood hood = new Hood();
 
-  private boolean isManual = false;
-
   public PowerCellManagement() {
-    SmartDashboard.putNumber("Shooter RPM", 0);
-    SmartDashboard.putNumber("Hood angle", 0);
   }
 
   /**
@@ -33,7 +28,7 @@ public class PowerCellManagement extends SubsystemBase {
         break;
       case near:
         shooter.setSpeed(Physical.SHOOTER_RPM_NEAR);
-        hood.setAngle(Physical.SHOOTER_RPM_NEAR);
+        hood.setAngle(Physical.HOOD_ANGLE_NEAR);
         break;
       case auto:
         shooter.setSpeed(Physical.SHOOTER_RPM_AUTO);
@@ -41,22 +36,10 @@ public class PowerCellManagement extends SubsystemBase {
     }
   }
 
-  public void toggleManual() {
-    isManual = !isManual;
-    intake.isManual = isManual;
-    index.isManual = isManual;
-  }
-
-  public boolean isManual() {
-    return isManual;
-  }
-
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Power Cell Count", index.getPowerCellCount());
     SmartDashboard.putNumber("Current shooter speed", shooter.getSpeed());
     SmartDashboard.putNumber("Current hood angle", hood.getAngle());
-    SmartDashboard.putNumber("Current index angle", intake.getArmAngle());
-    SmartDashboard.putBoolean("Index & Intake Manual", isManual);
   }
 }

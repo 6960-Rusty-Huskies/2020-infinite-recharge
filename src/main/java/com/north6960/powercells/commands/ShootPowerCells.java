@@ -27,16 +27,19 @@ public class ShootPowerCells extends SequentialCommandGroup {
     super(
       // new FollowLimelightOffsetX(driveBase, pcm)
       // .alongWith(new SequentialCommandGroup(
-        new InstantCommand( () -> pcm.intake.putUp()),
-        new InstantCommand( () -> pcm.index.driveUpper(-Physical.INDEX_SPEED)),
+        new InstantCommand( () -> { 
+          pcm.index.driveUpper(-Physical.INDEX_SPEED); 
+          pcm.shooter.setSpeed(-100);
+        }),
         new WaitCommand(0.25),
-        new InstantCommand( () -> pcm.index.driveUpper(0) ),
-        new InstantCommand(() -> pcm.setUpShooter(type)),
+        new InstantCommand( () -> {
+          pcm.index.driveUpper(0);
+          pcm.setUpShooter(type);
+        }),
         new WaitUntilCommand(pcm.shooter::atSetpoint),
-        new PerpetualCommand(new InstantCommand( () -> { 
-          pcm.index.driveLower(Physical.INDEX_SPEED);
-          pcm.index.driveUpper(Physical.INDEX_SPEED);
-        }, pcm))  
+        new PerpetualCommand(
+          new InstantCommand( () -> pcm.index.driveBoth(Physical.INDEX_SPEED), pcm)
+        )  
       // ))
       );
 
@@ -51,10 +54,8 @@ public class ShootPowerCells extends SequentialCommandGroup {
 
   @Override
   public void end(boolean interrupted) {
-    pcm.index.driveLower(0);
-    pcm.index.driveUpper(0);
+    pcm.index.driveBoth(0);
     pcm.shooter.setSpeed(0);
-    pcm.intake.putDown();
     Limelight.setLed(LedMode.off);
   }
 }

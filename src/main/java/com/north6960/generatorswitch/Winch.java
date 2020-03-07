@@ -17,10 +17,11 @@ public class Winch extends SubsystemBase {
   public Winch() {
     motor = new VictorSPX(CAN.WINCH_MOTOR);
     motor.setNeutralMode(NeutralMode.Brake);
+    motor.setInverted(true);
   }
 
   public void move(double speed) {
-    motor.set(VictorSPXControlMode.PercentOutput, speed);
+    motor.set(VictorSPXControlMode.PercentOutput, 0.5 * speed);
   }
 
   @Override

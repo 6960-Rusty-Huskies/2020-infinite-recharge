@@ -24,32 +24,22 @@ public class IntakePowerCells extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(!pcm.intake.isDown()) {
-      pcm.intake.putDown();
-    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(!pcm.index.isManual) {
-      if(pcm.index.lower.getBeamBreak()) {
-        pcm.index.driveBoth(Physical.INDEX_SPEED);
-      }
-      else {
-        pcm.index.driveBoth(0);
-      }
+    if(pcm.index.lower.getBeamBreak()) {
+      pcm.index.driveBoth(Physical.INDEX_SPEED);
     }
-
     else {
-      pcm.index.driveBoth(Physical.INDEX_SPEED * controller.getY(Hand.kLeft));
+      pcm.index.driveBoth(0);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    pcm.intake.putUp();
   }
 
   // Returns true when the command should end.
