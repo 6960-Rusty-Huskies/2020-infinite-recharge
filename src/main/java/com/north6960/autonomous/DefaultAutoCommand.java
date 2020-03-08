@@ -21,7 +21,7 @@ public class DefaultAutoCommand extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     super(
       new InstantCommand( () -> pcm.intake.armMotor.set(0.5), pcm.intake),
-      new WaitUntilCommand(() -> !pcm.intake.limitSwitchTriggered()),
+      new WaitUntilCommand(() -> !pcm.intake.limitSwitchTriggered()).withTimeout(0.5),
       new InstantCommand( () -> pcm.intake.armMotor.set(0), pcm.intake), 
       command.withTimeout(8),
       new InstantCommand( () -> driveBase.arcadeDrive(-0.75, 0), driveBase ),

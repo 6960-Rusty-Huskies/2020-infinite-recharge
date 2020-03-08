@@ -120,7 +120,7 @@ public final class Constants {
 	public static final class Physical {
 		public static final double SHOOTER_RPM_NEAR = 2000;
 		public static final double SHOOTER_RPM_FAR = 3650;
-		public static final double SHOOTER_RPM_AUTO = 2350;
+		public static final double SHOOTER_RPM_AUTO = 2200;
 
 		public static final double HOOD_ANGLE_NEAR = 10;
 		public static final double HOOD_ANGLE_FAR = -5;

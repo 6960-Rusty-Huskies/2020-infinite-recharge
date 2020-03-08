@@ -28,7 +28,7 @@ public class ControlPanelManipulator extends SubsystemBase {
     colorMatch = new ColorMatch();
 
     upperLimitSwitch = new DigitalInput(Digital.SPINNER_SWITCH_TOP);
-    lowerLimitSwitch = new DigitalInput(Digital.SPINNER_SWITCH_BOTTOM);
+    // lowerLimitSwitch = new DigitalInput(Digital.SPINNER_SWITCH_BOTTOM);
 
     colorMatch.addColorMatch(WheelColor.red);
     colorMatch.addColorMatch(WheelColor.green);

@@ -1,5 +1,6 @@
 package com.north6960.powercells;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.north6960.Constants.CAN;
@@ -29,6 +30,7 @@ public class Intake extends SubsystemBase {
     limitSwitch = new DigitalInput(Digital.INTAKE_ARM_LIMIT_SWITCH);
 
     wheelMotor.setInverted(true);
+    armMotor.setNeutralMode(NeutralMode.Brake);
 
     controller = new OperatorController();
   }
@@ -50,10 +52,10 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     double armSpeed = speedMult * controller.getY(Hand.kLeft);
-    if(!limitSwitchTriggered() || armSpeed > 0) {
+    // if(!limitSwitchTriggered() || armSpeed > 0) {
       armMotor.set(armSpeed);
       wheelMotor.set(speedMult * controller.getX(Hand.kLeft));
-    }
+    // }
 
     SmartDashboard.putBoolean("Intake limit switch", limitSwitchTriggered());
   }

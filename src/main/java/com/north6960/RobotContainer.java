@@ -29,7 +29,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private Climber climber = new Climber();
-  private ControlPanelManipulator cpm = new ControlPanelManipulator();
+  // private ControlPanelManipulator cpm = new ControlPanelManipulator();
   private DriveBase driveBase = new DriveBase(0.75, 0.75);
   public PowerCellManagement powerCellManagement = new PowerCellManagement();
 
@@ -56,8 +56,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // =-=-=-=-= DRIVER CONTROLS =-=-=-=-= //
+    
     driverController.raiseWinchButton
-      .whileHeld( () -> climber.driveWinch(1.0) )
+      .whileHeld( () -> climber.driveWinch(0.4) )
       .whenReleased( () -> climber.driveWinch(0.0) );
 
     driverController.halfSpeedButton
@@ -99,11 +100,11 @@ public class RobotContainer {
         powerCellManagement.shooter.setSpeed(0);
       } );
 
-      opController.rotationControlBtn
-        .toggleWhenPressed(new PositionControl(cpm));
+      // opController.rotationControlBtn
+      //   .toggleWhenPressed(new PositionControl(cpm));
 
-      opController.positionControlBtn
-        .toggleWhenPressed(new RotationControl(cpm));
+      // opController.positionControlBtn
+      //   .toggleWhenPressed(new RotationControl(cpm));
   }
 
 
