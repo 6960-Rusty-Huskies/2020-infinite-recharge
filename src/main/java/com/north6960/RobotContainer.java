@@ -4,12 +4,10 @@ import com.north6960.Constants.Physical;
 import com.north6960.autonomous.DefaultAutoCommand;
 import com.north6960.controller.DriverController;
 import com.north6960.controller.OperatorController;
-import com.north6960.controlpanel.ControlPanelManipulator;
-import com.north6960.controlpanel.commands.PositionControl;
-import com.north6960.controlpanel.commands.RotationControl;
 import com.north6960.drive.DriveBase;
 import com.north6960.drive.commands.DriveTeleop;
-import com.north6960.generatorswitch.Climber;
+import com.north6960.generatorswitch.Lift;
+import com.north6960.generatorswitch.Winch;
 import com.north6960.powercells.PowerCellManagement;
 import com.north6960.powercells.ShootingType;
 import com.north6960.powercells.commands.IntakePowerCells;
@@ -28,7 +26,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  private Climber climber = new Climber();
+  private Lift lift = new Lift();
+  private Winch winch = new Winch();
   // private ControlPanelManipulator cpm = new ControlPanelManipulator();
   private DriveBase driveBase = new DriveBase(0.75, 0.75);
   public PowerCellManagement powerCellManagement = new PowerCellManagement();
@@ -58,8 +57,8 @@ public class RobotContainer {
     // =-=-=-=-= DRIVER CONTROLS =-=-=-=-= //
     
     driverController.raiseWinchButton
-      .whileHeld( () -> climber.driveWinch(0.4) )
-      .whenReleased( () -> climber.driveWinch(0.0) );
+      .whileHeld( () -> winch.set(-1.0) )
+      .whenReleased( () -> winch.set(0.0) );
 
     driverController.halfSpeedButton
       .whileHeld( () -> driveBase.isHalfSpeed = true )
